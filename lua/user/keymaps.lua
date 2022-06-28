@@ -16,21 +16,24 @@ vim.g.mapleader = " "
 --   command_mode = "c",
 
 -- Normal --
+keymap("n", "<leader>q", ":q!<CR>", opts)
+keymap("n", "<leader>w", ":w!<CR>", opts)
+keymap("n", "<leader>c", "<cmd>Bdelete<CR>", opts)
 -- Better window navigation
-keymap("n", "<C-h>", "<C-w>h", opts)
-keymap("n", "<C-j>", "<C-w>j", opts)
-keymap("n", "<C-k>", "<C-w>k", opts)
-keymap("n", "<C-l>", "<C-w>l", opts)
+keymap("n", "<C-Up>", "<C-w>k", opts)
+keymap("n", "<C-Down>", "<C-w>j", opts)
+keymap("n", "<C-Left>", "<C-w>h", opts)
+keymap("n", "<C-Right>", "<C-w>l", opts)
 
 -- Resize with arrows
-keymap("n", "<C-Up>", ":resize -2<CR>", opts)
-keymap("n", "<C-Down>", ":resize +2<CR>", opts)
-keymap("n", "<C-Left>", ":vertical resize -2<CR>", opts)
-keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
+keymap("n", "<C-A-Up>", ":resize -2<CR>", opts)
+keymap("n", "<C-A-Down>", ":resize +2<CR>", opts)
+keymap("n", "<C-A-Left>", ":vertical resize -2<CR>", opts)
+keymap("n", "<C-A-Right>", ":vertical resize +2<CR>", opts)
 
 -- Navigate buffers
-keymap("n", "<S-l>", ":bnext<CR>", opts)
-keymap("n", "<S-h>", ":bprevious<CR>", opts)
+keymap("n", "<S-Right>", ":bnext<CR>", opts)
+keymap("n", "<S-Left>", ":bprevious<CR>", opts)
 
 -- Clear highlights
 keymap("n", "<leader>h", "<cmd>nohlsearch<CR>", opts)
