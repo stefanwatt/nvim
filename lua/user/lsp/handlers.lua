@@ -72,7 +72,6 @@ local function lsp_keymaps(bufnr)
 end
 
 M.on_attach = function(client, bufnr)
-<<<<<<< HEAD
   local status_cmp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
   if not status_cmp_ok then
     return
@@ -83,35 +82,29 @@ M.on_attach = function(client, bufnr)
   if not status_ok then
     print "test"
     return
-=======
+  end    
   if client.name == "tsserver" then
     client.resolved_capabilities.document_formatting = false
->>>>>>> master
   end
   illuminate.on_attach(client)
 
   if client.name == "jdt.ls" then
     vim.lsp.codelens.refresh()
-    if JAVA_DAP_ACTIVE then
-      require("jdtls").setup_dap { hotcodereplace = "auto" }
-      require("jdtls.dap").setup_dap_main_class_configs()
-    end
+    require("jdtls").setup_dap { hotcodereplace = "auto" }
+    require("jdtls.dap").setup_dap_main_class_configs()
     client.resolved_capabilities.document_formatting = false
     client.resolved_capabilities.textDocument.completion.completionItem.snippetSupport = false
   end
 
-<<<<<<< HEAD
   M.capabilities = vim.lsp.protocol.make_client_capabilities()
   M.capabilities.textDocument.completion.completionItem.snippetSupport = true
   M.capabilities = cmp_nvim_lsp.update_capabilities(M.capabilities)
-=======
   lsp_keymaps(bufnr)
   local status_ok, illuminate = pcall(require, "illuminate")
   if not status_ok then
     return
   end
   illuminate.on_attach(client)
->>>>>>> master
 end
 
 return M
