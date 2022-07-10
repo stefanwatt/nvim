@@ -14,14 +14,30 @@ dashboard.section.header.val = {
 }
 local startify = require "alpha.themes.startify"
 local button = startify.button
+local file_button = startify.file_button
 local favorites = {
   type = "group",
   val = {
-    button("i", "bspwm config", ":e ~/.config/bspwm/bspwmrc.mjs<CR>"),
-    button("n", "nvim config", ":e ~/.config/nvim/init.lua<CR>"),
+    file_button("~/.config/bspwm/bspwmrc.mjs", "i", "bspwm config"),
+    file_button("~/.config/nvim/init.lua", "n", "nvim config"),
+    file_button("~/.config/sxhkd/sxhkdrc","k", "keymaps (sxhkd)"),
     button("p", "projects", ":Telescope projects<CR>"),
   },
 }
+local projectDirectories = require("user.utils").getSubDirectories("~/Projects/")
+local projectEntriesStart = 10
+local projectEntries = {}
+for i,dirname in ipairs(projectDirectories) do
+  projectEntries[i] = file_button("~/Projects/"..dirname,tostring(i+projectEntriesStart-1),dirname)
+end
+
+local projects = {
+  type = "group",
+  val = function ()
+    return projectEntries
+  end
+}
+
 local section = startify.section
 startify.config.layout = {
   { type = "padding", val = 1 },
@@ -31,6 +47,10 @@ startify.config.layout = {
   favorites,
   { type = "padding", val = 1 },
   section.mru,
+  { type = "padding", val = 1 },
+  { type = "text", val = "Projects", opts = { hl = "SpecialComment", shrink_margin = false } },
+  { type = "padding", val = 1 },
+  projects,
   { type = "padding", val = 1 },
   section.bottom_buttons,
   section.footer,

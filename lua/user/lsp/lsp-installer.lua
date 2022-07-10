@@ -4,6 +4,7 @@ if not status_ok then
 end
 
 local servers = {
+  "svelte",
   "sumneko_lua",
   "cssls",
   "html",

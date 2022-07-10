@@ -56,7 +56,12 @@ return packer.startup(function(use)
   use { "lewis6991/impatient.nvim", commit = "969f2c5c90457612c09cf2a13fee1adaa986d350" }
   use { "lukas-reineke/indent-blankline.nvim", commit = "6177a59552e35dfb69e1493fd68194e673dc3ee2" }
   use { "goolord/alpha-nvim", commit = "ef27a59e5b4d7b1c2fe1950da3fe5b1c5f3b4c94" }
-  use { "folke/which-key.nvim", commit="bd4411a2ed4dd8bb69c125e339d837028a6eea71" }
+  use { "folke/which-key.nvim", commit = "bd4411a2ed4dd8bb69c125e339d837028a6eea71" }
+  use { "unblevable/quick-scope", commit = "428e8698347f254d24b248af9f656194a80081e5" }
+  use { "ggandor/lightspeed.nvim", commit = "a4b4277d143270c6a7d85ef2e1574a1bbeab6677" }
+  use { "tpope/vim-surround", commit = "bf3480dc9ae7bea34c78fbba4c65b4548b5b1fea" }
+
+
 
   -- Colorschemes
   use { "folke/tokyonight.nvim", commit = "8223c970677e4d88c9b6b6d81bda23daf11062bb" }
@@ -82,7 +87,28 @@ return packer.startup(function(use)
 
   -- Telescope
   use { "nvim-telescope/telescope.nvim", commit = "d96eaa914aab6cfc4adccb34af421bdd496468b0" }
-
+  use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
+  use {
+    "ur4ltz/surround.nvim",
+    config = function()
+      require "surround".setup { mappings_style = "surround" }
+    end,
+    commit = "633068182cf894480341b992445f0f0d2883721d"
+  }
+  use { "elianiva/telescope-npm.nvim", commit = "60eee38b34f577104475a592dd3716a7afa2aef1" }
+  use { 'ibhagwan/fzf-lua',
+    requires = { 'kyazdani42/nvim-web-devicons' },
+    commit = "ee19eda2e3b2c7e627c94e0daf9c93ab17027ab1"
+  }
+  use { "tami5/sqlite.lua", commit = "d53bdff134a81e12834c3f7bd431376482132b7c" }
+  use {
+    "nvim-telescope/telescope-frecency.nvim",
+    config = function()
+      require "telescope".load_extension("frecency")
+    end,
+    requires = { "tami5/sqlite.lua" },
+    commit = "68ac8cfe6754bb656b4f84d6c3dafa421b6f9697"
+  }
   -- Treesitter
   use {
     "nvim-treesitter/nvim-treesitter",
