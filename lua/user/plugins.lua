@@ -60,7 +60,14 @@ return packer.startup(function(use)
   use { "unblevable/quick-scope", commit = "428e8698347f254d24b248af9f656194a80081e5" }
   use { "ggandor/lightspeed.nvim", commit = "a4b4277d143270c6a7d85ef2e1574a1bbeab6677" }
   use { "tpope/vim-surround", commit = "bf3480dc9ae7bea34c78fbba4c65b4548b5b1fea" }
-
+  use {
+    'chipsenkbeil/distant.nvim',
+    config = function()
+      require('distant').setup {
+        ['*'] = require('distant.settings').chip_default()
+      }
+    end
+  }
 
 
   -- Colorschemes
