@@ -18,7 +18,7 @@ local file_button = startify.file_button
 local favorites = {
   type = "group",
   val = {
-    file_button("~/.config/bspwm/bspwmrc.mjs", "i", "bspwm config"),
+    file_button("~/.config/bspwm/bspwmrc.mjs", "b", "bspwm config"),
     file_button("~/.config/nvim/init.lua", "n", "nvim config"),
     file_button("~/.config/sxhkd/sxhkdrc","k", "keymaps (sxhkd)"),
     button("p", "projects", ":Telescope projects<CR>"),

@@ -42,7 +42,7 @@ packer.init {
 return packer.startup(function(use)
   -- My plugins here
   use { "wbthomason/packer.nvim", commit = "00ec5adef58c5ff9a07f11f45903b9dbbaa1b422" } -- Have packer manage itself
-  use { "nvim-lua/plenary.nvim", commit = "968a4b9afec0c633bc369662e78f8c5db0eba249" } -- Useful lua functions used by lots of plugins
+  use { "nvim-lua/plenary.nvim", commit = "986ad71ae930c7d96e812734540511b4ca838aa2"} -- Useful lua functions used by lots of plugins
   use { "windwp/nvim-autopairs", commit = "fa6876f832ea1b71801c4e481d8feca9a36215ec" } -- Autopairs, integrates with both cmp and treesitter
   use { "numToStr/Comment.nvim", commit = "2c26a00f32b190390b664e56e32fd5347613b9e2" }
   use { "JoosepAlviste/nvim-ts-context-commentstring", commit = "88343753dbe81c227a1c1fd2c8d764afb8d36269" }
@@ -60,19 +60,13 @@ return packer.startup(function(use)
   use { "unblevable/quick-scope", commit = "428e8698347f254d24b248af9f656194a80081e5" }
   use { "ggandor/lightspeed.nvim", commit = "a4b4277d143270c6a7d85ef2e1574a1bbeab6677" }
   use { "tpope/vim-surround", commit = "bf3480dc9ae7bea34c78fbba4c65b4548b5b1fea" }
-  use {
-    'chipsenkbeil/distant.nvim',
-    config = function()
-      require('distant').setup {
-        ['*'] = require('distant.settings').chip_default()
-      }
-    end
-  }
-
+  use { "stefanwatt/nvim-typing-test"}
+  use({ "GustavoKatel/tasks.nvim", commit="1bb8b9725cc7bb58e646d9a8da48a57010cafcad" })
 
   -- Colorschemes
   use { "folke/tokyonight.nvim", commit = "8223c970677e4d88c9b6b6d81bda23daf11062bb" }
   use { "lunarvim/darkplus.nvim", branch = "neovim-0.7" }
+  use {"lunarvim/onedarker.nvim"}
 
   -- cmp plugins
   use { "hrsh7th/nvim-cmp", commit = "df6734aa018d6feb4d76ba6bda94b1aeac2b378a" } -- The completion plugin
