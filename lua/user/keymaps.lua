@@ -88,3 +88,8 @@ keymap("n", "<leader>dt", "<cmd>lua require'dap'.terminate()<cr>", opts)
 
 keymap("n", "<leader>ts", ":TypingTestStart<cr>", opts)
 keymap("n", "<leader>tq", ":TypingTestQuit<cr>", opts)
+
+keymap("n", "<C-f>", ":SearchBoxIncSearch show_matches=true<cr>", opts)
+keymap("n", "<C-h>", ":SearchBoxReplace show_matches=true<cr>", opts)
+keymap("x", "<C-f>", 'y:SearchBoxIncSearch show_matches=true visual_mode=true -- <C-r>" <CR>', opts)
+keymap("x", "<C-h>", 'y:SearchBoxReplace show_matches=true visual_mode=true -- <C-r>" <CR>', opts)
