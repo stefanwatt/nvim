@@ -63,6 +63,13 @@ return packer.startup(function(use)
   use { "stefanwatt/nvim-typing-test"}
   use({ "GustavoKatel/tasks.nvim", commit="1bb8b9725cc7bb58e646d9a8da48a57010cafcad" })
   use { "williamboman/mason.nvim" }
+  use {
+    'VonHeikemen/searchbox.nvim',
+    commit= "ccdbbb8b1b378d4e45d9af9040a6c1e925ad1c56",
+    requires = {
+      {'MunifTanjim/nui.nvim',commit="51cbd0ccc9410e317a947eea1e99966226a5f8b5"}
+    }
+  }
   -- Colorschemes
   use { "folke/tokyonight.nvim", commit = "8223c970677e4d88c9b6b6d81bda23daf11062bb" }
   use { "lunarvim/darkplus.nvim", branch = "neovim-0.7" }
