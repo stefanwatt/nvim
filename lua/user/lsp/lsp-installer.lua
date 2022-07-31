@@ -4,6 +4,8 @@ if not status_ok then
 end
 
 local servers = {
+  "emmet_ls",
+  "angularls",
   "svelte",
   "sumneko_lua",
   "cssls",
