@@ -70,6 +70,9 @@ return packer.startup(function(use)
       {'MunifTanjim/nui.nvim',commit="51cbd0ccc9410e317a947eea1e99966226a5f8b5"}
     }
   }
+  use { "kdheepak/lazygit.nvim",commit="9c73fd69a4c1cb3b3fc35b741ac968e331642600" }
+  use { "f-person/git-blame.nvim",commit="1bb73289929107309d2d90f7582ece5e9436bfd8" }
+
   -- Colorschemes
   use { "folke/tokyonight.nvim", commit = "8223c970677e4d88c9b6b6d81bda23daf11062bb" }
   use { "lunarvim/darkplus.nvim", branch = "neovim-0.7" }
