@@ -42,7 +42,7 @@ packer.init {
 return packer.startup(function(use)
   -- My plugins here
   use { "wbthomason/packer.nvim", commit = "00ec5adef58c5ff9a07f11f45903b9dbbaa1b422" } -- Have packer manage itself
-  use { "nvim-lua/plenary.nvim", commit = "986ad71ae930c7d96e812734540511b4ca838aa2"} -- Useful lua functions used by lots of plugins
+  use { "nvim-lua/plenary.nvim", commit = "986ad71ae930c7d96e812734540511b4ca838aa2" } -- Useful lua functions used by lots of plugins
   use { "windwp/nvim-autopairs", commit = "fa6876f832ea1b71801c4e481d8feca9a36215ec" } -- Autopairs, integrates with both cmp and treesitter
   use { "numToStr/Comment.nvim", commit = "2c26a00f32b190390b664e56e32fd5347613b9e2" }
   use { "JoosepAlviste/nvim-ts-context-commentstring", commit = "88343753dbe81c227a1c1fd2c8d764afb8d36269" }
@@ -58,25 +58,29 @@ return packer.startup(function(use)
   use { "goolord/alpha-nvim", commit = "ef27a59e5b4d7b1c2fe1950da3fe5b1c5f3b4c94" }
   use { "folke/which-key.nvim", commit = "bd4411a2ed4dd8bb69c125e339d837028a6eea71" }
   use { "unblevable/quick-scope", commit = "428e8698347f254d24b248af9f656194a80081e5" }
-  use { "ggandor/lightspeed.nvim", commit = "a4b4277d143270c6a7d85ef2e1574a1bbeab6677" }
+  use {
+    'phaazon/hop.nvim',
+    branch = 'v2', -- optional but strongly recommended
+    commit = "2a1b686aad85a3c241f8cd8fd42eb09c7de5ed79"
+  }
   use { "tpope/vim-surround", commit = "bf3480dc9ae7bea34c78fbba4c65b4548b5b1fea" }
-  use { "stefanwatt/nvim-typing-test"}
-  use({ "GustavoKatel/tasks.nvim", commit="1bb8b9725cc7bb58e646d9a8da48a57010cafcad" })
+  use { "stefanwatt/nvim-typing-test" }
+  use({ "GustavoKatel/tasks.nvim", commit = "1bb8b9725cc7bb58e646d9a8da48a57010cafcad" })
   use { "williamboman/mason.nvim" }
   use {
     'VonHeikemen/searchbox.nvim',
-    commit= "ccdbbb8b1b378d4e45d9af9040a6c1e925ad1c56",
+    commit = "ccdbbb8b1b378d4e45d9af9040a6c1e925ad1c56",
     requires = {
-      {'MunifTanjim/nui.nvim',commit="51cbd0ccc9410e317a947eea1e99966226a5f8b5"}
+      { 'MunifTanjim/nui.nvim', commit = "51cbd0ccc9410e317a947eea1e99966226a5f8b5" }
     }
   }
-  use { "kdheepak/lazygit.nvim",commit="9c73fd69a4c1cb3b3fc35b741ac968e331642600" }
-  use { "f-person/git-blame.nvim",commit="1bb73289929107309d2d90f7582ece5e9436bfd8" }
+  use { "kdheepak/lazygit.nvim", commit = "9c73fd69a4c1cb3b3fc35b741ac968e331642600" }
+  use { "f-person/git-blame.nvim", commit = "1bb73289929107309d2d90f7582ece5e9436bfd8" }
 
   -- Colorschemes
   use { "folke/tokyonight.nvim", commit = "8223c970677e4d88c9b6b6d81bda23daf11062bb" }
   use { "lunarvim/darkplus.nvim", branch = "neovim-0.7" }
-  use {"lunarvim/onedarker.nvim"}
+  use { "lunarvim/onedarker.nvim" }
 
   -- cmp plugins
   use { "hrsh7th/nvim-cmp", commit = "df6734aa018d6feb4d76ba6bda94b1aeac2b378a" } -- The completion plugin
@@ -114,9 +118,6 @@ return packer.startup(function(use)
   use { "tami5/sqlite.lua", commit = "d53bdff134a81e12834c3f7bd431376482132b7c" }
   use {
     "nvim-telescope/telescope-frecency.nvim",
-    config = function()
-      require "telescope".load_extension("frecency")
-    end,
     requires = { "tami5/sqlite.lua" },
     commit = "68ac8cfe6754bb656b4f84d6c3dafa421b6f9697"
   }

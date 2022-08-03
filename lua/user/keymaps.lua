@@ -61,3 +61,7 @@ keymap("n", "<C-f>", ":SearchBoxIncSearch show_matches=true<cr>", opts)
 keymap("n", "<C-h>", ":SearchBoxReplace show_matches=true<cr>", opts)
 keymap("x", "<C-f>", 'y:SearchBoxIncSearch show_matches=true visual_mode=true -- <C-r>" <CR>', opts)
 keymap("x", "<C-h>", 'y:SearchBoxReplace show_matches=true visual_mode=true -- <C-r>" <CR>', opts)
+
+keymap("n", "s", ":HopWord<CR>", opts)
+keymap("n", "S", ":HopChar2<CR>", opts)
+keymap("n", "l", ":HopLine<CR>", opts)

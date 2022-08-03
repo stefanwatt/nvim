@@ -91,6 +91,8 @@ local m_opts = {
 local m_mappings = {
 }
 
+vim.api.nvim_set_keymap('', 'f', "", {})
+vim.api.nvim_set_keymap('', 'F', "", {})
 local mappings = {
   -- ["1"] = "which_key_ignore",
   a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Action" },
