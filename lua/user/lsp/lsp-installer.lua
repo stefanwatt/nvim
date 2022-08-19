@@ -16,7 +16,9 @@ local servers = {
   "jsonls",
   "yamlls",
   "jdtls",
-  "tailwindcss"
+  "tailwindcss",
+  "rust_analyzer",
+  "taplo"
 }
 
 lsp_installer.setup()

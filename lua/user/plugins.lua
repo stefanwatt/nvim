@@ -76,8 +76,11 @@ return packer.startup(function(use)
   }
   use { "kdheepak/lazygit.nvim", commit = "9c73fd69a4c1cb3b3fc35b741ac968e331642600" }
   use { "f-person/git-blame.nvim", commit = "1bb73289929107309d2d90f7582ece5e9436bfd8" }
+  use { "mrshmllow/document-color.nvim", commit = "07c05b2d0dc29da1e82e1189d6f435d5a6aef4e1" }
 
   -- Colorschemes
+  use { 'Everblush/everblush.nvim', as = 'everblush', commit="d6746505ec81930c93f71da30d72f5ba5f55ef7c" }
+  use {'decaycs/decay.nvim', as = 'decay', commit="7ce218fdc23ac6447c6408b99c2b9ddb9a5ce649"}
   use { "folke/tokyonight.nvim", commit = "8223c970677e4d88c9b6b6d81bda23daf11062bb" }
   use { "lunarvim/darkplus.nvim", branch = "neovim-0.7" }
   use { "lunarvim/onedarker.nvim" }
@@ -89,8 +92,8 @@ return packer.startup(function(use)
   use { "saadparwaiz1/cmp_luasnip", commit = "a9de941bcbda508d0a45d28ae366bb3f08db2e36" } -- snippet completions
   use { "hrsh7th/cmp-nvim-lsp", commit = "affe808a5c56b71630f17aa7c38e15c59fd648a8" }
   use { "hrsh7th/cmp-nvim-lua", commit = "d276254e7198ab7d00f117e88e223b4bd8c02d21" }
-
-  -- snippets
+  --
+  -- -- snippets
   use { "L3MON4D3/LuaSnip", commit = "79b2019c68a2ff5ae4d732d50746c901dd45603a" } --snippet engine
   use { "rafamadriz/friendly-snippets", commit = "d27a83a363e61009278b6598703a763ce9c8e617" } -- a bunch of snippets to use
 
@@ -121,6 +124,7 @@ return packer.startup(function(use)
     requires = { "tami5/sqlite.lua" },
     commit = "68ac8cfe6754bb656b4f84d6c3dafa421b6f9697"
   }
+
   -- Treesitter
   use {
     "nvim-treesitter/nvim-treesitter",
