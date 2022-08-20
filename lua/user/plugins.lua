@@ -63,7 +63,7 @@ return packer.startup(function(use)
     branch = 'v2', -- optional but strongly recommended
     commit = "2a1b686aad85a3c241f8cd8fd42eb09c7de5ed79"
   }
-  use { "tpope/vim-surround", commit = "bf3480dc9ae7bea34c78fbba4c65b4548b5b1fea" }
+  use { "kylechui/nvim-surround", commit = "22a25192ed98a937efe48b93c192a352d197c7e3" }
   use { "stefanwatt/nvim-typing-test" }
   use({ "GustavoKatel/tasks.nvim", commit = "1bb8b9725cc7bb58e646d9a8da48a57010cafcad" })
   use { "williamboman/mason.nvim" }
