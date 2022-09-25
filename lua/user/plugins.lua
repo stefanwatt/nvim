@@ -57,7 +57,6 @@ return packer.startup(function(use)
   use { "lukas-reineke/indent-blankline.nvim", commit = "6177a59552e35dfb69e1493fd68194e673dc3ee2" }
   use { "goolord/alpha-nvim", commit = "ef27a59e5b4d7b1c2fe1950da3fe5b1c5f3b4c94" }
   use { "folke/which-key.nvim", commit = "bd4411a2ed4dd8bb69c125e339d837028a6eea71" }
-  use { "unblevable/quick-scope", commit = "428e8698347f254d24b248af9f656194a80081e5" }
   use {
     'phaazon/hop.nvim',
     branch = 'v2', -- optional but strongly recommended
@@ -77,13 +76,22 @@ return packer.startup(function(use)
   use { "kdheepak/lazygit.nvim", commit = "9c73fd69a4c1cb3b3fc35b741ac968e331642600" }
   use { "f-person/git-blame.nvim", commit = "1bb73289929107309d2d90f7582ece5e9436bfd8" }
   use { "mrshmllow/document-color.nvim", commit = "07c05b2d0dc29da1e82e1189d6f435d5a6aef4e1" }
+  use { "https://git.sr.ht/~whynothugo/lsp_lines.nvim", commit = "dbfd8e96ec2696e1ceedcd23fd70e842256e3dea" }
+  use { "EdenEast/nightfox.nvim", commit = "e2f961859cbfb2ba38147dc59fdd2314992c8b62" }
+  use { "jlcrochet/vim-razor", commit = "4fdf2b50ac0060bd1ceb7203b58fef21805d9033" }
+  use { "ThePrimeagen/refactoring.nvim", commit = "c9ca8e3bbf7218101f16e6a03b15bf72b99b2cae", requires = {
+    { "nvim-lua/plenary.nvim" },
+    { "nvim-treesitter/nvim-treesitter" }
+  } }
+
 
   -- Colorschemes
-  use { 'Everblush/everblush.nvim', as = 'everblush', commit="d6746505ec81930c93f71da30d72f5ba5f55ef7c" }
-  use {'decaycs/decay.nvim', as = 'decay', commit="7ce218fdc23ac6447c6408b99c2b9ddb9a5ce649"}
+  use { 'Everblush/everblush.nvim', as = 'everblush', commit = "d6746505ec81930c93f71da30d72f5ba5f55ef7c" }
+  use { 'decaycs/decay.nvim', as = 'decay', commit = "7ce218fdc23ac6447c6408b99c2b9ddb9a5ce649" }
   use { "folke/tokyonight.nvim", commit = "8223c970677e4d88c9b6b6d81bda23daf11062bb" }
   use { "lunarvim/darkplus.nvim", branch = "neovim-0.7" }
   use { "lunarvim/onedarker.nvim" }
+  use { "catppuccin/nvim", as = "catppuccin" }
 
   -- cmp plugins
   use { "hrsh7th/nvim-cmp", commit = "df6734aa018d6feb4d76ba6bda94b1aeac2b378a" } -- The completion plugin
@@ -101,18 +109,12 @@ return packer.startup(function(use)
   use { "neovim/nvim-lspconfig", commit = "148c99bd09b44cf3605151a06869f6b4d4c24455" } -- enable LSP
   use { "williamboman/nvim-lsp-installer", commit = "e9f13d7acaa60aff91c58b923002228668c8c9e6" } -- simple to use language server installer
   use { "jose-elias-alvarez/null-ls.nvim", commit = "ff40739e5be6581899b43385997e39eecdbf9465" } -- for formatters and linters
-  use { "RRethy/vim-illuminate", commit = "c82e6d04f27a41d7fdcad9be0bce5bb59fcb78e5" }
+  use { "RRethy/vim-illuminate", commit = "59f69f90fbce5cf37741fb8e4aa040e78a0b3516" }
 
   -- Telescope
   use { "nvim-telescope/telescope.nvim", commit = "d96eaa914aab6cfc4adccb34af421bdd496468b0" }
-  use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
-  use {
-    "ur4ltz/surround.nvim",
-    config = function()
-      require "surround".setup { mappings_style = "surround" }
-    end,
-    commit = "633068182cf894480341b992445f0f0d2883721d"
-  }
+  use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install",
+    setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
   use { "elianiva/telescope-npm.nvim", commit = "60eee38b34f577104475a592dd3716a7afa2aef1" }
   use { 'ibhagwan/fzf-lua',
     requires = { 'kyazdani42/nvim-web-devicons' },

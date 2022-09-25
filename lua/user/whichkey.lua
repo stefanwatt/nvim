@@ -91,8 +91,6 @@ local m_opts = {
 local m_mappings = {
 }
 
-vim.api.nvim_set_keymap('', 'f', "", {})
-vim.api.nvim_set_keymap('', 'F', "", {})
 local mappings = {
   -- ["1"] = "which_key_ignore",
   a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Action" },
@@ -227,7 +225,13 @@ local vopts = {
 }
 local vmappings = {
   -- ["/"] = { '<ESC><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>', "Comment" },
-  -- s = { "<esc><cmd>'<,'>SnipRun<cr>", "Run range" },
+  r = {
+    name = "refactoring",
+    e = { "<Esc><Cmd>lua require('refactoring').refactor('Extract Function')<cr>", "Extract Function" },
+    f = { "<Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<cr>", "Extract Function To File" },
+    v = { "<Esc><Cmd>lua require('refactoring').refactor('Extract Variable')<cr>", "Extract Variable" },
+    i = { "<Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<cr>", "Inline Variable" },
+  },
 }
 
 whichkey.setup(setup)

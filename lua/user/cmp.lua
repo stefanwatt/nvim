@@ -50,6 +50,18 @@ cmp.setup({
 		end,
 	},
 
+ completion = {
+    get_trigger_characters = function(trigger_characters)
+      local new_trigger_characters = {}
+      for _, char in ipairs(trigger_characters) do
+        if char ~= '>' then
+          table.insert(new_trigger_characters, char)
+        end
+      end
+      return new_trigger_characters
+    end
+  },
+
 	mapping = cmp.mapping.preset.insert({
 		["<C-k>"] = cmp.mapping.select_prev_item(),
 		["<C-j>"] = cmp.mapping.select_next_item(),
@@ -62,7 +74,7 @@ cmp.setup({
 		}),
 		-- Accept currently selected item. If none selected, `select` first item.
 		-- Set `select` to `false` to only confirm explicitly selected items.
-		["<CR>"] = cmp.mapping.confirm({ select = false }),
+		["<CR>"] = cmp.mapping.confirm({ select = true }),
 		["<Tab>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_next_item()

@@ -80,16 +80,23 @@ M.on_attach = function(client, bufnr)
   end
 
   lsp_keymaps(bufnr)
-  local status_ok, illuminate = pcall(require, "illuminate")
-  if not status_ok then
-    print "test"
-    return
+  if client.name == "svelte" then
+      vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        group = augroup,
+        buffer = bufnr,
+        callback = function()
+          -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
+          vim.lsp.buf.formatting_sync()
+        end,
+      })
+  end
+  if client.name == "denols" then
+    require("null-ls").disable({"prettier"})
   end
   if client.name == "tsserver" then
     client.resolved_capabilities.document_formatting = false
   end
-  illuminate.on_attach(client)
-
   if client.name == "jdt.ls" then
     vim.lsp.codelens.refresh()
     require("jdtls").setup_dap { hotcodereplace = "auto" }
@@ -110,7 +117,6 @@ M.on_attach = function(client, bufnr)
   if not status_ok then
     return
   end
-  illuminate.on_attach(client)
 end
 
 return M

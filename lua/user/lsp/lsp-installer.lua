@@ -1,3 +1,4 @@
+local util = require 'vim.lsp.util'
 local status_ok, lsp_installer = pcall(require, "nvim-lsp-installer")
 if not status_ok then
   return
@@ -7,6 +8,7 @@ local servers = {
   "emmet_ls",
   "angularls",
   "svelte",
+  "denols",
   "sumneko_lua",
   "cssls",
   "html",
