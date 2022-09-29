@@ -83,7 +83,7 @@ return packer.startup(function(use)
     { "nvim-lua/plenary.nvim" },
     { "nvim-treesitter/nvim-treesitter" }
   } }
-
+  use { 'anuvyklack/hydra.nvim', commit = "6ef743f693fee84cf9f50faff21effa5c1704dd1" }
 
   -- Colorschemes
   use { 'Everblush/everblush.nvim', as = 'everblush', commit = "d6746505ec81930c93f71da30d72f5ba5f55ef7c" }
@@ -91,7 +91,7 @@ return packer.startup(function(use)
   use { "folke/tokyonight.nvim", commit = "8223c970677e4d88c9b6b6d81bda23daf11062bb" }
   use { "lunarvim/darkplus.nvim", branch = "neovim-0.7" }
   use { "lunarvim/onedarker.nvim" }
-  use { "catppuccin/nvim", as = "catppuccin" }
+  use { "catppuccin/nvim", as = "catppuccin", commit = "3ef4abaf77c4e77edac90944532b05b061f9edf6" }
 
   -- cmp plugins
   use { "hrsh7th/nvim-cmp", commit = "df6734aa018d6feb4d76ba6bda94b1aeac2b378a" } -- The completion plugin
