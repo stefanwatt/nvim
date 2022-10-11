@@ -98,7 +98,7 @@ local mappings = {
   e = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
   v = { "<cmd>vsplit<cr>", "vsplit" },
   h = { "<cmd>nohlsearch<CR>", "no highlights" },
-  ["/"] = { '<cmd>lua require("Comment.api").toggle_current_linewise()<CR>', "Comment" },
+  ["/"] = { "Comment" },
   c = { "<cmd>Bdelete!<CR>", "Close Buffer" },
   p = {
     name = "Packer",
@@ -213,6 +213,15 @@ local mappings = {
     t = { '<cmd>lua require("user.functions").toggle_diagnostics()<cr>', "Toggle Diagnostics" },
     u = { "<cmd>LuaSnipUnlinkCurrent<cr>", "Unlink Snippet" },
   },
+  P = {
+    name = "Project",
+    r = { "<cmd>IdeRecentProjects<cr>", "Recent"},
+    w = { "<cmd>IdeProjectWrite<cr>", "Save"},
+    s = { "<cmd>IdeProjectSettings<cr>", "Settings"},
+    d = { "<cmd>IdeProjectDebug<cr>", "Debug"},
+    l = { "<cmd>IdeProjectRun<cr>", "Launch"},
+    c = { "<cmd>IdeProjectConfigure<cr>", "Config"},
+  }
 }
 
 local vopts = {
@@ -224,7 +233,7 @@ local vopts = {
   nowait = true, -- use `nowait` when creating keymaps
 }
 local vmappings = {
-  -- ["/"] = { '<ESC><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>', "Comment" },
+  ["/"] = { "Comment" },
   r = {
     name = "refactoring",
     e = { "<Esc><Cmd>lua require('refactoring').refactor('Extract Function')<cr>", "Extract Function" },

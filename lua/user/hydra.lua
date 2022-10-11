@@ -22,15 +22,3 @@ local diagnostics_hydra = Hydra({
 vim.api.nvim_create_user_command("HydraActivateDiagnostics", function()
 	diagnostics_hydra:activate()
 end, {})
-
-Hydra({
-  name = 'Side scroll',
-  mode = 'n',
-  body = '<leader>z',
-  heads = {
-    { 'h', '5zh' },
-    { 'l', '5zl', { desc = '←/→' } },
-    { 'H', 'zH' },
-    { 'L', 'zL', { desc = 'half screen ←/→' } },
-  }
-})

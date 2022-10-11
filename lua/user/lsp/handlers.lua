@@ -62,7 +62,7 @@ local function lsp_keymaps(bufnr)
   keymap(bufnr, "n", "gI", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
   keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
   keymap(bufnr, "n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
-  keymap(bufnr, "n", "<leader>lf", "<cmd>lua vim.lsp.buf.formatting()<cr>", opts)
+  keymap(bufnr, "n", "<leader>lf", "<cmd>lua vim.lsp.buf.format({ async = true })<cr>", opts)
   keymap(bufnr, "n", "<leader>li", "<cmd>LspInfo<cr>", opts)
   keymap(bufnr, "n", "<leader>lI", "<cmd>LspInstallInfo<cr>", opts)
   keymap(bufnr, "n", "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
@@ -86,8 +86,7 @@ M.on_attach = function(client, bufnr)
         group = augroup,
         buffer = bufnr,
         callback = function()
-          -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
-          vim.lsp.buf.formatting_sync()
+          vim.lsp.buf.format({ bufnr = bufnr, async = true })
         end,
       })
   end
@@ -103,10 +102,6 @@ M.on_attach = function(client, bufnr)
     require("jdtls.dap").setup_dap_main_class_configs()
     client.resolved_capabilities.document_formatting = false
     client.resolved_capabilities.textDocument.completion.completionItem.snippetSupport = false
-  end
-
-  if client.server_capabilities.colorProvider then
-    require("document-color").buf_attach(bufnr, { mode = "background" })
   end
 
   M.capabilities = vim.lsp.protocol.make_client_capabilities()

@@ -38,6 +38,14 @@ for _, server in pairs(servers) do
     capabilities = require("user.lsp.handlers").capabilities,
   }
 
+  if server == "denols" then
+    local deno_opts = {root_dir = lspconfig.util.root_pattern("deno.json","deno.jsonc")}
+    opts = vim.tbl_deep_extend("force", deno_opts, opts)
+  end
+  -- if server == "tsserver" then
+  --   local deno_opts = {root_dir = lspconfig.util.root_pattern("tsserver.json")}
+  --   opts = vim.tbl_deep_extend("force", deno_opts, opts)
+  -- end
   if server == "sumneko_lua" then
     local sumneko_opts = require "user.lsp.settings.sumneko_lua"
     opts = vim.tbl_deep_extend("force", sumneko_opts, opts)
