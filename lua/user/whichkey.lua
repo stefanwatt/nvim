@@ -98,7 +98,7 @@ local mappings = {
   e = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
   v = { "<cmd>vsplit<cr>", "vsplit" },
   h = { "<cmd>nohlsearch<CR>", "no highlights" },
-  ["/"] = { "Comment" },
+  ["/"] = {"<cmd>CommentToggle<cr>" ,"Comment" },
   c = { "<cmd>Bdelete!<CR>", "Close Buffer" },
   p = {
     name = "Packer",
@@ -204,7 +204,7 @@ local mappings = {
     o = { "<cmd>SymbolsOutline<cr>", "Outline" },
     q = { "<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>", "Quickfix" },
     r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
-    R = { "<cmd>TroubleToggle lsp_references<cr>", "References" },
+    R = { "<cmd>lua vim.lsp.buf.references()<cr>", "References" },
     s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
     S = {
       "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
@@ -233,7 +233,7 @@ local vopts = {
   nowait = true, -- use `nowait` when creating keymaps
 }
 local vmappings = {
-  ["/"] = { "Comment" },
+  ["/"] = { "<Esc><cmd>'<,'>CommentToggle<cr>","Comment" },
   r = {
     name = "refactoring",
     e = { "<Esc><Cmd>lua require('refactoring').refactor('Extract Function')<cr>", "Extract Function" },

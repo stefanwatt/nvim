@@ -39,7 +39,7 @@ vim.opt.shortmess:append "c"
 vim.opt.whichwrap:append("<,>,[,],h,l")
 vim.opt.iskeyword:append("-")
 vim.o.ls = 0
-vim.o.ch = 0
+-- vim.o.ch = 0
 vim.cmd([[
   if exists("g:neovide")
     set guifont=VictorMono\ Nerd\ Font:h12
@@ -51,5 +51,6 @@ vim.cmd([[
     let g:neovide_remember_window_size = v:false
     let g:neovide_cursor_vfx_mode = "pixiedust"
     let g:neovide_confirm_quit=v:false
+    let g:neovide_cursor_vfx_particle_density = 200.0
   endif
 ]])
