@@ -81,7 +81,9 @@ return packer.startup(function(use)
       "rcarriga/nvim-notify",
       "hrsh7th/nvim-cmp",
     }
-  }) -- Colorschemes
+  })
+  use {"stefanwatt/auto-save.nvim"}
+  -- Colorschemes
   use { "Everblush/everblush.nvim", commit = "8341ec1d72018973ca09862e07249195fa1039d3" }
   use { "decaycs/decay.nvim", as = "decay", commit = "dd6fcc3915892dcf723032dd570a414f342c7f6a" }
   use { "folke/tokyonight.nvim", commit = "4092905fc570a721128af73f6bf78e5d47f5edce" }

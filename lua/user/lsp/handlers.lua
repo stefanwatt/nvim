@@ -94,14 +94,14 @@ M.on_attach = function(client, bufnr)
     require("null-ls").disable({"prettier"})
   end
   if client.name == "tsserver" then
-    client.resolved_capabilities.document_formatting = false
+    client.server_capabilities.documentFormattingProvider = false
   end
   if client.name == "jdt.ls" then
     vim.lsp.codelens.refresh()
     require("jdtls").setup_dap { hotcodereplace = "auto" }
     require("jdtls.dap").setup_dap_main_class_configs()
-    client.resolved_capabilities.document_formatting = false
-    client.resolved_capabilities.textDocument.completion.completionItem.snippetSupport = false
+    client.server_capabilities.documentFormattingProvider = false
+    -- client.resolved_capabilities.textDocument.completion.completionItem.snippetSupport = false
   end
 
   M.capabilities = vim.lsp.protocol.make_client_capabilities()
