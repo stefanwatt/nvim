@@ -84,6 +84,7 @@ return packer.startup(function(use)
   })
   use {"stefanwatt/auto-save.nvim"}
   use {"stefanwatt/lsp-lines.nvim"}
+  use {"monaqa/dial.nvim"}
 
   -- Colorschemes
   use { "Everblush/everblush.nvim", commit = "8341ec1d72018973ca09862e07249195fa1039d3" }
