@@ -83,6 +83,8 @@ return packer.startup(function(use)
     }
   })
   use {"stefanwatt/auto-save.nvim"}
+  use {"stefanwatt/lsp-lines.nvim"}
+
   -- Colorschemes
   use { "Everblush/everblush.nvim", commit = "8341ec1d72018973ca09862e07249195fa1039d3" }
   use { "decaycs/decay.nvim", as = "decay", commit = "dd6fcc3915892dcf723032dd570a414f342c7f6a" }

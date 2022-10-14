@@ -39,11 +39,11 @@ vim.opt.shortmess:append "c"
 vim.opt.whichwrap:append("<,>,[,],h,l")
 vim.opt.iskeyword:append("-")
 vim.o.ls = 0
--- vim.o.ch = 0
+vim.o.ch = 0
 vim.cmd([[
   if exists("g:neovide")
     set guifont=VictorMono\ Nerd\ Font:h12
-    let g:neovide_refresh_rate=144
+    let g:neovide_refresh_rate=60
     let g:neovide_refresh_rate_idle=5
     let g:neovide_floating_blur_amount_x = 4.0
     let g:neovide_floating_blur_amount_y = 4.0
