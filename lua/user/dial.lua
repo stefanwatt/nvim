@@ -29,5 +29,5 @@ require("dial.config").augends:register_group{
     },
   }
 }
-vim.api.nvim_set_keymap("n", "<Leader>i", require("dial.map").inc_normal("mygroup"), {noremap = true})
-vim.api.nvim_set_keymap("n", "<Leader>I", require("dial.map").dec_normal("mygroup"), {noremap = true})
+vim.api.nvim_set_keymap("n", "<Leader>s", require("dial.map").inc_normal("mygroup"), {noremap = true})
+vim.api.nvim_set_keymap("n", "<Leader>S", require("dial.map").dec_normal("mygroup"), {noremap = true})
