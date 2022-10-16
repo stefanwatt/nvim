@@ -210,7 +210,15 @@ local mappings = {
       "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
       "Workspace Symbols",
     },
-    t = { '<cmd>lua require("user.functions").toggle_diagnostics()<cr>', "Toggle Diagnostics" },
+    t = {
+      name = "Typescript",
+      i = {"<cmd>TypescriptAddMissingImports<cr>", "Add missing imports"},
+      o = {"<cmd>TypescriptOrganizeImports<cr>", "Organize imports"},
+      u = {"<cmd>TypescriptRemoveUnused<cr>", "Remove unused variables"},
+      f = {"<cmd>TypescriptFixAll<cr>", "Fix all"},
+      r = {"<cmd>TypescriptRenameFile<cr>", "Rename file"},
+      d = {"<cmd>TypescriptGoToSourceDefinition<cr>", "Go to source definition"},
+    },
     u = { "<cmd>LuaSnipUnlinkCurrent<cr>", "Unlink Snippet" },
   },
   P = {

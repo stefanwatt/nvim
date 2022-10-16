@@ -69,3 +69,6 @@ keymap("n", "S", ":HopChar2<CR>", opts)
 keymap("n", "l", ":HopLine<CR>", opts)
 keymap("n", "f", ":HopChar2CurrentLine<CR>", opts)
 keymap("n", "F", ":HopChar1CurrentLine<CR>", opts)
+
+keymap("v", "f", "<cmd>HopChar2CurrentLine<CR>", opts)
+keymap("v", "s", "<cmd>HopWord<CR>", opts)
