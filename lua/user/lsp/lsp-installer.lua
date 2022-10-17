@@ -18,6 +18,7 @@ local servers = {
   "yamlls",
   "jdtls",
   "tailwindcss",
+  "tsserver",
   "rust_analyzer",
   "taplo"
 }

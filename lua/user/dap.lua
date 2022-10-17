@@ -121,6 +121,7 @@ dap.adapters.node2 = {
   command = 'node',
   args = { os.getenv('HOME') .. '/vscode-node-debug2/out/src/nodeDebug.js' },
 }
+
 dap.configurations.javascript = {
   {
     name = 'Launch',
@@ -139,4 +140,18 @@ dap.configurations.javascript = {
     request = 'attach',
     processId = require 'dap.utils'.pick_process,
   },
+}
+
+dap.configurations.typescript = {
+    {
+        name = "ts-node (Node2 with ts-node)",
+        type = "node2",
+        request = "launch",
+        cwd = vim.fn.getcwd(),
+        runtimeArgs = { "-r", "ts-node/register" },
+        runtimeExecutable = "node",
+        args = {"--inspect", "${file}"},
+        sourceMaps = true,
+        skipFiles = { "<node_internals>/**", "node_modules/**" },
+    }
 }

@@ -44,7 +44,6 @@ return packer.startup(function(use)
   use { "wbthomason/packer.nvim", commit = "6afb67460283f0e990d35d229fd38fdc04063e0a" }
   use { "nvim-lua/plenary.nvim", commit = "4b7e52044bbb84242158d977a50c4cbcd85070c7" }
   use { "windwp/nvim-autopairs", commit = "4fc96c8f3df89b6d23e5092d31c866c53a346347" }
-  -- use { "numToStr/Comment.nvim", commit = "d9cfae1059b62f7eacc09dba181efe4894e3b086" }
   use { "terrortylor/nvim-comment", commit = "e9ac16ab056695cad6461173693069ec070d2b23"}
   use { "JoosepAlviste/nvim-ts-context-commentstring", commit = "4d3a68c41a53add8804f471fcc49bb398fe8de08" }
   use { "kyazdani42/nvim-web-devicons", commit = "563f3635c2d8a7be7933b9e547f7c178ba0d4352" }
@@ -85,7 +84,6 @@ return packer.startup(function(use)
   use {"stefanwatt/auto-save.nvim"}
   use {"stefanwatt/lsp-lines.nvim"}
   use {"monaqa/dial.nvim", commit = "6bf54a83cd40448f1ba5171358f0d6f48bd970fd"}
-  use {"ThePrimeagen/vim-be-good"}
   use {"jose-elias-alvarez/typescript.nvim", commit="785fed9919723961583d534169134cee90bd479c"}
 
   -- Colorschemes
