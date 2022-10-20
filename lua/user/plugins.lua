@@ -44,7 +44,7 @@ return packer.startup(function(use)
   use { "wbthomason/packer.nvim", commit = "6afb67460283f0e990d35d229fd38fdc04063e0a" }
   use { "nvim-lua/plenary.nvim", commit = "4b7e52044bbb84242158d977a50c4cbcd85070c7" }
   use { "windwp/nvim-autopairs", commit = "4fc96c8f3df89b6d23e5092d31c866c53a346347" }
-  use { "terrortylor/nvim-comment", commit = "e9ac16ab056695cad6461173693069ec070d2b23"}
+  use { "terrortylor/nvim-comment", commit = "e9ac16ab056695cad6461173693069ec070d2b23" }
   use { "JoosepAlviste/nvim-ts-context-commentstring", commit = "4d3a68c41a53add8804f471fcc49bb398fe8de08" }
   use { "kyazdani42/nvim-web-devicons", commit = "563f3635c2d8a7be7933b9e547f7c178ba0d4352" }
   use { "kyazdani42/nvim-tree.lua", commit = "7282f7de8aedf861fe0162a559fc2b214383c51c" }
@@ -81,10 +81,10 @@ return packer.startup(function(use)
       "hrsh7th/nvim-cmp",
     }
   })
-  use {"stefanwatt/auto-save.nvim"}
-  use {"stefanwatt/lsp-lines.nvim"}
-  use {"monaqa/dial.nvim", commit = "6bf54a83cd40448f1ba5171358f0d6f48bd970fd"}
-  use {"jose-elias-alvarez/typescript.nvim", commit="785fed9919723961583d534169134cee90bd479c"}
+  use { "stefanwatt/auto-save.nvim" }
+  use { "stefanwatt/lsp-lines.nvim" }
+  use { "monaqa/dial.nvim", commit = "6bf54a83cd40448f1ba5171358f0d6f48bd970fd" }
+  use { "jose-elias-alvarez/typescript.nvim", commit = "785fed9919723961583d534169134cee90bd479c" }
 
   -- Colorschemes
   use { "Everblush/everblush.nvim", commit = "8341ec1d72018973ca09862e07249195fa1039d3" }
@@ -136,6 +136,8 @@ return packer.startup(function(use)
   use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" },
     commit = "c8ce83a66deb0ca6f5af5a9f9d5fcc05a6d0f66b" }
   use { "ravenxrz/DAPInstall.nvim", commit = "8798b4c36d33723e7bba6ed6e2c202f84bb300de" }
+  use { "mxsdev/nvim-dap-vscode-js", commit = "079d0f3713c4649603290dc2ecc765e23e76a9fc",
+    requires = { "mfussenegger/nvim-dap" } }
 
   -- Java
   use { "mfussenegger/nvim-jdtls", commit = "75d27daa061458dd5735b5eb5bbc48d3baad1186" } -- END PLUGINS

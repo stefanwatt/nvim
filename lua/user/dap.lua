@@ -91,7 +91,8 @@ dapui.setup({
   }
 })
 
-vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DiagnosticSignError", linehl = "", numhl = "" })
+vim.fn.sign_define("DapBreakpoint", { text = "⬤", texthl = "DiagnosticSignError", linehl = "", numhl = "" })
+vim.fn.sign_define('DapStopped', { text='⏭', texthl='DapStopped', linehl='DapStopped', numhl= 'DapStopped' })
 
 dap.listeners.after.event_initialized["dapui_config"] = function()
   dapui.open()
@@ -116,42 +117,28 @@ dap.configurations.java = {
   },
 }
 
-dap.adapters.node2 = {
-  type = 'executable',
-  command = 'node',
-  args = { os.getenv('HOME') .. '/vscode-node-debug2/out/src/nodeDebug.js' },
-}
+require("dap-vscode-js").setup({
+  node_path = os.getenv('HOME') .. '/.nvm/versions/node/v18.2.0/bin/node',
+  debugger_path = os.getenv('HOME') .. '/vscode-js-debug/',
+  adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' }, -- which adapters to register in nvim-dap
+})
 
-dap.configurations.javascript = {
-  {
-    name = 'Launch',
-    type = 'node2',
-    request = 'launch',
-    program = '${file}',
-    cwd = vim.fn.getcwd(),
+for _, language in ipairs({ "typescript", "javascript" }) do
+  dap.configurations[language] = {
+   {
+    type = "pwa-node",
+    request = "launch",
+    name = "Launch file",
+    program = "${file}",
+    cwd = "${workspaceFolder}",
     sourceMaps = true,
-    protocol = 'inspector',
-    console = 'integratedTerminal',
+    skipFiles = { "<node_internals>/**", "node_modules/**" },
   },
   {
-    -- For this to work you need to make sure the node process is started with the `--inspect` flag.
-    name = 'Attach to process',
-    type = 'node2',
-    request = 'attach',
-    processId = require 'dap.utils'.pick_process,
-  },
-}
-
-dap.configurations.typescript = {
-    {
-        name = "ts-node (Node2 with ts-node)",
-        type = "node2",
-        request = "launch",
-        cwd = vim.fn.getcwd(),
-        runtimeArgs = { "-r", "ts-node/register" },
-        runtimeExecutable = "node",
-        args = {"--inspect", "${file}"},
-        sourceMaps = true,
-        skipFiles = { "<node_internals>/**", "node_modules/**" },
-    }
-}
+    type = "pwa-node",
+    request = "attach",
+    name = "Attach",
+    processId = require'dap.utils'.pick_process,
+    cwd = "${workspaceFolder}",
+  }}
+end
