@@ -85,6 +85,7 @@ return packer.startup(function(use)
   use { "stefanwatt/lsp-lines.nvim" }
   use { "monaqa/dial.nvim", commit = "6bf54a83cd40448f1ba5171358f0d6f48bd970fd" }
   use { "jose-elias-alvarez/typescript.nvim", commit = "785fed9919723961583d534169134cee90bd479c" }
+  use { "elihunter173/dirbuf.nvim", commit = "ac7ad3c8e61630d15af1f6266441984f54f54fd2" }
 
   -- Colorschemes
   use { "Everblush/everblush.nvim", commit = "8341ec1d72018973ca09862e07249195fa1039d3" }
