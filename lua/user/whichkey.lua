@@ -102,6 +102,8 @@ local mappings = {
   c = { "<cmd>Bdelete!<CR>", "Close Buffer" },
   s= {"dial inc"},
   S= {"dial dec"},
+  o = { "<cmd>lua require('portal').jump_forward()<cr>", "Portal forward" },
+  i = { "<cmd>lua require('portal').jump_backward()<cr>", "Portal backward" },
   p = {
     name = "Packer",
     c = { "<cmd>PackerCompile<cr>", "Compile" },
@@ -110,16 +112,6 @@ local mappings = {
     S = { "<cmd>PackerStatus<cr>", "Status" },
     u = { "<cmd>PackerUpdate<cr>", "Update" },
   },
-
-  o = {
-    name = "Options",
-    w = { '<cmd>lua require("user.functions").toggle_option("wrap")<cr>', "Wrap" },
-    r = { '<cmd>lua require("user.functions").toggle_option("relativenumber")<cr>', "Relative" },
-    l = { '<cmd>lua require("user.functions").toggle_option("cursorline")<cr>', "Cursorline" },
-    s = { '<cmd>lua require("user.functions").toggle_option("spell")<cr>', "Spell" },
-    t = { '<cmd>lua require("user.functions").toggle_tabline()<cr>', "Tabline" },
-  },
-
   d = {
     name = "Debug",
     b = { "<cmd>lua require'dap'.toggle_breakpoint()<cr>", "Breakpoint" },

@@ -72,3 +72,11 @@ keymap("n", "F", ":HopChar1CurrentLine<CR>", opts)
 
 keymap("v", "f", "<cmd>HopChar2CurrentLine<CR>", opts)
 keymap("v", "s", "<cmd>HopWord<CR>", opts)
+
+keymap({"n","x"}, "p", "<Plug>(YankyPutAfter)",opts)
+keymap({"n","x"}, "P", "<Plug>(YankyPutBefore)",opts)
+keymap({"n","x"}, "gp", "<Plug>(YankyGPutAfter)",opts)
+keymap({"n","x"}, "gP", "<Plug>(YankyGPutBefore)",opts)
+keymap("n", "<c-n>", "<Plug>(YankyCycleForward)",opts)
+keymap("n", "<c-p>", "<Plug>(YankyCycleBackward)",opts)
+
