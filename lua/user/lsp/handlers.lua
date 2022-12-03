@@ -101,7 +101,10 @@ M.on_attach = function(client, bufnr)
     require("jdtls").setup_dap { hotcodereplace = "auto" }
     require("jdtls.dap").setup_dap_main_class_configs()
     client.server_capabilities.documentFormattingProvider = false
-    -- client.resolved_capabilities.textDocument.completion.completionItem.snippetSupport = false
+  end
+  if client.name == "tailwindcss" then
+    require('telescope').load_extension('tailiscope')
+    vim.keymap.set("n", "<leader>fT", "<cmd>Telescope tailiscope<cr>")
   end
 
   M.capabilities = vim.lsp.protocol.make_client_capabilities()

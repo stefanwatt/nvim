@@ -47,3 +47,5 @@ tasks.setup({
 		}),
 	},
 })
+
+require('telescope').load_extension('tailiscope')

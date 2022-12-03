@@ -120,7 +120,7 @@ local mappings = {
     o = { "<cmd>lua require'dap'.step_over()<cr>", "Over" },
     O = { "<cmd>lua require'dap'.step_out()<cr>", "Out" },
     r = { "<cmd>lua require'dap'.repl.toggle()<cr>", "Repl" },
-    l = { "<cmd>lua require'dap'.run_last()<cr>", "Last" },
+    l = { "<cmd>lua require'osv'.run_this()<cr>", "Lua debug" },
     u = { "<cmd>lua require'dapui'.toggle()<cr>", "UI" },
     x = { "<cmd>lua require'dap'.terminate()<cr>", "Exit" },
   },

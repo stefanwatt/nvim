@@ -19,6 +19,8 @@ vim.g.mapleader = " "
 keymap("n", "<leader>q", ":q!<CR>", opts)
 keymap("n", "<leader>w", ":w!<CR>", opts)
 keymap("n", "<leader>c", "<cmd>Bdelete<CR>", opts)
+keymap("n", "<C-d>", "<C-d>zz")
+keymap("n", "<C-u>", "<C-u>zz")
 -- Better window navigation
 keymap("n", "<C-Up>", "<C-w>k", opts)
 keymap("n", "<C-Down>", "<C-w>j", opts)
@@ -43,7 +45,7 @@ keymap("v", "p", '"_dP', opts)
 
 -- Insert --
 -- Press jk fast to enter
-keymap("i", "ne", "<ESC>", opts)
+-- keymap("i", "ne", "<ESC>", opts)
 
 -- Visual --
 -- Stay in indent mode
@@ -80,3 +82,4 @@ keymap({"n","x"}, "gP", "<Plug>(YankyGPutBefore)",opts)
 keymap("n", "<c-n>", "<Plug>(YankyCycleForward)",opts)
 keymap("n", "<c-p>", "<Plug>(YankyCycleBackward)",opts)
 
+keymap("n", "<leader><leader>x", "<cmd>so %<cr>",opts)

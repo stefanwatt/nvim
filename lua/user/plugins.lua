@@ -58,7 +58,6 @@ return packer.startup(function(use)
   use { "folke/which-key.nvim", commit = "6885b669523ff4238de99a7c653d47b081b5506d" }
   use { "phaazon/hop.nvim", branch = "v2", commit = "2a1b686aad85a3c241f8cd8fd42eb09c7de5ed79" }
   use { "kylechui/nvim-surround", commit = "17191679202978b1de8c1bd5d975400897b1b92d" }
-  use { "stefanwatt/nvim-typing-test", commit = "727c239e5a16127175b252b92d85e28c7813ed9a" }
   use { "GustavoKatel/tasks.nvim", commit = "1bb8b9725cc7bb58e646d9a8da48a57010cafcad" }
   use { "williamboman/mason.nvim", commit = "6f706712ec0363421e0988cd48f512b6a6cf7d6e" }
   use { "VonHeikemen/searchbox.nvim", commit = "4b8d3bb68283d27434d81b92424f1398fa9d739a",
@@ -86,9 +85,8 @@ return packer.startup(function(use)
   use { "monaqa/dial.nvim", commit = "6bf54a83cd40448f1ba5171358f0d6f48bd970fd" }
   use { "jose-elias-alvarez/typescript.nvim", commit = "785fed9919723961583d534169134cee90bd479c" }
   use { "elihunter173/dirbuf.nvim", commit = "ac7ad3c8e61630d15af1f6266441984f54f54fd2" }
-  use { "nvim-zh/colorful-winsep.nvim", commit="23b0b419980206fa1d45034dfd88d60c9344250a" }
-  use { "cbochs/portal.nvim", commit="8db183a4cb6641aa5745c0545ff29df896727788" }
   use { "gbprod/yanky.nvim", commit="39bef9fe84af59499cdb88d8e8fb69f3175e1265" }
+  use {"danielvolchek/tailiscope.nvim"}
 
   -- Colorschemes
   use { "Everblush/everblush.nvim", commit = "8341ec1d72018973ca09862e07249195fa1039d3" }
@@ -97,6 +95,8 @@ return packer.startup(function(use)
   use { "lunarvim/darkplus.nvim", branch = "neovim-0.7", commit = "13ef9daad28d3cf6c5e793acfc16ddbf456e1c83" }
   use { "lunarvim/onedarker.nvim", commit = "4eaa5e8760832d23a84f8ad4e0ff012eacd2c01f" }
   use { "catppuccin/nvim", as = "catppuccin", commit = "167ecd3ee31d254390862fb90ad91492a469366e" }
+  use { "sam4llis/nvim-tundra", commit = "dfe152f2a8bac247a6b05b08c7e3e8124d165115" }
+
 
   -- cmp plugins
   use { "hrsh7th/nvim-cmp", commit = "2427d06b6508489547cd30b6e86b1c75df363411" }
@@ -130,7 +130,8 @@ return packer.startup(function(use)
     commit = "9634c3508c6565284065ec011476204ce13f354a" }
 
   -- Treesitter
-  use { "nvim-treesitter/nvim-treesitter", commit = "aebc6cf6bd4675ac86629f516d612ad5288f7868" }
+  use { "nvim-treesitter/nvim-treesitter",  commit = "aebc6cf6bd4675ac86629f516d612ad5288f7868"}
+  use { "nvim-treesitter/playground", commit= "1290fdf6f2f0189eb3b4ce8073d3fda6a3658376", requires = { "nvim-treesitter/nvim-treesitter" }}
   use { "p00f/nvim-ts-rainbow", commit = "fad8badcd9baa4deb2cf2a5376ab412a1ba41797" }
   use { "windwp/nvim-ts-autotag", commit = "044a05c4c51051326900a53ba98fddacd15fea22" }
 
@@ -142,6 +143,7 @@ return packer.startup(function(use)
   use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" },
     commit = "c8ce83a66deb0ca6f5af5a9f9d5fcc05a6d0f66b" }
   use { "ravenxrz/DAPInstall.nvim", commit = "8798b4c36d33723e7bba6ed6e2c202f84bb300de" }
+  use { "jbyuki/one-small-step-for-vimkind", commit = "ccd671fedaca36e474aadfdd70b9ca4189fcd86e" }
   use { "mxsdev/nvim-dap-vscode-js", commit = "079d0f3713c4649603290dc2ecc765e23e76a9fc",
     requires = { "mfussenegger/nvim-dap" } }
 
