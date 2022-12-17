@@ -85,8 +85,66 @@ return packer.startup(function(use)
   use { "monaqa/dial.nvim", commit = "6bf54a83cd40448f1ba5171358f0d6f48bd970fd" }
   use { "jose-elias-alvarez/typescript.nvim", commit = "785fed9919723961583d534169134cee90bd479c" }
   use { "elihunter173/dirbuf.nvim", commit = "ac7ad3c8e61630d15af1f6266441984f54f54fd2" }
-  use { "gbprod/yanky.nvim", commit="39bef9fe84af59499cdb88d8e8fb69f3175e1265" }
-  use {"danielvolchek/tailiscope.nvim"}
+  use { "gbprod/yanky.nvim", commit = "39bef9fe84af59499cdb88d8e8fb69f3175e1265" }
+  use { "danielvolchek/tailiscope.nvim" }
+
+  use({
+    "jackMort/ChatGPT.nvim",
+    config = function()
+      require("chatgpt").setup({
+        welcome_message = "", -- set to "" if you don't like the fancy robot
+        loading_text = "loading",
+        question_sign = "", -- you can use emoji if you want e.g. 🙂
+        answer_sign = "ﮧ", -- 🤖
+        max_line_length = 120,
+        chat_layout = {
+          relative = "editor",
+          position = "50%",
+          size = {
+            height = "80%",
+            width = "80%",
+          },
+        },
+        chat_window = {
+          border = {
+            highlight = "FloatBorder",
+            style = "rounded",
+            text = {
+              top = " ChatGPT ",
+            },
+          },
+        },
+        chat_input = {
+          prompt = "  ",
+          border = {
+            highlight = "FloatBorder",
+            style = "rounded",
+            text = {
+              top_align = "center",
+              top = " Prompt ",
+            },
+          },
+          win_options = {
+            winhighlight = "Normal:Normal",
+          },
+        },
+        openai_params = {
+          model = "text-davinci-003",
+          frequency_penalty = 0,
+          presence_penalty = 0,
+          max_tokens = 300,
+          temperature = 0,
+          top_p = 1,
+          n = 1,
+        },
+      })
+    end,
+    requires = {
+      "MunifTanjim/nui.nvim",
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim"
+    }
+  })
 
   -- Colorschemes
   use { "Everblush/everblush.nvim", commit = "8341ec1d72018973ca09862e07249195fa1039d3" }
@@ -97,23 +155,29 @@ return packer.startup(function(use)
   use { "catppuccin/nvim", as = "catppuccin", commit = "167ecd3ee31d254390862fb90ad91492a469366e" }
   use { "sam4llis/nvim-tundra", commit = "dfe152f2a8bac247a6b05b08c7e3e8124d165115" }
 
+  -- lsp-zero
+  use {
+    'VonHeikemen/lsp-zero.nvim',
+    requires = {
+      -- LSP Support
+      {'neovim/nvim-lspconfig'},
+      {'williamboman/mason.nvim'},
+      {'williamboman/mason-lspconfig.nvim'},
 
-  -- cmp plugins
-  use { "hrsh7th/nvim-cmp", commit = "2427d06b6508489547cd30b6e86b1c75df363411" }
-  use { "hrsh7th/cmp-buffer", commit = "3022dbc9166796b644a841a02de8dd1cc1d311fa" }
-  use { "hrsh7th/cmp-path", commit = "447c87cdd6e6d6a1d2488b1d43108bfa217f56e1" }
-  use { "saadparwaiz1/cmp_luasnip", commit = "a9de941bcbda508d0a45d28ae366bb3f08db2e36" }
-  use { "hrsh7th/cmp-nvim-lsp", commit = "affe808a5c56b71630f17aa7c38e15c59fd648a8" }
-  use { "hrsh7th/cmp-nvim-lua", commit = "d276254e7198ab7d00f117e88e223b4bd8c02d21" }
+      -- Autocompletion
+      {'hrsh7th/nvim-cmp'},
+      {'hrsh7th/cmp-buffer'},
+      {'hrsh7th/cmp-path'},
+      {'saadparwaiz1/cmp_luasnip'},
+      {'hrsh7th/cmp-nvim-lsp'},
+      {'hrsh7th/cmp-nvim-lua'},
 
-  --
-  -- -- snippets
-  use { "L3MON4D3/LuaSnip", commit = "8f8d493e7836f2697df878ef9c128337cbf2bb84" }
-  use { "rafamadriz/friendly-snippets", commit = "2be79d8a9b03d4175ba6b3d14b082680de1b31b1" }
+      -- Snippets
+      {'L3MON4D3/LuaSnip'},
+      {'rafamadriz/friendly-snippets'},
+    }
+  }
 
-  -- LSP
-  use { "neovim/nvim-lspconfig", commit = "af43c300d4134db3550089cd4df6c257e3734689" }
-  use { "williamboman/nvim-lsp-installer", commit = "23820a878a5c2415bfd3b971d1fe3c79e4dd6763" }
   use { "jose-elias-alvarez/null-ls.nvim", commit = "c0c19f32b614b3921e17886c541c13a72748d450" }
   use { "RRethy/vim-illuminate", commit = "a2e8476af3f3e993bb0d6477438aad3096512e42" }
 
@@ -130,8 +194,9 @@ return packer.startup(function(use)
     commit = "9634c3508c6565284065ec011476204ce13f354a" }
 
   -- Treesitter
-  use { "nvim-treesitter/nvim-treesitter",  commit = "aebc6cf6bd4675ac86629f516d612ad5288f7868"}
-  use { "nvim-treesitter/playground", commit= "1290fdf6f2f0189eb3b4ce8073d3fda6a3658376", requires = { "nvim-treesitter/nvim-treesitter" }}
+  use { "nvim-treesitter/nvim-treesitter", commit = "aebc6cf6bd4675ac86629f516d612ad5288f7868" }
+  use { "nvim-treesitter/playground", commit = "1290fdf6f2f0189eb3b4ce8073d3fda6a3658376",
+    requires = { "nvim-treesitter/nvim-treesitter" } }
   use { "p00f/nvim-ts-rainbow", commit = "fad8badcd9baa4deb2cf2a5376ab412a1ba41797" }
   use { "windwp/nvim-ts-autotag", commit = "044a05c4c51051326900a53ba98fddacd15fea22" }
 

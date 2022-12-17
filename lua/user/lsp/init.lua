@@ -1,9 +1,6 @@
-local status_ok, _ = pcall(require, "lspconfig")
-if not status_ok then
-  return
-end
+local lsp = require('lsp-zero')
 
-require "user.lsp.lsp-installer"
-require("user.lsp.handlers").setup()
+lsp.preset('recommended')
+lsp.setup()
 require "user.lsp.null-ls"
 require "user.lsp.lsp-lines"
