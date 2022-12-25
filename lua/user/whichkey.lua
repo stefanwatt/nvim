@@ -93,7 +93,6 @@ local m_mappings = {
 
 local mappings = {
   -- ["1"] = "which_key_ignore",
-  a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Action" },
   D = { "<cmd>Alpha<cr>", "Dashboard" },
   e = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
   v = { "<cmd>vsplit<cr>", "vsplit" },
@@ -176,47 +175,23 @@ local mappings = {
 
   l = {
     name = "LSP",
-    a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
-    c = { "<cmd>lua require('user.lsp').server_capabilities()<cr>", "Get Capabilities" },
-    d = { "<cmd>HydraActivateDiagnostics<cr>", "Enter Diagnostics Mode (Hydra)" },
-    w = {
-      "<cmd>Telescope lsp_workspace_diagnostics<cr>",
-      "Workspace Diagnostics",
-    },
+    a = { "<cmd>Lspsaga code_action<CR>", "Code Action" },
+    d = { "<cmd>Lspsaga show_line_diagnostics<CR>", "Diagnostics" },
     f = { "<cmd>lua vim.lsp.buf.format({ async = true })<cr>", "Format" },
-    F = { "<cmd>LspToggleAutoFormat<cr>", "Toggle Autoformat" },
+    F = { "<cmd>Lspsaga lsp_finder<CR>", "Toggle Autoformat" },
     i = { "<cmd>LspInfo<cr>", "Info" },
     h = { "<cmd>IlluminationToggle<cr>", "Toggle Doc HL" },
     I = { "<cmd>Mason<cr>", "Installer Info" },
-    j = {
-      "<cmd>lua vim.diagnostic.goto_next({buffer=0})<CR>",
-      "Next Diagnostic",
-    },
-    k = {
-      "<cmd>lua vim.diagnostic.goto_prev({buffer=0})<cr>",
-      "Prev Diagnostic",
-    },
     v = { "<cmd>lua require('lsp_lines').toggle()<cr>", "Toggle Virtual Text" },
     l = { "<cmd>lua vim.diagnostic.config({ virtual_lines = { only_current_line = true } })<cr>", "Virtual Text current line" },
-    o = { "<cmd>SymbolsOutline<cr>", "Outline" },
-    q = { "<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>", "Quickfix" },
-    r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
+    o = { "<cmd>LSoutlineToggle<CR>"},
+    r = { "<cmd>Lspsaga rename<CR>", "Rename" },
     R = { "<cmd>lua vim.lsp.buf.references()<cr>", "References" },
     s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
     S = {
       "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
       "Workspace Symbols",
     },
-    t = {
-      name = "Typescript",
-      i = {"<cmd>TypescriptAddMissingImports<cr>", "Add missing imports"},
-      o = {"<cmd>TypescriptOrganizeImports<cr>", "Organize imports"},
-      u = {"<cmd>TypescriptRemoveUnused<cr>", "Remove unused variables"},
-      f = {"<cmd>TypescriptFixAll<cr>", "Fix all"},
-      r = {"<cmd>TypescriptRenameFile<cr>", "Rename file"},
-      d = {"<cmd>TypescriptGoToSourceDefinition<cr>", "Go to source definition"},
-    },
-    u = { "<cmd>LuaSnipUnlinkCurrent<cr>", "Unlink Snippet" },
   },
   P = {
     name = "Project",

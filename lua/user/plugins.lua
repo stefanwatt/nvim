@@ -64,9 +64,6 @@ return packer.startup(function(use)
     requires = { { "MunifTanjim/nui.nvim" } } }
   use { "kdheepak/lazygit.nvim", commit = "9c73fd69a4c1cb3b3fc35b741ac968e331642600" }
   use { "f-person/git-blame.nvim", commit = "08e75b7061f4a654ef62b0cac43a9015c87744a2" }
-  use { "EdenEast/nightfox.nvim", commit = "59c3dbcec362eff7794f1cb576d56fd8a3f2c8bb" }
-  use { "jlcrochet/vim-razor", commit = "4fdf2b50ac0060bd1ceb7203b58fef21805d9033" }
-  use { "anuvyklack/hydra.nvim", commit = "6ef743f693fee84cf9f50faff21effa5c1704dd1" }
   use { "noib3/nvim-cokeline", requires = "kyazdani42/nvim-web-devicons",
     config = function() require("cokeline").setup() end, commit = "501f93ec84af0d505d95d3827cad470b9c5e86dc" }
 
@@ -89,61 +86,8 @@ return packer.startup(function(use)
   use { "danielvolchek/tailiscope.nvim" }
 
   use({
-    "jackMort/ChatGPT.nvim",
-    config = function()
-      require("chatgpt").setup({
-        welcome_message = "", -- set to "" if you don't like the fancy robot
-        loading_text = "loading",
-        question_sign = "", -- you can use emoji if you want e.g. 🙂
-        answer_sign = "ﮧ", -- 🤖
-        max_line_length = 120,
-        chat_layout = {
-          relative = "editor",
-          position = "50%",
-          size = {
-            height = "80%",
-            width = "80%",
-          },
-        },
-        chat_window = {
-          border = {
-            highlight = "FloatBorder",
-            style = "rounded",
-            text = {
-              top = " ChatGPT ",
-            },
-          },
-        },
-        chat_input = {
-          prompt = "  ",
-          border = {
-            highlight = "FloatBorder",
-            style = "rounded",
-            text = {
-              top_align = "center",
-              top = " Prompt ",
-            },
-          },
-          win_options = {
-            winhighlight = "Normal:Normal",
-          },
-        },
-        openai_params = {
-          model = "text-davinci-003",
-          frequency_penalty = 0,
-          presence_penalty = 0,
-          max_tokens = 300,
-          temperature = 0,
-          top_p = 1,
-          n = 1,
-        },
-      })
-    end,
-    requires = {
-      "MunifTanjim/nui.nvim",
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim"
-    }
+      "glepnir/lspsaga.nvim",
+      branch = "main",
   })
 
   -- Colorschemes
@@ -198,7 +142,7 @@ return packer.startup(function(use)
   use { "nvim-treesitter/playground", commit = "1290fdf6f2f0189eb3b4ce8073d3fda6a3658376",
     requires = { "nvim-treesitter/nvim-treesitter" } }
   use { "p00f/nvim-ts-rainbow", commit = "fad8badcd9baa4deb2cf2a5376ab412a1ba41797" }
-  use { "windwp/nvim-ts-autotag", commit = "044a05c4c51051326900a53ba98fddacd15fea22" }
+  use { "windwp/nvim-ts-autotag", commit = "5bbdfdaa303c698f060035f37a91eaad8d2f8e27" }
 
   -- Git
   use { "lewis6991/gitsigns.nvim", commit = "f98c85e7c3d65a51f45863a34feb4849c82f240f" }
