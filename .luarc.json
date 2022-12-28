@@ -4,6 +4,7 @@
         "unused-local"
     ],
     "Lua.diagnostics.globals": [
-        "require"
+        "require",
+        "vim"
     ]
 }
