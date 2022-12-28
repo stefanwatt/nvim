@@ -1,7 +1,7 @@
 require("lazy").setup("user.plugins", {
   defaults = { lazy = true },
   dev = { patterns = jit.os:find("Windows") and {} or { "folke" } },
-  install = { colorscheme = { "catppuccin", "habamax" } },
+  install = { colorscheme = { "catppuccin" } },
   checker = { enabled = true },
   performance = {
     rtp = {
