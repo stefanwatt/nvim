@@ -1,8 +1,13 @@
 require("lazy").setup("user.plugins", {
   defaults = { lazy = true },
-  dev = { patterns = jit.os:find("Windows") and {} or { "folke" } },
+  dev = {
+    -- directory where you store your local plugin projects
+    path = "~/Projects",
+    ---@type string[] plugins that match these patterns will use your local versions instead of being fetched from GitHub
+    patterns = {"*.nvim"}, -- For example {"folke"}
+  },
   install = { colorscheme = { "catppuccin" } },
-  checker = { enabled = true },
+  checker = { enabled = false },
   performance = {
     rtp = {
       disabled_plugins = {

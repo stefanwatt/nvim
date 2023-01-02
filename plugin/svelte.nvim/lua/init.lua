@@ -17,16 +17,17 @@ function exportLines(startLineIndex, endLineIndex, lines, newFilePath)
   -- vim.cmd("w")
 end
 
-function parseString(sourceCode)
-  local tsparser = vim.treesitter.get_string_parser(sourceCode, "svelte", {})
-  -- local tsparser = vim.treesitter.get_parser(0, "svelte")
+function parseString()
+  -- local tsparser = vim.treesitter.get_string_parser(sourceCode, "svelte", {})
+  local tsparser = vim.treesitter.get_parser(0, "svelte")
   local root = tsparser:parse()[1]:root()
   local query = vim.treesitter.parse_query('svelte', [[
-    (each_statement) @var
+    (identifier) @var
   ]])
   for id, captures, metadata in query:iter_matches(root,0) do
     i(captures)
   end
+  print("done")
 end
 
 
@@ -62,4 +63,4 @@ function example()
   -- end)
 end
 
-vim.keymap.set("x", "<F5>", example, {})
+vim.keymap.set("n", "<leader>b", parseString, {})

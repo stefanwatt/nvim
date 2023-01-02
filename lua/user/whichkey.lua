@@ -97,6 +97,7 @@ local mappings = {
   e = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
   v = { "<cmd>vsplit<cr>", "vsplit" },
   h = { "<cmd>nohlsearch<CR>", "no highlights" },
+  n = { "<cmd>NoNeckPain<CR>", "No neck pain" },
   ["/"] = {"<cmd>CommentToggle<cr>" ,"Comment" },
   c = { "<cmd>bdelete!<CR>", "Close Buffer" },
   s= {"dial inc"},
