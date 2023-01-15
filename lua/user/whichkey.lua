@@ -176,7 +176,7 @@ local mappings = {
     name = "LSP",
     a = { "<cmd>Lspsaga code_action<CR>", "Code Action" },
     d = { "<cmd>Lspsaga show_line_diagnostics<CR>", "Diagnostics" },
-    f = { "<cmd>lua vim.lsp.buf.format({ async = true })<cr>", "Format" },
+    f = { "<cmd>lua vim.lsp.buf.format()<cr>", "Format" },
     F = { "<cmd>Lspsaga lsp_finder<CR>", "Toggle Autoformat" },
     i = { "<cmd>LspInfo<cr>", "Info" },
     h = { "<cmd>IlluminationToggle<cr>", "Toggle Doc HL" },
