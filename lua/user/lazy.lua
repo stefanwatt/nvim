@@ -22,5 +22,5 @@ require("lazy").setup("user.plugins", {
       },
     },
   },
-  debug = true,
+  debug = false,
 })
