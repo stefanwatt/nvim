@@ -19,6 +19,16 @@ configs.setup({
   },
   indent = { enable = true, disable = { "python", "css" } },
 
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "<CR>",
+      node_incremental = "<CR>",
+      scope_incremental = "<S-CR>",
+      node_decremental = "<BS>",
+    },
+  },
+
   rainbow = {
     enable = true,
     -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
