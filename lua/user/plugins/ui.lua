@@ -21,7 +21,7 @@ return {
     "akinsho/bufferline.nvim",
     tag = "v3.0.0",
     commit = "a40f058c6284855ad6a8b8137b3e312beca4d6aa",
-    dependencies = {"kyazdani42/nvim-web-devicons"}
+    dependencies = { "kyazdani42/nvim-web-devicons" }
   },
   { "elihunter173/dirbuf.nvim", commit = "ac7ad3c8e61630d15af1f6266441984f54f54fd2" },
   {
@@ -39,5 +39,6 @@ return {
   {
     "shortcuts/no-neck-pain.nvim",
     -- pin=true,
-  }
+  },
+  { "Tummetott/reticle.nvim" }
 }

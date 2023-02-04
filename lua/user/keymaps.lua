@@ -18,7 +18,7 @@ vim.g.mapleader = " "
 -- Normal --
 keymap("n", "<leader>q", ":q!<CR>", opts)
 keymap("n", "<leader>w", ":w!<CR>", opts)
-keymap("n", "<leader>c", "<cmd>Bdelete<CR>", opts)
+keymap("n", "<leader>c", ":lua require('bufdelete').bufdelete({0, true})<CR>", opts)
 keymap("n", "<C-d>", "<C-d>zz")
 keymap("n", "<C-u>", "<C-u>zz")
 -- Better window navigation
@@ -36,9 +36,6 @@ keymap("n", "<C-A-Right>", ":vertical resize +2<CR>", opts)
 -- Navigate buffers
 keymap("n", "<S-Right>", ":bnext<CR>", opts)
 keymap("n", "<S-Left>", ":bprevious<CR>", opts)
-
--- Close buffers
-keymap("n", "<S-q>", "<cmd>Bdelete!<CR>", opts)
 
 -- Better paste
 keymap("v", "p", '"_dP', opts)
@@ -66,6 +63,10 @@ keymap("x", "<C-h>", 'y<ESC>:SearchBoxReplace show_matches=true -- <C-r>" <CR>',
 keymap("x", "<C-A-f>", ':SearchBoxIncSearch show_matches=true <CR>', opts)
 keymap("x", "<C-A-h>", ':SearchBoxReplace show_matches=true <CR>', opts)
 
+
+keymap("n", "<C-H>", ":lua require('spectre').open()<CR>", opts)
+keymap("v", "<C-H>", ":lua require('spectre').open_visual()<CR>", opts)
+
 keymap("n", "s", ":HopWord<CR>", opts)
 keymap("n", "S", ":HopChar2<CR>", opts)
 keymap("n", "l", ":HopLine<CR>", opts)
@@ -83,3 +84,5 @@ keymap("n", "<c-n>", "<Plug>(YankyCycleForward)",opts)
 keymap("n", "<c-p>", "<Plug>(YankyCycleBackward)",opts)
 
 keymap("n", "<leader><leader>x", "<cmd>so %<cr>",opts)
+
+

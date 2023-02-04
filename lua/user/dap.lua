@@ -16,6 +16,8 @@ end
 dap_install.setup {}
 
 dap_install.config("python", {})
+
+local masonAdaptersPath = '/.local/share/nvim/mason/packages'
 -- add other configs here
 
 dapui.setup({
@@ -42,7 +44,7 @@ dapui.setup({
   layouts = {
     {
       elements = {
-      -- Elements can be strings or table with id and size keys.
+        -- Elements can be strings or table with id and size keys.
         { id = "scopes", size = 0.25 },
         "breakpoints",
         "stacks",
@@ -92,7 +94,7 @@ dapui.setup({
 })
 
 vim.fn.sign_define("DapBreakpoint", { text = "⬤", texthl = "DiagnosticSignError", linehl = "", numhl = "" })
-vim.fn.sign_define('DapStopped', { text='⏭', texthl='DapStopped', linehl='DapStopped', numhl= 'DapStopped' })
+vim.fn.sign_define('DapStopped', { text = '⏭', texthl = 'DapStopped', linehl = 'DapStopped', numhl = 'DapStopped' })
 
 dap.listeners.after.event_initialized["dapui_config"] = function()
   dapui.open()
@@ -123,34 +125,50 @@ require("dap-vscode-js").setup({
   adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' }, -- which adapters to register in nvim-dap
 })
 
-for _, language in ipairs({ "typescript", "javascript" }) do
-  dap.configurations[language] = {
-   {
-    type = "pwa-node",
-    request = "launch",
-    name = "Launch file",
-    program = "${file}",
-    cwd = "${workspaceFolder}",
-    sourceMaps = true,
-    skipFiles = { "<node_internals>/**", "node_modules/**" },
-  },
-  {
-    type = "pwa-node",
-    request = "attach",
-    name = "Attach",
-    processId = require'dap.utils'.pick_process,
-    cwd = "${workspaceFolder}",
-  }}
+dap.adapters.nlua = function(callback, config)
+  callback({ type = 'server', host = config.host or "127.0.0.1", port = config.port or 8086 })
 end
 
-dap.configurations.lua = { 
-  { 
-    type = 'nlua', 
+dap.adapters.firefox = {
+  type = 'executable',
+  command = 'node',
+  args = { os.getenv('HOME') .. '/dap/vscode-firefox-debug/dist/adapter.bundle.js' },
+}
+for _, language in ipairs({ "typescript", "javascript" }) do
+  dap.configurations[language] = {
+    {
+      type = "pwa-node",
+      request = "launch",
+      name = "Launch file",
+      program = "${file}",
+      cwd = "${workspaceFolder}",
+      sourceMaps = true,
+      skipFiles = { "<node_internals>/**", "node_modules/**" },
+    },
+    {
+      name = 'Debug with Firefox',
+      type = 'firefox',
+      request = 'launch',
+      reAttach = true,
+      url = 'http://localhost:5173',
+      webRoot = '${workspaceFolder}',
+      firefoxExecutable = '/usr/bin/firefox'
+    },
+    {
+      type = "pwa-node",
+      request = "attach",
+      name = "Attach",
+      processId = require 'dap.utils'.pick_process,
+      cwd = "${workspaceFolder}",
+    }
+  }
+end
+
+dap.configurations.lua = {
+  {
+    type = 'nlua',
     request = 'attach',
     name = "Attach to running Neovim instance",
   }
 }
 
-dap.adapters.nlua = function(callback, config)
-  callback({ type = 'server', host = config.host or "127.0.0.1", port = config.port or 8086 })
-end
