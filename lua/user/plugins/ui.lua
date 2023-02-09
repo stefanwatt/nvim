@@ -40,5 +40,6 @@ return {
     "shortcuts/no-neck-pain.nvim",
     -- pin=true,
   },
-  { "Tummetott/reticle.nvim" }
+  { "Tummetott/reticle.nvim" },
+  { "tzachar/local-highlight.nvim" }
 }

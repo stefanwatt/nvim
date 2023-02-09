@@ -4,7 +4,7 @@ local keymap = vim.keymap.set
 local opts = { silent = true }
 
 --Remap space as leader key
-  keymap("", "<Space>", "<Nop>", opts)
+keymap("", "<Space>", "<Nop>", opts)
 vim.g.mapleader = " "
 
 -- Modes
@@ -18,7 +18,6 @@ vim.g.mapleader = " "
 -- Normal --
 keymap("n", "<leader>q", ":q!<CR>", opts)
 keymap("n", "<leader>w", ":w!<CR>", opts)
-keymap("n", "<leader>c", ":lua require('bufdelete').bufdelete({0, true})<CR>", opts)
 keymap("n", "<C-d>", "<C-d>zz")
 keymap("n", "<C-u>", "<C-u>zz")
 -- Better window navigation
@@ -76,13 +75,11 @@ keymap("n", "F", ":HopChar1CurrentLine<CR>", opts)
 keymap("v", "f", "<cmd>HopChar2CurrentLine<CR>", opts)
 keymap("v", "s", "<cmd>HopWord<CR>", opts)
 
-keymap({"n","x"}, "p", "<Plug>(YankyPutAfter)",opts)
-keymap({"n","x"}, "P", "<Plug>(YankyPutBefore)",opts)
-keymap({"n","x"}, "gp", "<Plug>(YankyGPutAfter)",opts)
-keymap({"n","x"}, "gP", "<Plug>(YankyGPutBefore)",opts)
-keymap("n", "<c-n>", "<Plug>(YankyCycleForward)",opts)
-keymap("n", "<c-p>", "<Plug>(YankyCycleBackward)",opts)
+keymap({ "n", "x" }, "p", "<Plug>(YankyPutAfter)", opts)
+keymap({ "n", "x" }, "P", "<Plug>(YankyPutBefore)", opts)
+keymap({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)", opts)
+keymap({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)", opts)
+keymap("n", "<c-n>", "<Plug>(YankyCycleForward)", opts)
+keymap("n", "<c-p>", "<Plug>(YankyCycleBackward)", opts)
 
-keymap("n", "<leader><leader>x", "<cmd>so %<cr>",opts)
-
-
+keymap("n", "<leader><leader>x", "<cmd>so %<cr> :lua print('file reloaded')<cr>", opts)

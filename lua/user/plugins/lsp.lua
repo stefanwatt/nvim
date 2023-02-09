@@ -23,7 +23,6 @@ return {
   },
 
   { "jose-elias-alvarez/null-ls.nvim", commit = "c0c19f32b614b3921e17886c541c13a72748d450" },
-  { "RRethy/vim-illuminate", commit = "a2e8476af3f3e993bb0d6477438aad3096512e42" },
   {
     'glepnir/lspsaga.nvim',
     commit="b7b4777369b441341b2dcd45c738ea4167c11c9e",
