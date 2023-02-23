@@ -40,6 +40,7 @@ vim.opt.shortmess:append "c"
 vim.opt.whichwrap:append("<,>,[,],h,l")
 vim.opt.iskeyword:append("-")
 vim.o.ls = 0
+vim.o.cmdheight=0
 -- vim.o.statuscolumn = "%!v:lua.get_statuscol()"
 -- vim.o.ch = 0
 vim.cmd([[
