@@ -16,6 +16,7 @@ vim.g.mapleader = " "
 --   command_mode = "c",
 
 -- Normal --
+keymap("n", "<leader>e", ":Telescope file_browser path=%:p:h select_buffer=true<CR>", opts)
 keymap("n", "<leader>q", ":q!<CR>", opts)
 keymap("n", "<leader>w", ":w!<CR>", opts)
 keymap("n", "<C-d>", "<C-d>zz")

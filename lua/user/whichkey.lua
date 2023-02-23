@@ -94,7 +94,7 @@ local m_mappings = {
 local mappings = {
   -- ["1"] = "which_key_ignore",
   D = { "<cmd>Alpha<cr>", "Dashboard" },
-  e = { "<cmd>Telescope file_browser path=%:p:h select_buffer=true<cr>", "Explorer" },
+  e = { "<cmd>Telescope file_browser path=%:p:h select_buffer=true initial_mode=normal<cr><Esc>", "Explorer" },
   v = { "<cmd>vsplit<cr>", "vsplit" },
   h = { "<cmd>nohlsearch<CR>", "no highlights" },
   n = { "<cmd>NoNeckPain<CR>", "No neck pain" },
