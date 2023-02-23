@@ -20,6 +20,21 @@ telescope.setup {
       },
     },
   },
+  extensions = {
+    file_browser = {
+      theme = "dropdown",
+      -- disables netrw and use telescope-file-browser in its place
+      hijack_netrw = true,
+      mappings = {
+        ["i"] = {
+          -- your custom insert mode mappings
+        },
+        ["n"] = {
+          -- your custom normal mode mappings
+        },
+      },
+    },
+  },
 }
 
 telescope.load_extension("tasks")
@@ -34,18 +49,19 @@ local source_tasksjson = require("tasks.sources.tasksjson")
 local builtin = require("tasks.sources.builtin")
 
 tasks.setup({
-	sources = {
-		npm = source_npm,
-		vscode = source_tasksjson,
-		utils = builtin.new_builtin_source({
-      npm_install= {
-          cmd = "npm install"
+  sources = {
+    npm = source_npm,
+    vscode = source_tasksjson,
+    utils = builtin.new_builtin_source({
+      npm_install = {
+        cmd = "npm install"
       },
-      tsc_watch= {
-          cmd = "tsc -w"
+      tsc_watch = {
+        cmd = "tsc -w"
       },
-		}),
-	},
+    }),
+  },
 })
 
 require('telescope').load_extension('tailiscope')
+require("telescope").load_extension "file_browser"

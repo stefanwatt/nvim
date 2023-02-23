@@ -55,13 +55,8 @@ keymap("x", "<leader>/", 'gc', opts)
 keymap("n", "<leader>ts", ":TypingTestStart<cr>", opts)
 keymap("n", "<leader>tq", ":TypingTestQuit<cr>", opts)
 
-keymap("n", "<C-f>", ":SearchBoxIncSearch show_matches=true<cr>", opts)
 keymap("n", "<C-h>", ":SearchBoxReplace show_matches=true<cr>", opts)
-keymap("x", "<C-f>", 'y<ESC>:SearchBoxIncSearch show_matches=true -- <C-r>" <CR>', opts)
 keymap("x", "<C-h>", 'y<ESC>:SearchBoxReplace show_matches=true -- <C-r>" <CR>', opts)
-keymap("x", "<C-A-f>", ':SearchBoxIncSearch show_matches=true <CR>', opts)
-keymap("x", "<C-A-h>", ':SearchBoxReplace show_matches=true <CR>', opts)
-
 
 keymap("n", "<C-H>", ":lua require('spectre').open()<CR>", opts)
 keymap("v", "<C-H>", ":lua require('spectre').open_visual()<CR>", opts)
