@@ -1,36 +1,33 @@
-local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+require("auto-save").setup({
+  -- The name of the augroup.
+  augroup_name = "AutoSavePlug",
 
-require("auto-save").setup {
-  enabled = true, -- start auto-save when the plugin is loaded (i.e. when your package manager loads it)
-  noautocmd_save = true,
-  execution_message = {
-    message = function() -- message to print on save
-      return ("AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"))
-    end,
-    dim = 0.18, -- dim the color of `message`
-    cleaning_interval = 1250, -- (milliseconds) automatically clean MsgArea after displaying `message`. See :h MsgArea
-  },
-  trigger_events = {"TextChanged", "InsertLeave"}, -- vim events that trigger auto-save. See :h events
-  -- function that determines whether to save the current buffer or not
-  -- return true: if buffer is ok to be saved
-  -- return false: if it's not ok to be saved
-  condition = function(buf)
-    local fn = vim.fn
-    local utils = require("auto-save.utils.data")
+  -- The events in which to trigger an auto save.
+  events = { "InsertLeave", "TextChanged" },
 
-    if fn.getbufvar(buf, "&modifiable") == 1 and
-        utils.not_in(fn.getbufvar(buf, "&filetype"), {}) then
-      return true -- met condition(s), can save
+  -- If you'd prefer to silence the output of `save_fn`.
+  silent = true,
+
+  -- If you'd prefer to write a vim command.
+  save_cmd = nil,
+
+  -- What to do after checking if auto save conditions have been met.
+  save_fn = function()
+    local config = require("auto-save.config")
+    if config.save_cmd ~= nil then
+      vim.cmd(config.save_cmd)
+    else
+      vim.cmd("w")
     end
-    return false -- can't save
+    print("autosaved")
   end,
-  write_all_buffers = false, -- write all buffers when the current one meets `condition`
-  debounce_delay = 150, -- saves the file at most every `debounce_delay` milliseconds
-  callbacks = { -- functions to be executed at different intervals
-    enabling = nil, -- ran when enabling auto-save
-    disabling = nil, -- ran when disabling auto-save
-    before_asserting_save = nil, -- ran before checking `condition`
-    before_saving = nil,
-    after_saving = nil
-  }
-}
+
+  -- May define a timeout, or a duration to defer the save for - this allows
+  -- for formatters to run, for example if they're configured via an autocmd
+  -- that listens for `BufWritePre` event.
+  timeout = nil,
+
+  -- Define some filetypes to explicitly not save, in case our existing conditions
+  -- don't quite catch all the buffers we'd prefer not to write to.
+  exclude_ft = {""},
+})

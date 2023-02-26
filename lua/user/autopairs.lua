@@ -1,17 +1,24 @@
 -- Setup nvim-cmp.
-local status_ok, npairs = pcall(require, "nvim-autopairs")
+local status_ok, pairs = pcall(require, "mini.pairs")
 if not status_ok then
   return
 end
 
-npairs.setup {
-  check_ts = true, -- treesitter integration
-  disable_filetype = { "TelescopePrompt" },
-}
+pairs.setup(
+  {
+    modes = { insert = true, command = false, terminal = false },
+    mappings = {
+      ['('] = { action = 'open', pair = '()', neigh_pattern = '[^\\].' },
+      ['['] = { action = 'open', pair = '[]', neigh_pattern = '[^\\].' },
+      ['{'] = { action = 'open', pair = '{}', neigh_pattern = '[^\\].' },
 
-local cmp_autopairs = require "nvim-autopairs.completion.cmp"
-local cmp_status_ok, cmp = pcall(require, "cmp")
-if not cmp_status_ok then
-  return
-end
-cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done {})
+      [')'] = { action = 'close', pair = '()', neigh_pattern = '[^\\].' },
+      [']'] = { action = 'close', pair = '[]', neigh_pattern = '[^\\].' },
+      ['}'] = { action = 'close', pair = '{}', neigh_pattern = '[^\\].' },
+
+      ['"'] = { action = 'closeopen', pair = '""', neigh_pattern = '[^\\].', register = { cr = false } },
+      ["'"] = { action = 'closeopen', pair = "''", neigh_pattern = '[^%a\\].', register = { cr = false } },
+      ['`'] = { action = 'closeopen', pair = '``', neigh_pattern = '[^\\].', register = { cr = false } },
+    },
+  }
+)
