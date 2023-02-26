@@ -18,5 +18,17 @@ return {
   {
     'echasnovski/mini.surround',
     version = '*',
+    event = "BufWinEnter",
+    config = function ()
+      require("user.surround")
+    end
+  },
+  {
+    'echasnovski/mini.bufremove',
+    version = '*',
+    event = "BufWinEnter",
+    config = function()
+      require('mini.bufremove').setup()
+    end
   },
 }
