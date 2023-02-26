@@ -1,8 +1,9 @@
 local keymap = vim.keymap.set
 local saga = require('lspsaga')
 
-keymap("n", "gd", "<cmd>Lspsaga peek_definition<CR>", { silent = true })
-keymap("n", "K", "<cmd>Lspsaga hover_doc<CR>", { silent = true })
+keymap("n", "gD", "<cmd>Lspsaga peek_definition<CR>", { silent = true })
+keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { silent = true })
+keymap("n", "K","<cmd>Lspsaga goto_definition<CR>", { silent = true })
 
 saga.init_lsp_saga({
   -- Options with default value
