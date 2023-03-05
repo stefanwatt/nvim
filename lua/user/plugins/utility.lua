@@ -11,7 +11,6 @@ return {
       require "user.autosave"
     end
   },
-  { "gbprod/yanky.nvim", commit = "39bef9fe84af59499cdb88d8e8fb69f3175e1265" },
   { "Susensio/magic-bang.nvim" },
   { "nvim-pack/nvim-spectre", dependencies = { "nvim-lua/plenary.nvim" } },
   { 'echasnovski/mini.pairs', version = '*' },

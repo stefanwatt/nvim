@@ -38,8 +38,11 @@ keymap("n", "<S-Right>", ":bnext<CR>", opts)
 keymap("n", "<S-Left>", ":bprevious<CR>", opts)
 
 -- Better paste
-keymap("v", "p", '"_dP', opts)
+keymap("v", "<C-v>", '"_dP', opts)
 
+-- foo
+--foo 
+--foo 
 -- Insert --
 -- Press jk fast to enter
 -- keymap("i", "ne", "<ESC>", opts)
@@ -70,12 +73,5 @@ keymap("n", "F", ":HopChar1CurrentLine<CR>", opts)
 
 keymap("v", "f", "<cmd>HopChar2CurrentLine<CR>", opts)
 keymap("v", "s", "<cmd>HopWord<CR>", opts)
-
-keymap({ "n", "x" }, "p", "<Plug>(YankyPutAfter)", opts)
-keymap({ "n", "x" }, "P", "<Plug>(YankyPutBefore)", opts)
-keymap({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)", opts)
-keymap({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)", opts)
-keymap("n", "<c-n>", "<Plug>(YankyCycleForward)", opts)
-keymap("n", "<c-p>", "<Plug>(YankyCycleBackward)", opts)
 
 keymap("n", "<leader><leader>x", "<cmd>so %<cr> :lua print('file reloaded')<cr>", opts)
