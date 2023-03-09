@@ -21,6 +21,11 @@ telescope.setup {
     },
   },
   extensions = {
+    menufacture = {
+      mappings = {
+        main_menu = { [{ 'n' }] = 'm' },
+      },
+    },
     file_browser = {
       theme = "dropdown",
       -- disables netrw and use telescope-file-browser in its place
@@ -63,5 +68,6 @@ tasks.setup({
   },
 })
 
-require('telescope').load_extension('tailiscope')
+require('telescope').load_extension "tailiscope"
 require("telescope").load_extension "file_browser"
+require('telescope').load_extension "menufacture"

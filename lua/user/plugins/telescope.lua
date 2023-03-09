@@ -1,6 +1,5 @@
 return {
-  { "nvim-telescope/telescope.nvim", commit = "76ea9a898d3307244dce3573392dcf2cc38f340f",
-  },
+  { "nvim-telescope/telescope.nvim"},
 
   { "elianiva/telescope-npm.nvim", commit = "60eee38b34f577104475a592dd3716a7afa2aef1" },
   { "ibhagwan/fzf-lua",
@@ -16,5 +15,6 @@ return {
   {
     "nvim-telescope/telescope-file-browser.nvim",
     dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
-  }
+  },
+  { 'molecule-man/telescope-menufacture' }
 }
