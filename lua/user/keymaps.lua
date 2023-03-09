@@ -38,11 +38,8 @@ keymap("n", "<S-Right>", ":bnext<CR>", opts)
 keymap("n", "<S-Left>", ":bprevious<CR>", opts)
 
 -- Better paste
-keymap("v", "<C-v>", '"_dP', opts)
+keymap("v", "p", '"_dP', opts)
 
--- foo
---foo 
---foo 
 -- Insert --
 -- Press jk fast to enter
 -- keymap("i", "ne", "<ESC>", opts)
