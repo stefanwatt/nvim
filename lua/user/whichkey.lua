@@ -204,7 +204,6 @@ local vopts = {
   nowait = true, -- use `nowait` when creating keymaps
 }
 local vmappings = {
-  ["/"] = { "<Esc><cmd>'<,'>CommentToggle<cr>","Comment" },
   r = {
     name = "refactoring",
     e = { "<Esc><Cmd>lua require('refactoring').refactor('Extract Function')<cr>", "Extract Function" },
