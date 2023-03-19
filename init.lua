@@ -16,6 +16,7 @@ require "user.keymaps"
 require "user.lazy"
 require "user.autocommands"
 require "user.colorscheme"
+
 require "user.treesitter"
 require "user.autopairs"
 require "user.comment"

@@ -65,5 +65,6 @@
   "telescope-npm.nvim": { "branch": "master", "commit": "60eee38b34f577104475a592dd3716a7afa2aef1" },
   "telescope.nvim": { "branch": "master", "commit": "a3f17d3baf70df58b9d3544ea30abe52a7a832c2" },
   "toggleterm.nvim": { "branch": "main", "commit": "2a787c426ef00cb3488c11b14f5dcf892bbd0bda" },
+  "treesj": { "branch": "main", "commit": "90248883bdb2d559ff4ba7f0148eb0145d3f0908" },
   "which-key.nvim": { "branch": "main", "commit": "5ffa07bc53294db5cd87c4cc741b7f586fa253f7" }
 }
