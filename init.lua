@@ -17,8 +17,6 @@ require "user.lazy"
 require "user.autocommands"
 require "user.colorscheme"
 
-require "user.autopairs"
-require "user.comment"
 require "user.gitsigns"
 require "user.toggleterm"
 require "user.project"
