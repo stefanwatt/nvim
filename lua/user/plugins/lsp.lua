@@ -1,6 +1,7 @@
 return {
   { "williamboman/mason.nvim", commit = "6f706712ec0363421e0988cd48f512b6a6cf7d6e" },
   {
+    event="BufWinEnter",
     'VonHeikemen/lsp-zero.nvim',
     dependencies = {
       -- LSP Support
@@ -19,7 +20,10 @@ return {
       -- Snippets
       { 'L3MON4D3/LuaSnip' },
       { 'rafamadriz/friendly-snippets' },
-    }
+    },
+    config = function ()
+      require("user.lsp")
+    end
   },
 
   { "jose-elias-alvarez/null-ls.nvim", commit = "c0c19f32b614b3921e17886c541c13a72748d450" },

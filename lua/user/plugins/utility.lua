@@ -30,4 +30,11 @@ return {
       require('mini.bufremove').setup()
     end
   },
+  {
+    dir = '~/Projects/haxe-nvim',
+    event = "BufWinEnter",
+    config = function()
+      require "haxe-nvim"
+    end
+  }
 }

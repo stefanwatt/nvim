@@ -53,8 +53,8 @@ keymap("v", ">", ">gv", opts)
 keymap("n", "<leader>/", "gcc", opts)
 keymap("x", "<leader>/", 'gc', opts)
 
-keymap("n", "<leader>ts", ":TypingTestStart<cr>", opts)
-keymap("n", "<leader>tq", ":TypingTestQuit<cr>", opts)
+keymap("n", "<leader>ts", ":TypingTest start<cr>", opts)
+keymap("n", "<leader>tq", ":TypingTest stop<cr>", opts)
 
 keymap("n", "<C-h>", ":SearchBoxReplace show_matches=true<cr>", opts)
 keymap("x", "<C-h>", 'y<ESC>:SearchBoxReplace show_matches=true -- <C-r>" <CR>', opts)
@@ -65,10 +65,32 @@ keymap("v", "<C-H>", ":lua require('spectre').open_visual()<CR>", opts)
 keymap("n", "s", ":HopWord<CR>", opts)
 keymap("n", "S", ":HopChar2<CR>", opts)
 keymap("n", "l", ":HopLine<CR>", opts)
-keymap("n", "f", ":HopChar2CurrentLine<CR>", opts)
-keymap("n", "F", ":HopChar1CurrentLine<CR>", opts)
+-- keymap("n", "f", ":HopChar2CurrentLine<CR>", opts)
+-- keymap("n", "F", ":HopChar1CurrentLine<CR>", opts)
 
 keymap("v", "f", "<cmd>HopChar2CurrentLine<CR>", opts)
 keymap("v", "s", "<cmd>HopWord<CR>", opts)
 
 keymap("n", "<leader><leader>x", "<cmd>so %<cr> :lua print('file reloaded')<cr>", opts)
+
+function typingTestLayout()
+  local Layout = require("nui.layout")
+  local Split = require("nui.split")
+
+  local middle_split = Split({ border = "single" })
+  local bottom_split = Split({ border = "single" })
+
+  local layout = Layout(
+    {
+          size = '55%',
+    },
+    Layout.Box({
+      Layout.Box(middle_split, { size = "45%" }),
+      Layout.Box(bottom_split, { size = "10%" }),
+    }, { dir = "col" })
+  )
+
+  layout:mount()
+end
+
+keymap("n", "<leader><leader>t", typingTestLayout , opts)
