@@ -80,6 +80,7 @@ local function setupCatppuccin()
       markdown = true,
       lightspeed = false,
       ts_rainbow = false,
+      ts_rainbow2 = true,
       hop = false,
       notify = true,
       telekasten = true,
