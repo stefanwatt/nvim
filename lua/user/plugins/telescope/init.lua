@@ -1,6 +1,10 @@
 return {
   {
     "nvim-telescope/telescope.nvim",
+    dependencies = {
+      "nvim-telescope/telescope-file-browser.nvim",
+    },
+    lazy = "false",
     config = function()
       local status_ok, telescope = pcall(require, "telescope")
       if not status_ok then
@@ -11,12 +15,10 @@ return {
 
       telescope.setup {
         defaults = {
-
           prompt_prefix = " ",
           selection_caret = " ",
           path_display = { "smart" },
           file_ignore_patterns = { ".git/", "node_modules" },
-
           mappings = {
             i = {
               ["<Down>"] = actions.move_selection_next,
@@ -53,4 +55,5 @@ return {
   require("user.plugins.telescope.misc"),
   require("user.plugins.telescope.npm"),
   require("user.plugins.telescope.tailiscope"),
+  require("user.plugins.telescope.projects"),
 }

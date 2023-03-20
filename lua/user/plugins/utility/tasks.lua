@@ -1,5 +1,9 @@
 return {
   "GustavoKatel/tasks.nvim",
+  keys = {
+    { "<leader>fts", "<cmd>Telescope tasks specs<cr>", "Specs" },
+    { "<leader>ftr", "<cmd>Telescope tasks running<cr>", "Running" }
+  },
   commit = "1bb8b9725cc7bb58e646d9a8da48a57010cafcad",
   dependencies = {
     "nvim-telescope/telescope.nvim",
