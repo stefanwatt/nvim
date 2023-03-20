@@ -1,6 +1,6 @@
 return {
-  event="BufWinEnter",
   "onsails/lspkind.nvim",
+  event="VeryLazy",
   dependencies = {
     "hrsh7th/nvim-cmp",
   },

@@ -1,6 +1,6 @@
 return {
   {
-    event = "BufWinEnter",
+    event = "BufReadPre",
     'VonHeikemen/lsp-zero.nvim',
     dependencies = {
       -- LSP Support

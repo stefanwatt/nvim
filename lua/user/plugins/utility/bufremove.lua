@@ -1,7 +1,7 @@
 return {
   'echasnovski/mini.bufremove',
   version = '*',
-  event = "BufWinEnter",
+  event = "VeryLazy",
   config = function()
     require('mini.bufremove').setup()
   end

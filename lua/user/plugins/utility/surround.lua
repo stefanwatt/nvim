@@ -1,7 +1,7 @@
 return {
   'echasnovski/mini.surround',
   version = '*',
-  event = "BufWinEnter",
+  event = "VeryLazy",
   config = function()
     require("mini.surround").setup(
       {

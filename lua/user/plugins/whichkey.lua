@@ -138,11 +138,6 @@ return {
           k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
           c = { "<cmd>Telescope commands<cr>", "Commands" },
           p = { "<cmd>Telescope projects<cr>", "Keymaps" },
-          t = {
-            name = "Tasks",
-            s = { "<cmd>Telescope tasks specs<cr>", "Specs" },
-            r = { "<cmd>Telescope tasks running<cr>", "Running" },
-          }
         },
         g = {
           name = "Git",
