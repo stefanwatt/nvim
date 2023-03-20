@@ -1,7 +1,7 @@
 return {
   {
     "stefanwatt/noice.nvim",
-    event = "VimEnter",
+    event = "VeryLazy",
 
     dependencies = {
       -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
@@ -11,6 +11,14 @@ return {
     },
     config = function()
       require("noice").setup({
+        lsp = {
+          signature = {
+            enabled = false
+          },
+          hover = {
+            enabled = false
+          }
+        },
         cmdline = {
           enabled = true, -- disable if you use native command line UI
           view = "cmdline_popup", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
