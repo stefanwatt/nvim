@@ -23,6 +23,4 @@ return {
     commit = "4d3a68c41a53add8804f471fcc49bb398fe8de08",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
   },
-  require("user.plugins.treesitter.splitjoin"),
-  require("user.plugins.treesitter.misc"),
 }

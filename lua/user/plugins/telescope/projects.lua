@@ -1,7 +1,7 @@
 return {
   { 
-    lazy=false,
     "ahmedkhalf/project.nvim",
+    event="VeryLazy",
     commit = "628de7e433dd503e782831fe150bb750e56e55d6",
     config = function()
       local status_ok, project = pcall(require, "project_nvim")

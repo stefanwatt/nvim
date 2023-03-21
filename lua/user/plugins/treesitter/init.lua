@@ -89,4 +89,6 @@ return {
       }
     end
   },
+  require("user.plugins.treesitter.splitjoin"),
+  require("user.plugins.treesitter.misc"),
 }

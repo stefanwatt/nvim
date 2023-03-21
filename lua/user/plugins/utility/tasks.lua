@@ -1,13 +1,11 @@
 return {
   "GustavoKatel/tasks.nvim",
-  keys = {
-    { "<leader>fts", "<cmd>Telescope tasks specs<cr>", "Specs" },
-    { "<leader>ftr", "<cmd>Telescope tasks running<cr>", "Running" }
-  },
+  event = "VeryLazy",
   commit = "1bb8b9725cc7bb58e646d9a8da48a57010cafcad",
   dependencies = {
     "nvim-telescope/telescope.nvim",
-    "elianiva/telescope-npm.nvim"
+    "elianiva/telescope-npm.nvim",
+    "nvim-lua/plenary.nvim",
   },
   config = function()
     require("telescope").load_extension("tasks")
