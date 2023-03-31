@@ -39,20 +39,6 @@ return {
       }
 
       local toggle_bufferline = vim.api.nvim_create_augroup("ToggleBufferline", { clear = true })
-      vim.api.nvim_create_autocmd("User", {
-        callback = function()
-          vim.o.showtabline = 0
-        end,
-        group = toggle_bufferline,
-        pattern = "AlphaReady",
-      })
-      vim.api.nvim_create_autocmd("BufUnload", {
-        callback = function()
-          vim.o.showtabline = 2
-        end,
-        group = toggle_bufferline,
-        pattern = "<buffer>",
-      })
     end
   }
 }

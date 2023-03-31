@@ -1,9 +1,7 @@
 return {
   'echasnovski/mini.comment',
   version = '*',
-  keys = {
-    { "<leader>/"}
-  },
+  event = "VeryLazy",
   config = function()
     local status_ok, comment = pcall(require, "mini.comment")
     if not status_ok then

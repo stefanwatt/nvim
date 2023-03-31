@@ -72,25 +72,3 @@ keymap("v", "f", "<cmd>HopChar2CurrentLine<CR>", opts)
 keymap("v", "s", "<cmd>HopWord<CR>", opts)
 
 keymap("n", "<leader><leader>x", "<cmd>so %<cr> :lua print('file reloaded')<cr>", opts)
-
-function typingTestLayout()
-  local Layout = require("nui.layout")
-  local Split = require("nui.split")
-
-  local middle_split = Split({ border = "single" })
-  local bottom_split = Split({ border = "single" })
-
-  local layout = Layout(
-    {
-          size = '55%',
-    },
-    Layout.Box({
-      Layout.Box(middle_split, { size = "45%" }),
-      Layout.Box(bottom_split, { size = "10%" }),
-    }, { dir = "col" })
-  )
-
-  layout:mount()
-end
-
-keymap("n", "<leader><leader>t", typingTestLayout , opts)

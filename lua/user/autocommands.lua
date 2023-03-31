@@ -1,5 +1,7 @@
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
 -- Use 'q' to quit from common plugins
-vim.api.nvim_create_autocmd({ "FileType" }, {
+autocmd({ "FileType" }, {
   pattern = { "qf", "help", "man", "lspinfo", "spectre_panel", "lir" },
   callback = function()
     vim.cmd [[
@@ -8,20 +10,8 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
     ]]
   end,
 })
-
--- Remove statusline and tabline when in Alpha
--- vim.api.nvim_create_autocmd({ "User" }, {
---   pattern = { "AlphaReady" },
---   callback = function()
---     vim.cmd [[
---       set showtabline=0 | autocmd BufUnload <buffer> set showtabline=2
---       set laststatus=0 | autocmd BufUnload <buffer> set laststatus=3
---     ]]
---   end,
--- })
-
 -- Set wrap and spell in markdown and gitcommit
-vim.api.nvim_create_autocmd({ "FileType" }, {
+autocmd({ "FileType" }, {
   pattern = { "gitcommit", "markdown" },
   callback = function()
     vim.opt_local.wrap = true
@@ -32,16 +22,32 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 vim.cmd "autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif"
 
 -- Fixes Autocomment
-vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
+autocmd({ "BufWinEnter" }, {
   callback = function()
     vim.cmd "set formatoptions-=cro"
   end,
 })
 
 -- Highlight Yanked Text
-vim.api.nvim_create_autocmd({ "TextYankPost" }, {
+autocmd({ "TextYankPost" }, {
   callback = function()
     vim.highlight.on_yank { higroup = "Visual", timeout = 200 }
   end,
 })
 
+local group_name = augroup("alpha_settings", { clear = true })
+autocmd("User", {
+  desc = "Disable status and tablines for alpha",
+  group = group_name,
+  pattern = "AlphaReady",
+  callback = function()
+    local prev_showtabline = vim.opt.showtabline
+    vim.opt.showtabline = 0
+    autocmd("BufUnload", {
+      pattern = "<buffer>",
+      callback = function()
+        vim.opt.showtabline = prev_showtabline
+      end,
+    })
+  end,
+})

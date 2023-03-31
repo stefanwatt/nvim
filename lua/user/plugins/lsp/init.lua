@@ -19,8 +19,11 @@ return {
       -- Snippets
       { 'L3MON4D3/LuaSnip' },
       { 'rafamadriz/friendly-snippets' },
+      { 'folke/neodev.nvim' },
+
     },
     config = function()
+      require("neodev").setup({})
       local lsp = require('lsp-zero')
       lsp.set_preferences({
         suggest_lsp_servers = true,
