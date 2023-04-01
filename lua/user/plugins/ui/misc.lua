@@ -13,4 +13,13 @@ return {
     ft = { "markdown" },
     commit = "02cc3874738bc0f86e4b91f09b8a0ac88aef8e96"
   },
+  {
+    "roobert/tailwindcss-colorizer-cmp.nvim",
+    -- optionally, override the default options:
+    config = function()
+      require("tailwindcss-colorizer-cmp").setup({
+        color_square_width = 2,
+      })
+    end
+  }
 }

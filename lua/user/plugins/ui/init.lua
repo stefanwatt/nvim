@@ -8,5 +8,6 @@ return {
   require("user.plugins.ui.no-neck-pain"),
   require("user.plugins.ui.misc"),
   require("user.plugins.ui.reticle"),
-  require("user.plugins.ui.colorschemes")
+  require("user.plugins.ui.colorschemes"),
+  require("user.plugins.ui.colorizer")
 }
