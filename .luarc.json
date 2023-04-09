@@ -80,5 +80,6 @@
         "/home/stefan/.local/share/nvim/lazy/treesj/lua",
         "/home/stefan/.config/nvim/lua",
         "${3rd}/luv/library"
-    ]
+    ],
+    "workspace.checkThirdParty": false
 }
