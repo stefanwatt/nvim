@@ -5,6 +5,13 @@ return {
   -- { "lunarvim/darkplus.nvim", branch = "neovim-0.7", commit = "13ef9daad28d3cf6c5e793acfc16ddbf456e1c83" },
   -- { "lunarvim/onedarker.nvim", commit = "4eaa5e8760832d23a84f8ad4e0ff012eacd2c01f" },
   { "catppuccin/nvim"},
-  {'Shatur/neovim-ayu'}
+  {'Shatur/neovim-ayu'},
+  {
+    'echasnovski/mini.colors',
+    version = false,
+    config = function ()
+      require('mini.colors').setup({})
+    end
+  },
   -- { "sam4llis/nvim-tundra", commit = "dfe152f2a8bac247a6b05b08c7e3e8124d165115" },
 }

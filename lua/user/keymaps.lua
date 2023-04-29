@@ -72,3 +72,24 @@ keymap("v", "f", "<cmd>HopChar2CurrentLine<CR>", opts)
 keymap("v", "s", "<cmd>HopWord<CR>", opts)
 
 keymap("n", "<leader><leader>x", "<cmd>so %<cr> :lua print('file reloaded')<cr>", opts)
+
+-- MiniColors
+function miniColorsInteractive()
+  require('mini.colors').interactive({
+    mappings = {
+      Apply = '<leader>mca',
+      Reset = '<leader>mcr',
+      Quit = '<leader>mcq',
+      Write = '<leader>mcw',
+    }
+  })
+end
+keymap("n", "<leader><leader>c", miniColorsInteractive, opts)
+
+
+function getTSHighlightGroupUnderCursor()
+  local result = vim.treesitter.get_captures_at_cursor(0)
+  print(vim.inspect(result))
+end
+
+keymap("n", "<leader><leader>h", getTSHighlightGroupUnderCursor, opts)
