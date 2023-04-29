@@ -1,13 +1,8 @@
 return {
-  { 'rafamadriz/friendly-snippets', lazy = false },
   {
     'VonHeikemen/lsp-zero.nvim',
     branch = 'v2.x',
     lazy = false,
-    dependencies = {
-      'rafamadriz/friendly-snippets',
-      'L3MON4D3/LuaSnip',
-    },
     config = function()
       require("neodev").setup({})
       require('lsp-zero.settings').preset({})
@@ -38,4 +33,5 @@ return {
   require("user.plugins.lsp.lsp-lines"),
   require("user.plugins.lsp.lspkind"),
   require("user.plugins.lsp.misc"),
+  require("user.plugins.lsp.luasnip"),
 }

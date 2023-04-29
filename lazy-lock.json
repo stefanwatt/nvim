@@ -1,9 +1,11 @@
 {
   "DAPInstall.nvim": { "branch": "main", "commit": "8798b4c36d33723e7bba6ed6e2c202f84bb300de" },
+  "LuaSnip": { "branch": "master", "commit": "500981ff6cefc7343e3959ef0f939bd0bfd49ba9" },
   "alpha-nvim": { "branch": "main", "commit": "0bb6fc0646bcd1cdb4639737a1cee8d6e08bcc31" },
   "auto-save.nvim": { "branch": "main", "commit": "20f2bd0aed7534a2c80bd21af20c912480725fa0" },
   "bufferline.nvim": { "branch": "main", "commit": "a40f058c6284855ad6a8b8137b3e312beca4d6aa" },
   "cmp-nvim-lsp": { "branch": "main", "commit": "0e6b2ed705ddcff9738ec4ea838141654f12eeef" },
+  "cmp_luasnip": { "branch": "master", "commit": "18095520391186d634a0045dacaa346291096566" },
   "friendly-snippets": { "branch": "main", "commit": "631f79e346b0b3203d2ce3eae619ca8d612e5463" },
   "fzf-lua": { "branch": "main", "commit": "e7c610889ff954101c644cdb9cf68e499a3751ac" },
   "git-blame.nvim": { "branch": "master", "commit": "08e75b7061f4a654ef62b0cac43a9015c87744a2" },
