@@ -1,6 +1,7 @@
 return {
   {
     "Tummetott/reticle.nvim",
+    event="VeryLazy",
     config = function()
       require('reticle').setup({
         follow = {

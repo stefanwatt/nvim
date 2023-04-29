@@ -20,14 +20,14 @@ return {
         cmp_capabilities = true,
         manage_nvim_cmp = true,
         call_servers = 'local',
-        sign_icons = {
-          error = '✘',
-          warn = '▲',
-          hint = '⚑',
-          info = ''
-        }
       })
 
+      lsp.set_sign_icons({
+        error = '✘',
+        warn = '▲',
+        hint = '⚑',
+        info = '»'
+      })
       lsp.setup()
     end
   },
