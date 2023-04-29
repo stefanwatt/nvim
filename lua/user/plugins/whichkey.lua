@@ -1,7 +1,7 @@
 return {
   {
     "stefanwatt/which-key.nvim",
-    keys = {{"<leader>"}},
+    keys = { { "<leader>" } },
     commit = "5ffa07bc53294db5cd87c4cc741b7f586fa253f7",
     config = function()
       local status_ok, whichkey = pcall(require, "which-key")
@@ -188,6 +188,51 @@ return {
             "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
             "Workspace Symbols",
           },
+        },
+        t = {
+          name = "TypeScript",
+          s = {
+            "<cmd>lua require('vtsls').commands['restart_tsserver'](vim.api.nvim_get_current_buf(), function() end, function() end)<CR>",
+            "restart tsserver" },
+          l = {
+            "<cmd>lua require('vtsls').commands['open_tsserver_log'](vim.api.nvim_get_current_buf(), function() end, function() end)<CR>",
+            "open log" },
+          v = {
+            "<cmd>lua require('vtsls').commands['select_ts_version'](vim.api.nvim_get_current_buf(), function() end, function() end)<CR><cmd><CR>",
+            "select ts version" },
+          c = {
+            "<cmd>lua require('vtsls').commands['goto_project_config'](vim.api.nvim_get_current_buf(), function() end, function() end)<CR><cmd><CR>",
+            "go to project config" },
+          d = {
+            "<cmd>lua require('vtsls').commands['goto_source_definition'](vim.api.nvim_get_current_buf(), function() end, function() end)<CR><cmd><CR>",
+            "source definition" },
+          r = {
+            "<cmd>lua require('vtsls').commands['rename_file'](vim.api.nvim_get_current_buf(), function() end, function() end)<CR><cmd><CR>",
+            "rename file" },
+          i = {
+            name = "Imports",
+            o = {
+              "<cmd>lua require('vtsls').commands['organize_imports'](vim.api.nvim_get_current_buf(), function() end, function() end)<CR><cmd><CR>",
+              "organize" },
+            s = {
+              "<cmd>lua require('vtsls').commands['sort_imports'](vim.api.nvim_get_current_buf(), function() end, function() end)<CR><cmd><CR>",
+              "sort" },
+            u = {
+              "<cmd>lua require('vtsls').commands['remove_unused_imports'](vim.api.nvim_get_current_buf(), function() end, function() end)<CR><cmd><CR>",
+              "remove unused imports" },
+            a = {
+              "<cmd>lua require('vtsls').commands['fix_all'](vim.api.nvim_get_current_buf(), function() end, function() end)<CR><cmd><CR>",
+              "fix all" },
+            r = {
+              "<cmd>lua require('vtsls').commands['remove_unused'](vim.api.nvim_get_current_buf(), function() end, function() end)<CR><cmd><CR>",
+              "remove unused" },
+            m = {
+              "<cmd>lua require('vtsls').commands['add_missing_imports'](vim.api.nvim_get_current_buf(), function() end, function() end)<CR><cmd><CR>",
+              "add missing imports" },
+
+          },
+          a = { "<cmd><CR>", "source actions" },
+
         },
         P = {
           name = "Project",

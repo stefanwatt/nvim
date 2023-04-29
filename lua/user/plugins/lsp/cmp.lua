@@ -4,9 +4,12 @@ return {
     event = "InsertEnter",
     dependenies = {
       { 'hrsh7th/cmp-buffer' },
+      { 'hrsh7th/cmp-nvim-lsp' },
       { 'hrsh7th/cmp-path' },
       { 'saadparwaiz1/cmp_luasnip' },
       { 'hrsh7th/cmp-nvim-lua' },
+      { 'rafamadriz/friendly-snippets' },
+      { 'L3MON4D3/LuaSnip' },
     },
     config = function()
       require('lsp-zero.cmp').extend()

@@ -7,6 +7,7 @@ return {
       { 'hrsh7th/cmp-nvim-lsp' },
       { 'williamboman/mason-lspconfig.nvim' },
       { 'williamboman/mason.nvim' },
+      { 'yioneko/nvim-vtsls'}
     },
     config = function()
       local lsp = require('lsp-zero')
@@ -31,15 +32,14 @@ return {
         'sqlls',
         'svelte',
         'tailwindcss',
-        'vtsls',
         'lemminx',
         'yamlls',
         'rust_analyzer',
-
       }
 
       lsp.ensure_installed(servers)
 
+      table.insert(servers, 'vtsls')
       lsp.setup_servers(servers)
 
       lsp.set_server_config({
@@ -54,7 +54,10 @@ return {
         }
       })
 
-      require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
+      local lspconfig = require('lspconfig')
+      lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
+      require("lspconfig.configs").vtsls = require("vtsls").lspconfig -- set default server config
+      lspconfig.vtsls.setup({ --[[ your custom server config here ]] })
       lsp.setup()
     end
   }

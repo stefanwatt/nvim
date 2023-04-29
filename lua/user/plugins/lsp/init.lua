@@ -1,8 +1,13 @@
 return {
+  { 'rafamadriz/friendly-snippets', lazy = false },
   {
     'VonHeikemen/lsp-zero.nvim',
     branch = 'v2.x',
     lazy = false,
+    dependencies = {
+      'rafamadriz/friendly-snippets',
+      'L3MON4D3/LuaSnip',
+    },
     config = function()
       require("neodev").setup({})
       require('lsp-zero.settings').preset({})
@@ -26,14 +31,6 @@ return {
       lsp.setup()
     end
   },
-  -- Snippets
-  {
-    'L3MON4D3/LuaSnip',
-    version = "1.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-    build = "make install_jsregexp",
-    lazy = false
-  },
-  { 'rafamadriz/friendly-snippets' },
   require("user.plugins.lsp.cmp"),
   require("user.plugins.lsp.lspconfig"),
   require("user.plugins.lsp.null-ls"),

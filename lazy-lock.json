@@ -1,6 +1,5 @@
 {
   "DAPInstall.nvim": { "branch": "main", "commit": "8798b4c36d33723e7bba6ed6e2c202f84bb300de" },
-  "LuaSnip": { "branch": "master", "commit": "500981ff6cefc7343e3959ef0f939bd0bfd49ba9" },
   "alpha-nvim": { "branch": "main", "commit": "0bb6fc0646bcd1cdb4639737a1cee8d6e08bcc31" },
   "auto-save.nvim": { "branch": "main", "commit": "20f2bd0aed7534a2c80bd21af20c912480725fa0" },
   "bufferline.nvim": { "branch": "main", "commit": "a40f058c6284855ad6a8b8137b3e312beca4d6aa" },
@@ -45,6 +44,7 @@
   "nvim-ts-autotag": { "branch": "main", "commit": "5bbdfdaa303c698f060035f37a91eaad8d2f8e27" },
   "nvim-ts-context-commentstring": { "branch": "main", "commit": "4d3a68c41a53add8804f471fcc49bb398fe8de08" },
   "nvim-ts-rainbow2": { "branch": "master", "commit": "1ffe68cdd594633dfee0762feebfef81ed6f1fbb" },
+  "nvim-vtsls": { "branch": "main", "commit": "7a647c73b3685564c61295cf3ebf619e2d3e02c6" },
   "nvim-web-devicons": { "branch": "master", "commit": "563f3635c2d8a7be7933b9e547f7c178ba0d4352" },
   "one-small-step-for-vimkind": { "branch": "main", "commit": "ccd671fedaca36e474aadfdd70b9ca4189fcd86e" },
   "playground": { "branch": "master", "commit": "1290fdf6f2f0189eb3b4ce8073d3fda6a3658376" },
