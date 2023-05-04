@@ -52,6 +52,7 @@
   "playground": { "branch": "master", "commit": "1290fdf6f2f0189eb3b4ce8073d3fda6a3658376" },
   "plenary.nvim": { "branch": "master", "commit": "4b7e52044bbb84242158d977a50c4cbcd85070c7" },
   "project.nvim": { "branch": "main", "commit": "628de7e433dd503e782831fe150bb750e56e55d6" },
+  "ranger.nvim": { "branch": "main", "commit": "a683ec8b8a04541060ad228b1be36aa424762e30" },
   "reticle.nvim": { "branch": "main", "commit": "7290f2649684415a9d3da98957ea44f5421f4f2a" },
   "searchbox.nvim": { "branch": "main", "commit": "4b8d3bb68283d27434d81b92424f1398fa9d739a" },
   "sqlite.lua": { "branch": "master", "commit": "47685f0adb89928fc1b2a9b812418680f29aaf27" },

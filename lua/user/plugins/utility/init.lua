@@ -1,5 +1,6 @@
 return {
   require("user.plugins.utility.autosave"),
+  require("user.plugins.utility.ranger"),
   require("user.plugins.utility.bufremove"),
   require("user.plugins.utility.comment"),
   require("user.plugins.utility.pairs"),
