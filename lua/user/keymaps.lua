@@ -56,12 +56,6 @@ keymap("x", "<leader>/", 'gc', opts)
 keymap("n", "<leader>ts", ":TypingTest start<cr>", opts)
 keymap("n", "<leader>tq", ":TypingTest stop<cr>", opts)
 
-keymap("n", "<C-h>", ":SearchBoxReplace show_matches=true<cr>", opts)
-keymap("x", "<C-h>", 'y<ESC>:SearchBoxReplace show_matches=true -- <C-r>" <CR>', opts)
-
-keymap("n", "<C-H>", ":lua require('spectre').open()<CR>", opts)
-keymap("v", "<C-H>", ":lua require('spectre').open_visual()<CR>", opts)
-
 keymap("n", "s", ":HopWord<CR>", opts)
 keymap("n", "S", ":HopChar2<CR>", opts)
 keymap("n", "l", ":HopLine<CR>", opts)

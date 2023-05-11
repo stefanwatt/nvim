@@ -106,6 +106,9 @@ return {
         h = { "<cmd>nohlsearch<CR>", "no highlights" },
         n = { "<cmd>NoNeckPain<CR>", "No neck pain" },
         c = { "<cmd>lua MiniBufremove.delete()<CR>", "Close Buffer" },
+        C = { "<cmd>%bd|e#<CR><CR>", "Close all except current" },
+        r = { "<cmd>lua require('spectre').open_file_search()<CR>", "Search and replace (file)" },
+        R = { "<cmd>lua require('spectre').open()<CR>", "Search and replace (global)" },
         p = {
           name = "Packer",
           c = { "<cmd>PackerCompile<cr>", "Compile" },
@@ -255,14 +258,8 @@ return {
         nowait = true,  -- use `nowait` when creating keymaps
       }
       local vmappings = {
-        r = {
-          name = "refactoring",
-          e = { "<Esc><Cmd>lua require('refactoring').refactor('Extract Function')<cr>", "Extract Function" },
-          f = { "<Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<cr>",
-            "Extract Function To File" },
-          v = { "<Esc><Cmd>lua require('refactoring').refactor('Extract Variable')<cr>", "Extract Variable" },
-          i = { "<Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<cr>", "Inline Variable" },
-        },
+        r = { "<ESC><cmd>lua require('spectre').open_file_search()<cr>", "Search and replace (file)" },
+        R = { "<cmd>lua require('spectre').open_visual()<cr>", "Search and replace (global)" },
       }
 
       whichkey.setup(setup)

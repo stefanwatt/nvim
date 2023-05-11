@@ -21,7 +21,6 @@ return {
         'astro',
         'bashls',
         'cssls',
-        'denols',
         'eslint',
         'emmet_ls',
         'html',
@@ -35,11 +34,11 @@ return {
         'lemminx',
         'yamlls',
         'rust_analyzer',
+        'tsserver',
       }
 
       lsp.ensure_installed(servers)
 
-      table.insert(servers, 'vtsls')
       lsp.setup_servers(servers)
 
       lsp.set_server_config({
@@ -56,8 +55,8 @@ return {
 
       local lspconfig = require('lspconfig')
       lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
-      require("lspconfig.configs").vtsls = require("vtsls").lspconfig -- set default server config
-      lspconfig.vtsls.setup({ --[[ your custom server config here ]] })
+      -- require("lspconfig.configs").vtsls = require("vtsls").lspconfig -- set default server config
+      -- lspconfig.vtsls.setup({ --[[ your custom server config here ]] })
       lsp.setup()
     end
   }
