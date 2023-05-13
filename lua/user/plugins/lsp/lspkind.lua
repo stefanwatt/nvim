@@ -1,6 +1,9 @@
 return {
   "onsails/lspkind.nvim",
-  event = "InsertEnter",
+  event="VeryLazy",
+  dependencies = {
+    "hrsh7th/nvim-cmp",
+  },
   config = function()
     local lspkind = require('lspkind')
     local lspkind_opts = {
