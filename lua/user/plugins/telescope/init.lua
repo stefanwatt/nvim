@@ -4,7 +4,7 @@ return {
     dependencies = {
       "nvim-telescope/telescope-file-browser.nvim",
     },
-    cmd="Telescope",
+    cmd = "Telescope",
     config = function()
       local status_ok, telescope = pcall(require, "telescope")
       if not status_ok then
@@ -30,19 +30,6 @@ return {
           menufacture = {
             mappings = {
               main_menu = { [{ 'n' }] = 'm' },
-            },
-          },
-          file_browser = {
-            theme = "dropdown",
-            -- disables netrw and use telescope-file-browser in its place
-            hijack_netrw = true,
-            mappings = {
-              ["i"] = {
-                -- your custom insert mode mappings
-              },
-              ["n"] = {
-                -- your custom normal mode mappings
-              },
             },
           },
         },

@@ -2,6 +2,7 @@ return {
   {
     event = "BufReadPre",
     'VonHeikemen/lsp-zero.nvim',
+    branch = 'v2.x',
     dependencies = {
       -- LSP Support
       { 'neovim/nvim-lspconfig' },
@@ -25,6 +26,9 @@ return {
     config = function()
       require("neodev").setup({})
       local lsp = require('lsp-zero').preset({})
+      local cmp = require('cmp')
+      local luasnip = require('luasnip')
+
       lsp.set_preferences({
         suggest_lsp_servers = true,
         setup_servers_on_start = true,
@@ -41,21 +45,11 @@ return {
         }
       })
 
-      local cmp_status_ok, cmp = pcall(require, "cmp")
-      if not cmp_status_ok then
-        return
-      end
-
-      local snip_status_ok, luasnip = pcall(require, "luasnip")
-      if not snip_status_ok then
-        return
-      end
-
-      lsp.setup_nvim_cmp({
+      cmp.setup({
         formatting = {
           fields = { "kind", "abbr", "menu" },
           format = function(entry, _vim_item)
-            local vim_item =require("tailwindcss-colorizer-cmp").formatter(entry, _vim_item)
+            local vim_item = require("tailwindcss-colorizer-cmp").formatter(entry, _vim_item)
             local kind = require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry, vim_item)
             local strings = vim.split(kind.kind, "%s", { trimempty = true })
             kind.kind = " " .. (strings[1] or "") .. " "

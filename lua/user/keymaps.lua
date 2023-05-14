@@ -16,7 +16,6 @@ vim.g.mapleader = " "
 --   command_mode = "c",
 
 -- Normal --
-keymap("n", "<leader>e", ":Telescope file_browser path=%:p:h select_buffer=true<CR>", opts)
 keymap("n", "<leader>q", ":q!<CR>", opts)
 keymap("n", "<leader>w", ":w!<CR>", opts)
 keymap("n", "<C-d>", "<C-d>zz")
@@ -49,16 +48,12 @@ keymap("v", "p", '"_dP', opts)
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 
--- Comment
-keymap("n", "<leader>/", "gcc", opts)
-keymap("x", "<leader>/", 'gc', opts)
-
 keymap("n", "<leader>ts", ":TypingTest start<cr>", opts)
 keymap("n", "<leader>tq", ":TypingTest stop<cr>", opts)
 
-keymap("n", "s", ":HopWord<CR>", opts)
-keymap("n", "S", ":HopChar2<CR>", opts)
-keymap("n", "l", ":HopLine<CR>", opts)
+-- keymap("n", "s", ":HopWord<CR>", opts)
+-- keymap("n", "S", ":HopChar2<CR>", opts)
+-- keymap("n", "l", ":HopLine<CR>", opts)
 -- keymap("n", "f", ":HopChar2CurrentLine<CR>", opts)
 -- keymap("n", "F", ":HopChar1CurrentLine<CR>", opts)
 
@@ -66,24 +61,3 @@ keymap("v", "f", "<cmd>HopChar2CurrentLine<CR>", opts)
 keymap("v", "s", "<cmd>HopWord<CR>", opts)
 
 keymap("n", "<leader><leader>x", "<cmd>so %<cr> :lua print('file reloaded')<cr>", opts)
-
--- MiniColors
-function miniColorsInteractive()
-  require('mini.colors').interactive({
-    mappings = {
-      Apply = '<leader>mca',
-      Reset = '<leader>mcr',
-      Quit = '<leader>mcq',
-      Write = '<leader>mcw',
-    }
-  })
-end
-keymap("n", "<leader><leader>c", miniColorsInteractive, opts)
-
-
-function getTSHighlightGroupUnderCursor()
-  local result = vim.treesitter.get_captures_at_cursor(0)
-  print(vim.inspect(result))
-end
-
-keymap("n", "<leader><leader>h", getTSHighlightGroupUnderCursor, opts)
