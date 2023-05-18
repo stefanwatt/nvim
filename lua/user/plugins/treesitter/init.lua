@@ -2,7 +2,8 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     dependencies = {
-      "JoosepAlviste/nvim-ts-context-commentstring"
+      "JoosepAlviste/nvim-ts-context-commentstring",
+      "windwp/nvim-ts-autotag"
     },
     event = "BufReadPost",
     config = function()
@@ -10,6 +11,8 @@ return {
       if not status_ok then
         return
       end
+
+      require('nvim-ts-autotag').setup()
 
       configs.setup({
         ensure_installed = "all", -- one of "all" or a list of languages

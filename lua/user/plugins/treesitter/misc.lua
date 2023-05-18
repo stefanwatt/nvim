@@ -9,17 +9,4 @@ return {
     url = "https://gitlab.com/HiPhish/nvim-ts-rainbow2",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
   },
-  {
-    "windwp/nvim-ts-autotag",
-    event = "VeryLazy",
-    commit = "5bbdfdaa303c698f060035f37a91eaad8d2f8e27",
-    config = function()
-      require('nvim-ts-autotag').setup()
-    end
-  },
-  {
-    "JoosepAlviste/nvim-ts-context-commentstring",
-    event = "VeryLazy",
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
-  },
 }
