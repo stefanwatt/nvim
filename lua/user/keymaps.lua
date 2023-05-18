@@ -61,3 +61,8 @@ keymap("v", "f", "<cmd>HopChar2CurrentLine<CR>", opts)
 keymap("v", "s", "<cmd>HopWord<CR>", opts)
 
 keymap("n", "<leader><leader>x", "<cmd>so %<cr> :lua print('file reloaded')<cr>", opts)
+
+keymap("n", "<F13>", "<cmd>lua print('f13')<cr>", opts)
+keymap("n", "<F14>", "<cmd>lua print('f14')<cr>", opts)
+keymap("n", "<F15>", "<cmd>lua print('f15')<cr>", opts)
+keymap("n", "<F16>", "<cmd>lua print('f16')<cr>", opts)

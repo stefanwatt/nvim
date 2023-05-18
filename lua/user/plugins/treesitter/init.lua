@@ -1,6 +1,9 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    dependencies = {
+      "JoosepAlviste/nvim-ts-context-commentstring"
+    },
     event = "BufReadPost",
     config = function()
       local status_ok, configs = pcall(require, "nvim-treesitter.configs")
@@ -62,7 +65,10 @@ return {
             goto_node = '<cr>',
             show_help = '?',
           },
-        }
+        },
+        context_commentstring = {
+          enable = true,
+        },
       })
 
       vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
