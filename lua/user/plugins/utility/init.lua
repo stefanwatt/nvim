@@ -7,7 +7,7 @@ return {
   require("user.plugins.utility.surround"),
   require("user.plugins.utility.tasks"),
   require("user.plugins.utility.misc"),
-  require("user.plugins.utility.hop"),
+  require("user.plugins.utility.leap"),
   require("user.plugins.utility.spectre"),
   require("user.plugins.utility.magic-bang"),
 }

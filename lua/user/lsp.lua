@@ -30,12 +30,15 @@ mason_lspconfig.setup({
 
 local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
 local lsp_attach = function(client, bufnr)
-  -- Create your keybindings here...
+  if client.name == 'emmet_ls' then
+    client.server_capabilities.completionProvider.triggerCharacters = { ".","#" }
+  end
 end
 
 local lspconfig = require('lspconfig')
 
 for k, server in pairs(servers) do
+  local capabilities = lsp_capabilities
   lspconfig[server].setup({
     on_attach = lsp_attach,
     capabilities = lsp_capabilities,
