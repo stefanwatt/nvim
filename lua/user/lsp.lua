@@ -22,17 +22,18 @@ local servers = {
   'rust_analyzer',
 }
 
+require("lsp-format").setup {}
 local mason_lspconfig = require('mason-lspconfig')
 mason_lspconfig.setup({
   ensure_installed = servers,
   automatic_installation = true,
 })
-
 local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
 local lsp_attach = function(client, bufnr)
   if client.name == 'emmet_ls' then
-    client.server_capabilities.completionProvider.triggerCharacters = { ".","#" }
+    client.server_capabilities.completionProvider.triggerCharacters = { ".", "#" }
   end
+  require("lsp-format").on_attach(client)
 end
 
 local lspconfig = require('lspconfig')

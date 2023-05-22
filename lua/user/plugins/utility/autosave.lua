@@ -7,7 +7,7 @@ return {
         -- The name of the augroup.
         augroup_name = "AutoSavePlug",
         -- The events in which to trigger an auto save.
-        events = { "InsertLeave", "TextChanged" },
+        events = { "InsertLeave", "TextChanged", "TextChangedI" },
         -- If you'd prefer to silence the output of `save_fn`.
         silent = true,
         -- If you'd prefer to write a vim command.
@@ -25,7 +25,7 @@ return {
         -- May define a timeout, or a duration to defer the save for - this allows
         -- for formatters to run, for example if they're configured via an autocmd
         -- that listens for `BufWritePre` event.
-        timeout = nil,
+        timeout = 3000,
         -- Define some filetypes to explicitly not save, in case our existing conditions
         -- don't quite catch all the buffers we'd prefer not to write to.
         exclude_ft = { "" },

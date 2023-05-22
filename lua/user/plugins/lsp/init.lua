@@ -6,8 +6,7 @@ return {
       -- LSP Support
       { 'neovim/nvim-lspconfig' },
       { 'williamboman/mason-lspconfig.nvim' },
-      -- Autocompletion
-
+      { 'lukas-reineke/lsp-format.nvim' },
     },
   },
   require("user.plugins.lsp.cmp"),

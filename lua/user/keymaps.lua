@@ -57,3 +57,6 @@ keymap("n", "<F13>", "<cmd>lua print('f13')<cr>", opts)
 keymap("n", "<F14>", "<cmd>lua print('f14')<cr>", opts)
 keymap("n", "<F15>", "<cmd>lua print('f15')<cr>", opts)
 keymap("n", "<F16>", "<cmd>lua print('f16')<cr>", opts)
+
+keymap("n", "<C-s>", "<Plug>(leap-backward-to)", { silent = true, noremap = true })
+keymap("n", "s", "<Plug>(leap-forward-to)", { silent = true, noremap = true })

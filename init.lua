@@ -17,4 +17,3 @@ require "user.lazy"
 require "user.autocommands"
 require "user.colorscheme"
 require "user.lsp"
-
