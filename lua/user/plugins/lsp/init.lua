@@ -15,4 +15,5 @@ return {
   require("user.plugins.lsp.lsp-lines"),
   require("user.plugins.lsp.lspkind"),
   require("user.plugins.lsp.misc"),
+  require("user.plugins.lsp.inlayhints"),
 }

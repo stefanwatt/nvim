@@ -38,10 +38,45 @@ end
 
 local lspconfig = require('lspconfig')
 
+local tsserverConfig = {
+  on_attach = lsp_attach,
+  capabilities = lsp_capabilities,
+  settings = {
+    typescript = {
+      inlayHints = {
+        includeInlayParameterNameHints = 'all',
+        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayVariableTypeHints = true,
+        includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayEnumMemberValueHints = true,
+      }
+    },
+    javascript = {
+      inlayHints = {
+        includeInlayParameterNameHints = 'all',
+        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayVariableTypeHints = true,
+        includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayEnumMemberValueHints = true,
+      }
+    }
+  }
+}
+
 for k, server in pairs(servers) do
   local capabilities = lsp_capabilities
-  lspconfig[server].setup({
-    on_attach = lsp_attach,
-    capabilities = lsp_capabilities,
-  })
+  if (server == 'tsserver') then
+    lspconfig[server].setup(tsserverConfig)
+  else
+    lspconfig[server].setup({
+      on_attach = lsp_attach,
+      capabilities = lsp_capabilities,
+    })
+  end
 end
