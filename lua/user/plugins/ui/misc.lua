@@ -1,6 +1,8 @@
 return {
   { "MunifTanjim/nui.nvim" },
-  { "kyazdani42/nvim-web-devicons" },
+  {
+    "kyazdani42/nvim-web-devicons",
+  },
   {
     "VonHeikemen/searchbox.nvim",
     commit = "4b8d3bb68283d27434d81b92424f1398fa9d739a",

@@ -1,5 +1,5 @@
 require("lazy").setup("user.plugins", {
-  defaults = { lazy = false },
+  defaults = { lazy = true },
   dev = {
     -- directory where you store your local plugin projects
     path = "~/Projects",
