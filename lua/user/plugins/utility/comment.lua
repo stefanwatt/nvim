@@ -3,12 +3,7 @@ return {
   version = '*',
   event = "VeryLazy",
   config = function()
-    local status_ok, comment = pcall(require, "mini.comment")
-    if not status_ok then
-      return
-    end
-
-    comment.setup {
+    require("mini.comment").setup {
       -- Options which control module behavior
       options = {
         -- Whether to ignore blank lines when adding comment

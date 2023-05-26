@@ -1,17 +1,11 @@
 return {
-  { 
-    lazy=false,
+  {
+    lazy = false,
     "goolord/alpha-nvim",
-    commit = "0bb6fc0646bcd1cdb4639737a1cee8d6e08bcc31",
+    dependencies = { "nvim-lua/plenary.nvim", "nvim-web-devicons" },
     config = function()
-      local status_ok, alpha = pcall(require, "alpha")
-      if not status_ok then
-        return
-      end
-      local path_ok, plenary_path = pcall(require, "plenary.path")
-      if not path_ok then
-        return
-      end
+      local alpha = require("alpha")
+      local plenary_path = require("plenary.path")
       local isometric = {
         [[      ___          ___          ___                                 ___     ]],
         [[     /__/\        /  /\        /  /\         ___       ___         /__/\    ]],
@@ -251,8 +245,11 @@ return {
           { type = "padding", val = 5 },
           header,
           { type = "padding", val = 2 },
-          { type = "text", val = "Quick Links",
-            opts = { hl = "SpecialComment", shrink_margin = false, position = "center" } },
+          {
+            type = "text",
+            val = "Quick Links",
+            opts = { hl = "SpecialComment", shrink_margin = false, position = "center" }
+          },
           top_buttons,
           favorites,
           { type = "padding", val = 1 },
@@ -277,7 +274,6 @@ return {
         },
       }
       alpha.setup(config)
-
     end
   }
 }

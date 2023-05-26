@@ -5,10 +5,7 @@ return {
     config = function()
       vim.fn.sign_define("DapBreakpoint", { text = "⬤", texthl = "DiagnosticSignError", linehl = "", numhl = "" })
       vim.fn.sign_define('DapStopped', { text = '⏭', texthl = 'DapStopped', linehl = 'DapStopped', numhl = 'DapStopped' })
-      local dap_status_ok, dap = pcall(require, "dap")
-      if not dap_status_ok then
-        return
-      end
+      local dap = require("dap")
 
       dap.configurations.java = {
         {
@@ -73,15 +70,8 @@ return {
     dependencies = { "mfussenegger/nvim-dap" },
     commit = "c8ce83a66deb0ca6f5af5a9f9d5fcc05a6d0f66b",
     config = function()
-      local dap_status_ok, dap = pcall(require, "dap")
-      if not dap_status_ok then
-        return
-      end
-
-      local dap_ui_status_ok, dapui = pcall(require, "dapui")
-      if not dap_ui_status_ok then
-        return
-      end
+      local dap = require("dap")
+      local dapui = require("dapui")
       dap.listeners.after.event_initialized["dapui_config"] = function()
         dapui.open()
       end
@@ -172,11 +162,7 @@ return {
     "ravenxrz/DAPInstall.nvim",
     commit = "8798b4c36d33723e7bba6ed6e2c202f84bb300de",
     config = function()
-      local dap_install_status_ok, dap_install = pcall(require, "dap-install")
-      if not dap_install_status_ok then
-        return
-      end
-
+      local dap_install = require("dap-install")
       dap_install.setup {}
 
       dap_install.config("python", {})

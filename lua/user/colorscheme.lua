@@ -1,5 +1,4 @@
 local function setupCatppuccin()
-
   vim.g.catppuccin_flavour = "frappe" -- latte, frappe, macchiato, mocha
   require("catppuccin").setup({
     dim_inactive = {
@@ -103,7 +102,4 @@ setupCatppuccin()
 --     overrides = {}, -- A dictionary of group names, each associated with a dictionary of parameters (`bg`, `fg`, `sp` and `style`) and colors in hex.
 -- })
 local colorscheme = "catppuccin"
-local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
-if not status_ok then
-  return
-end
+vim.cmd("colorscheme " .. colorscheme)

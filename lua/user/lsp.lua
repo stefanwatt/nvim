@@ -15,7 +15,7 @@ local servers = {
   'sqlls',
   'svelte',
   'tailwindcss',
-  'tsserver',
+  -- 'tsserver',
   'vimls',
   'lemminx',
   'yamlls',
@@ -72,7 +72,7 @@ local tsserverConfig = {
 for k, server in pairs(servers) do
   local capabilities = lsp_capabilities
   if (server == 'tsserver') then
-    lspconfig[server].setup(tsserverConfig)
+    -- lspconfig[server].setup(tsserverConfig)
   else
     lspconfig[server].setup({
       on_attach = lsp_attach,
@@ -80,3 +80,6 @@ for k, server in pairs(servers) do
     })
   end
 end
+
+require("lspconfig.configs").vtsls = require("vtsls").lspconfig -- set default server config
+require("lspconfig").vtsls.setup({ --[[ your custom server config here ]] })

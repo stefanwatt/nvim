@@ -4,10 +4,7 @@ return {
     keys = { { "<leader>" } },
     commit = "5ffa07bc53294db5cd87c4cc741b7f586fa253f7",
     config = function()
-      local status_ok, whichkey = pcall(require, "which-key")
-      if not status_ok then
-        return
-      end
+      local whichkey = require("which-key")
 
       local setup = {
         plugins = {

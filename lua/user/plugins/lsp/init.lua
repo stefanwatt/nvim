@@ -7,6 +7,7 @@ return {
       { 'neovim/nvim-lspconfig' },
       { 'williamboman/mason-lspconfig.nvim' },
       { 'lukas-reineke/lsp-format.nvim' },
+      { 'yioneko/nvim-vtsls' },
     },
   },
   require("user.plugins.lsp.cmp"),
