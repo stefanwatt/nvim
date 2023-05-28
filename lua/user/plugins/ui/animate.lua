@@ -13,29 +13,28 @@ return {
         end, { expr = true })
       end
       local animate = require("mini.animate")
-      local timing = animate.gen_timing.linear({ duration = 40, unit = "total" })
+      local timing = animate.gen_timing.cubic({ duration = 30, unit = "total" })
       animate.setup(
         {
           open = { enable = true },
           close = { enable = true },
           cursor = {
             enable = true,
-            timing = animate.gen_timing.cubic({ duration = 150, unit = "total" }),
-            path = animate.gen_path.angle({
+            timing = animate.gen_timing.cubic({ duration = 80, unit = "total" }),
+            path = animate.gen_path.line({
               predicate = function()
                 return true;
               end,
-              first_direction = "horizontal"
             })
 
           },
           resize = {
             enable = true,
-            timing,
+            timing=timing,
           },
           scroll = {
             enable = true,
-            timing,
+            timing=timing,
             subscroll = animate.gen_subscroll.equal({
               predicate = function(total_scroll)
                 if mouse_scrolled then
