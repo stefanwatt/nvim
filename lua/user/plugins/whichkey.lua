@@ -102,7 +102,7 @@ return {
         h = { "<cmd>nohlsearch<CR>", "no highlights" },
         n = { "<cmd>NoNeckPain<CR>", "No neck pain" },
         c = { "<cmd>lua MiniBufremove.delete()<CR>", "Close Buffer" },
-        C = { "<cmd>%bd|e#<CR><CR>", "Close all except current" },
+        C = { "<cmd>MiniBufremoveAllExceptCurrent<CR>", "Close all except current" },
         r = { "<cmd>lua require('spectre').open_file_search()<CR>", "Search and replace (file)" },
         R = { "<cmd>lua require('spectre').open()<CR>", "Search and replace (global)" },
         p = {
