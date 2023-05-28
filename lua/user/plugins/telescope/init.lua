@@ -17,6 +17,8 @@ return {
             i = {
               ["<Down>"] = actions.move_selection_next,
               ["<Up>"] = actions.move_selection_previous,
+              ["<C-Down>"] = actions.cycle_history_next,
+              ["<C-Up>"] = actions.cycle_history_prev,
             },
           },
         },

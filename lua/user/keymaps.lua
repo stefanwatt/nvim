@@ -27,10 +27,10 @@ keymap("n", "<C-Left>", "<C-w>h", opts)
 keymap("n", "<C-Right>", "<C-w>l", opts)
 
 -- Resize with arrows
-keymap("n", "<C-A-Up>", ":resize -2<CR>", opts)
-keymap("n", "<C-A-Down>", ":resize +2<CR>", opts)
-keymap("n", "<C-A-Left>", ":vertical resize -2<CR>", opts)
-keymap("n", "<C-A-Right>", ":vertical resize +2<CR>", opts)
+keymap("n", "<C-A-Up>", ":resize -10<CR>", opts)
+keymap("n", "<C-A-Down>", ":resize +10<CR>", opts)
+keymap("n", "<C-A-Left>", ":vertical resize -10<CR>", opts)
+keymap("n", "<C-A-Right>", ":vertical resize +10<CR>", opts)
 
 -- Navigate buffers
 keymap("n", "<S-Right>", ":bnext<CR>", opts)

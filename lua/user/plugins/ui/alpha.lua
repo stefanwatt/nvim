@@ -126,6 +126,7 @@ return {
         type = "group",
         val = {
           button("e", "  New file", ":ene <BAR> startinsert <CR>"),
+          button("l", "🖫  Restore last session", ":lua require('persistence').load({last=true})<CR>"),
         },
         position = "center"
       }

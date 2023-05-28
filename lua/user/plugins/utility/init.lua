@@ -10,4 +10,5 @@ return {
   require("user.plugins.utility.leap"),
   require("user.plugins.utility.spectre"),
   require("user.plugins.utility.magic-bang"),
+  require("user.plugins.utility.persistence"),
 }
