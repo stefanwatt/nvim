@@ -9,9 +9,10 @@ return {
     config = function()
       require("lspsaga").setup({})
       local keymap = vim.keymap.set
-      keymap("n", "gD", "<cmd>Lspsaga peek_definition<CR>", { silent = true })
-      keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { silent = true })
-      keymap("n", "K", "<cmd>Lspsaga hover_doc<CR>")
-   end
+      local opts = { silent = true }
+      keymap("n", "gD", "<cmd>Lspsaga peek_definition<CR>", opts)
+      keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+      keymap("n", "K", "<cmd>Lspsaga hover_doc<CR>", opts)
+    end
   },
 }

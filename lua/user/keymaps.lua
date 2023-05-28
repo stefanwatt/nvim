@@ -36,6 +36,7 @@ keymap("n", "<C-A-Right>", ":vertical resize +2<CR>", opts)
 keymap("n", "<S-Right>", ":bnext<CR>", opts)
 keymap("n", "<S-Left>", ":bprevious<CR>", opts)
 
+keymap("n", "gb", "<C-o>", opts)
 -- Better paste
 keymap("v", "p", '"_dP', opts)
 

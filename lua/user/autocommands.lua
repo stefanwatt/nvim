@@ -19,6 +19,14 @@ autocmd({ "FileType" }, {
   end,
 })
 
+
+autocmd({ "FileType" }, {
+  pattern = { "help" },
+  callback = function(opts)
+    vim.keymap.set("n", "gd", "<C-]>", { silent = true, buffer = opts.buf })
+  end,
+})
+
 vim.cmd "autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif"
 
 -- Fixes Autocomment

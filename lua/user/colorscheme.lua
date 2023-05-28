@@ -93,6 +93,14 @@ local function setupCatppuccin()
     },
     color_overrides = {},
     highlight_overrides = {},
+    custom_highlights = function(colors)
+      styles = { bg = colors.surface1, style = { "underline" } }
+      return {
+        IlluminatedWord= styles,
+        IlluminatedWordWrite = styles,
+        IlluminatedWordRead = styles,
+      }
+    end
   })
 end
 

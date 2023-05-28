@@ -9,5 +9,7 @@ return {
   require("user.plugins.ui.misc"),
   require("user.plugins.ui.reticle"),
   require("user.plugins.ui.colorschemes"),
-  require("user.plugins.ui.colorizer")
+  require("user.plugins.ui.colorizer"),
+  require("user.plugins.ui.animate"),
+  require("user.plugins.ui.illuminate")
 }
