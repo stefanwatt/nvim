@@ -98,8 +98,6 @@ return {
 					name = "Harpoon",
 					a = { "<cmd>lua require('harpoon.mark').add_file()<cr>", "add file mark " },
 					m = { "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>", "Quick menu" },
-					n = { "<cmd>lua require('harpoon.ui').nav_next()<cr>", "next mark" },
-					p = { "<cmd>lua require('harpoon.ui').nav_prev()<cr>", "prev mark" },
 					t = {
 						name = "Terminal",
 						t = { "<cmd>lua require('harpoon.term').gotoTerminal(1)<cr>", "Terminal 1" },

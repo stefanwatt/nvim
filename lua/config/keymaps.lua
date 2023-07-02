@@ -14,8 +14,11 @@ local opts = { silent = true }
 --   command_mode = "c",
 
 -- Normal --
+keymap("n", "<BS>", "ciw", opts)
+keymap("n", "<CR>", "ggVGy<C-o>zz", opts)
 keymap("n", "<leader>q", ":q!<CR>", opts)
 keymap("n", "<leader>w", ":w!<CR>", opts)
+keymap("n", "<leader>l", function() end, opts)
 keymap("n", "<C-d>", "<C-d>zz")
 keymap("n", "<C-u>", "<C-u>zz")
 -- Better window navigation

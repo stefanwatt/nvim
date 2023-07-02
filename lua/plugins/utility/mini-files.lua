@@ -17,7 +17,7 @@ return {
 				-- Module mappings created only inside explorer.
 				-- Use `''` (empty string) to not create one.
 				mappings = {
-					close = "q",
+					close = "<leader>q",
 					go_in_plus = "<Right>",
 					go_in = "L",
 					go_out_plus = "<Left>",
