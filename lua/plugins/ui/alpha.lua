@@ -3,6 +3,14 @@ return {
 		lazy = false,
 		"goolord/alpha-nvim",
 		dependencies = { "nvim-lua/plenary.nvim", "nvim-web-devicons" },
+		keys = {
+			{
+				"<leader>D",
+				mode = { "n" },
+				"<cmd>Alpha<cr>",
+				desc = "Dashboard",
+			},
+		},
 		config = function()
 			local alpha = require("alpha")
 			local plenary_path = require("plenary.path")

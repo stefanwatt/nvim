@@ -33,5 +33,49 @@ return {
 				rust_analyzer = {},
 			},
 		},
+		keys = {
+			{
+				"<leader>lR",
+				mode = { "n" },
+				"<cmd>lua vim.lsp.buf.references()<cr>",
+				desc = "References",
+			},
+			{
+				"<leader>ll",
+				mode = { "n" },
+				"<cmd>lua vim.diagnostic.config({ virtual_lines = { only_current_line = true } })<cr>",
+				desc = "Virtual Text current line",
+			},
+			{
+				"<leader>lo",
+				mode = { "n" },
+				"<cmd>LSoutlineToggle<CR>",
+				desc = "Toggle Outline",
+			},
+			{
+				"<leader>lI",
+				mode = { "n" },
+				"<cmd>Mason<cr>",
+				desc = "Installer Info",
+			},
+			{
+				"<leader>li",
+				mode = { "n" },
+				"<cmd>LspInfo<cr>",
+				desc = "Info",
+			},
+			{
+				"<leader>lh",
+				mode = { "n" },
+				"<cmd>IlluminationToggle<cr>",
+				desc = "Toggle Doc HL",
+			},
+			{
+				"<leader>lf",
+				mode = { "n" },
+				"<cmd>lua vim.lsp.buf.format()<cr>",
+				desc = "Format",
+			},
+		},
 	},
 }

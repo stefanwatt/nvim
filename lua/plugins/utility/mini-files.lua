@@ -2,6 +2,15 @@ return {
 	{
 		"echasnovski/mini.files",
 		version = false,
+		event = "VeryLazy",
+		keys = {
+			{
+				"<leader>e",
+				mode = { "n" },
+				"<cmd>lua MiniFiles.open()<cr>",
+				desc = "File Explorer",
+			},
+		},
 		config = function()
 			require("plugins.utility.my-files").setup({
 
