@@ -8,9 +8,6 @@ return {
 		event = "BufReadPost",
 		config = function()
 			local configs = require("nvim-treesitter.configs")
-
-			require("nvim-ts-autotag").setup()
-
 			configs.setup({
 				ensure_installed = "all", -- one of "all" or a list of languages
 				ignore_install = { "" }, -- List of parsers to ignore installing
@@ -20,7 +17,6 @@ return {
 				},
 				autotag = {
 					enable = true,
-					filetypes = { "html", "svelte" },
 				},
 				indent = { enable = true, disable = { "python", "css" } },
 				rainbow = {
@@ -86,4 +82,5 @@ return {
 	},
 	require("plugins.treesitter.splitjoin"),
 	require("plugins.treesitter.misc"),
+	require("plugins.treesitter.tagalong"),
 }

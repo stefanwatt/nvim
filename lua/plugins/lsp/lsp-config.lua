@@ -22,8 +22,21 @@ return {
 				emmet_ls = {},
 				html = {},
 				jsonls = {},
-				lua_ls = {},
+				lua_ls = {
+					mason = false, -- set to false if you don't want this server to be installed with mason
+					settings = {
+						Lua = {
+							workspace = {
+								checkThirdParty = false,
+							},
+							completion = {
+								callSnippet = "Replace",
+							},
+						},
+					},
+				},
 				marksman = {},
+				nil_ls = {},
 				sqlls = {},
 				svelte = {},
 				tailwindcss = {},

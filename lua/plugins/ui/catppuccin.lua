@@ -1,110 +1,149 @@
 return {
-  {
-    "catppuccin/nvim",
-    config = function()
-      vim.g.catppuccin_flavour = "frappe" -- latte, frappe, macchiato, mocha
-      require("catppuccin").setup({
-        dim_inactive = {
-          enabled = false,
-          shade = "dark",
-          percentage = 0.15,
+{
+  "catppuccin/nvim",
+  lazy = true,
+  name = "catppuccin",
+  opts = {
+    flavour = "frappe",
+    integrations = {
+      alpha = true,
+      cmp = true,
+      gitsigns = true,
+      illuminate = true,
+      indent_blankline = { enabled = true },
+      lsp_trouble = true,
+      mason = true,
+      mini = true,
+      native_lsp = {
+        enabled = true,
+        underlines = {
+          errors = { "undercurl" },
+          hints = { "undercurl" },
+          warnings = { "undercurl" },
+          information = { "undercurl" },
         },
-        transparent_background = false,
-        term_colors = false,
-        compile = {
-          enabled = false,
-          path = vim.fn.stdpath "cache" .. "/catppuccin",
-        },
-        styles = {
-          comments = { "italic" },
-          conditionals = { "italic" },
-          loops = {},
-          functions = {},
-          keywords = {},
-          strings = {},
-          variables = {},
-          numbers = {},
-          booleans = {},
-          properties = {},
-          types = {},
-          operators = {},
-        },
-        integrations = {
-          treesitter = true,
-          native_lsp = {
-            enabled = true,
-            virtual_text = {
-              errors = { "italic" },
-              hints = { "italic" },
-              warnings = { "italic" },
-              information = { "italic" },
-            },
-            underlines = {
-              errors = { "underline" },
-              hints = { "underline" },
-              warnings = { "underline" },
-              information = { "underline" },
-            },
-          },
-          coc_nvim = false,
-          lsp_trouble = false,
-          cmp = true,
-          lsp_saga = false,
-          gitgutter = false,
-          gitsigns = true,
-          leap = false,
-          telescope = true,
-          nvimtree = {
-            enabled = true,
-            show_root = true,
-            transparent_panel = false,
-          },
-          neotree = {
-            enabled = false,
-            show_root = true,
-            transparent_panel = false,
-          },
-          dap = {
-            enabled = false,
-            enable_ui = false,
-          },
-          which_key = false,
-          indent_blankline = {
-            enabled = true,
-            colored_indent_levels = false,
-          },
-          dashboard = true,
-          neogit = false,
-          vim_sneak = false,
-          fern = false,
-          barbar = false,
-          bufferline = true,
-          markdown = true,
-          lightspeed = false,
-          ts_rainbow = false,
-          ts_rainbow2 = true,
-          hop = false,
-          notify = true,
-          telekasten = true,
-          symbols_outline = true,
-          mini = false,
-          aerial = false,
-          vimwiki = true,
-          beacon = true,
-          navic = false,
-          overseer = false,
-        },
-        color_overrides = {},
-        highlight_overrides = {},
-        custom_highlights = function(colors)
-          styles = { bg = colors.surface1, style = { "underline" } }
-          return {
-            IlluminatedWord = styles,
-            IlluminatedWordWrite = styles,
-            IlluminatedWordRead = styles,
-          }
-        end
-      })
-    end
+      },
+      navic = { enabled = true, custom_bg = "lualine" },
+      neotest = true,
+      noice = true,
+      notify = true,
+      neotree = true,
+      semantic_tokens = true,
+      telescope = true,
+      treesitter = true,
+      which_key = true,
+    },
   },
+}
+  -- {
+  --   "catppuccin/nvim",
+  --   name = "catppuccin",
+  --   priority = 1000,
+  --   lazy = false,
+  --   config = function()
+  --     require("catppuccin").setup({
+  --       flavour = "frappe",
+  --       dim_inactive = {
+  --         enabled = false,
+  --         shade = "dark",
+  --         percentage = 0.15,
+  --       },
+  --       transparent_background = false,
+  --       term_colors = false,
+  --       compile = {
+  --         enabled = false,
+  --         path = vim.fn.stdpath "cache" .. "/catppuccin",
+  --       },
+  --       styles = {
+  --         comments = { "italic" },
+  --         conditionals = { "italic" },
+  --         loops = {},
+  --         functions = {},
+  --         keywords = {},
+  --         strings = {},
+  --         variables = {},
+  --         numbers = {},
+  --         booleans = {},
+  --         properties = {},
+  --         types = {},
+  --         operators = {},
+  --       },
+  --       integrations = {
+  --         treesitter = true,
+  --         native_lsp = {
+  --           enabled = true,
+  --           virtual_text = {
+  --             errors = { "italic" },
+  --             hints = { "italic" },
+  --             warnings = { "italic" },
+  --             information = { "italic" },
+  --           },
+  --           underlines = {
+  --             errors = { "underline" },
+  --             hints = { "underline" },
+  --             warnings = { "underline" },
+  --             information = { "underline" },
+  --           },
+  --         },
+  --         coc_nvim = false,
+  --         lsp_trouble = false,
+  --         cmp = true,
+  --         lsp_saga = false,
+  --         gitgutter = false,
+  --         gitsigns = true,
+  --         leap = false,
+  --         telescope = true,
+  --         nvimtree = {
+  --           enabled = true,
+  --           show_root = true,
+  --           transparent_panel = false,
+  --         },
+  --         neotree = {
+  --           enabled = false,
+  --           show_root = true,
+  --           transparent_panel = false,
+  --         },
+  --         dap = {
+  --           enabled = false,
+  --           enable_ui = false,
+  --         },
+  --         which_key = false,
+  --         indent_blankline = {
+  --           enabled = true,
+  --           colored_indent_levels = false,
+  --         },
+  --         dashboard = true,
+  --         neogit = false,
+  --         vim_sneak = false,
+  --         fern = false,
+  --         barbar = false,
+  --         bufferline = true,
+  --         markdown = true,
+  --         lightspeed = false,
+  --         ts_rainbow = false,
+  --         ts_rainbow2 = true,
+  --         hop = false,
+  --         notify = true,
+  --         telekasten = true,
+  --         symbols_outline = true,
+  --         mini = false,
+  --         aerial = false,
+  --         vimwiki = true,
+  --         beacon = true,
+  --         navic = false,
+  --         overseer = false,
+  --       },
+  --       color_overrides = {},
+  --       highlight_overrides = {},
+  --       custom_highlights = function(colors)
+  --         styles = { bg = colors.surface1, style = { "underline" } }
+  --         return {
+  --           IlluminatedWord = styles,
+  --           IlluminatedWordWrite = styles,
+  --           IlluminatedWordRead = styles,
+  --         }
+  --       end
+  --     })
+  --   end
+  -- },
 }

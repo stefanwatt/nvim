@@ -30,5 +30,6 @@ return {
         end,
       },
     })
+    vim.opt.formatoptions = "jcqlnt"
   end,
 }

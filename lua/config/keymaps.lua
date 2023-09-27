@@ -15,10 +15,11 @@ local opts = { silent = true }
 
 -- Normal --
 keymap("n", "<BS>", "ciw", opts)
-keymap("n", "<CR>", "ggVGy<C-o>zz", opts)
+keymap("n", "<CR>", "viwP", opts)
 keymap("n", "<leader>q", ":q!<CR>", opts)
 keymap("n", "<leader>w", ":w!<CR>", opts)
 keymap("n", "<leader>l", function() end, opts)
+keymap("n", "<C-s>", ":wall<CR>")
 keymap("n", "<C-d>", "<C-d>zz")
 keymap("n", "<C-u>", "<C-u>zz")
 -- Better window navigation
@@ -52,5 +53,14 @@ keymap("v", ">", ">gv", opts)
 
 keymap("n", "<leader><leader>x", "<cmd>so %<cr> :lua print('file reloaded')<cr>", opts)
 
-keymap("n", "<C-s>", "<Plug>(leap-backward-to)", { silent = true, noremap = true })
-keymap("n", "s", "<Plug>(leap-forward-to)", { silent = true, noremap = true })
+keymap("n", "s", function()
+	require("flash").jump({
+		search = {
+			mode = function(str)
+				return "\\<" .. str
+			end,
+		},
+	})
+end, { silent = true, noremap = true })
+
+keymap("v", "<leader><leader>s", "<Esc><cmd>SvelteExtractToComponent<cr>", opts)
