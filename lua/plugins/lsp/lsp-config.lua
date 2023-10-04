@@ -19,7 +19,6 @@ return {
 				bashls = {},
 				cssls = {},
 				eslint = {},
-				emmet_ls = {},
 				html = {},
 				jsonls = {},
 				lua_ls = {
