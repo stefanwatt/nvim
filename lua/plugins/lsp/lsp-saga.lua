@@ -33,7 +33,9 @@ return {
 			{ "nvim-treesitter/nvim-treesitter" },
 		},
 		config = function()
-			require("lspsaga").setup({})
+			require("lspsaga").setup({
+				symbol_in_winbar = { enable = false },
+			})
 			local keymap = vim.keymap.set
 			local opts = { silent = true }
 			keymap("n", "gD", "<cmd>Lspsaga peek_definition<CR>", opts)

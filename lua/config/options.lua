@@ -4,6 +4,7 @@
 vim.o.timeoutlen = 500
 vim.o.cmdheight = 0
 vim.o.laststatus = 0
+vim.o.swapfile = false
 vim.cmd([[
   if exists("g:neovide")
     set guifont=VictorMono\ Nerd\ Font:h12
