@@ -15,7 +15,7 @@ local opts = { silent = true }
 
 -- Normal --
 keymap("n", "<BS>", "ciw", opts)
-keymap("n", "<CR>", "viwP", opts)
+keymap("n", "<CR>", "ggVGy", opts)
 keymap("n", "<leader>q", ":q!<CR>", opts)
 keymap("n", "<leader>w", ":w!<CR>", opts)
 keymap("n", "<leader>l", function() end, opts)
