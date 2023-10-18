@@ -33,30 +33,30 @@ return {
 				"<cmd>lua require('telescope').extensions.diff.diff_files({ hidden = true })<cr>",
 				desc = "Buffers",
 			},
-			{
-				"<leader>fb",
-				mode = { "n" },
-				"<cmd>Telescope buffers<cr>",
-				desc = "Buffers",
-			},
+			-- {
+			-- 	"<leader>fb",
+			-- 	mode = { "n" },
+			-- 	"<cmd>Telescope buffers<cr>",
+			-- 	desc = "Buffers",
+			-- },
 			{
 				"<leader>fB",
 				mode = { "n" },
 				"<cmd>Telescope git_branches<cr>",
 				desc = "Checkout branch",
 			},
-			{
-				"<leader>ff",
-				mode = { "n" },
-				"<cmd>Telescope find_files find_command=rg,--ignore,--hidden,--files<cr>",
-				desc = "Find files",
-			},
-			{
-				"<leader>fw",
-				mode = { "n" },
-				"<cmd>Telescope live_grep<cr>",
-				desc = "Find word",
-			},
+			-- {
+			-- 	"<leader>ff",
+			-- 	mode = { "n" },
+			-- 	"<cmd>Telescope find_files find_command=rg,--ignore,--hidden,--files<cr>",
+			-- 	desc = "Find files",
+			-- },
+			-- {
+			-- 	"<leader>fw",
+			-- 	mode = { "n" },
+			-- 	"<cmd>Telescope live_grep<cr>",
+			-- 	desc = "Find word",
+			-- },
 			{
 				"<leader>fs",
 				mode = { "n" },

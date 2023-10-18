@@ -63,4 +63,4 @@ keymap("n", "s", function()
 	})
 end, { silent = true, noremap = true })
 
-keymap("v", "<leader><leader>s", "<Esc><cmd>SvelteExtractToComponent<cr>", opts)
+keymap("n", "<leader><leader>ff", "<cmd>lua MiniPick.builtin.files()<cr>", opts)

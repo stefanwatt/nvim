@@ -6,7 +6,8 @@
     "Lua.diagnostics.globals": [
         "require",
         "vim",
-        "jit"
+        "jit",
+        "MiniPick"
     ],
     "workspace.library": [
         "/home/stefan/.local/share/nvim/lazy/neodev.nvim/types/stable",
