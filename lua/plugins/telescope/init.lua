@@ -10,18 +10,6 @@ return {
 				name = "Find",
 			},
 			{
-				"<leader>ls",
-				mode = { "n" },
-				"<cmd>Telescope lsp_document_symbols<cr>",
-				desc = "Document Symbols",
-			},
-			{
-				"<leader>lS",
-				mode = { "n" },
-				"<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
-				desc = "Workspace Symbols",
-			},
-			{
 				"<leader>fd",
 				mode = { "n" },
 				"<cmd>lua require('telescope').extensions.diff.diff_current({ hidden = true })<cr>",
@@ -33,59 +21,11 @@ return {
 				"<cmd>lua require('telescope').extensions.diff.diff_files({ hidden = true })<cr>",
 				desc = "Buffers",
 			},
-			-- {
-			-- 	"<leader>fb",
-			-- 	mode = { "n" },
-			-- 	"<cmd>Telescope buffers<cr>",
-			-- 	desc = "Buffers",
-			-- },
-			{
-				"<leader>fB",
-				mode = { "n" },
-				"<cmd>Telescope git_branches<cr>",
-				desc = "Checkout branch",
-			},
-			-- {
-			-- 	"<leader>ff",
-			-- 	mode = { "n" },
-			-- 	"<cmd>Telescope find_files find_command=rg,--ignore,--hidden,--files<cr>",
-			-- 	desc = "Find files",
-			-- },
-			-- {
-			-- 	"<leader>fw",
-			-- 	mode = { "n" },
-			-- 	"<cmd>Telescope live_grep<cr>",
-			-- 	desc = "Find word",
-			-- },
-			{
-				"<leader>fs",
-				mode = { "n" },
-				"<cmd>Telescope lsp_document_symbols<cr>",
-				desc = "Find Symbols",
-			},
 			{
 				"<leader>fh",
 				mode = { "n" },
 				"<cmd>Telescope help_tags<cr>",
 				desc = "Help",
-			},
-			{
-				"<leader>fr",
-				mode = { "n" },
-				"<cmd>Telescope lsp_references<cr>",
-				desc = "References",
-			},
-			{
-				"<leader>fk",
-				mode = { "n" },
-				"<cmd>Telescope keymaps<cr>",
-				desc = "Keymaps",
-			},
-			{
-				"<leader>fc",
-				mode = { "n" },
-				"<cmd>Telescope commands<cr>",
-				desc = "Commands",
 			},
 			{
 				"<leader>ft",
@@ -137,4 +77,5 @@ return {
 	require("plugins.telescope.npm"),
 	require("plugins.telescope.projects"),
 	require("plugins.telescope.diff"),
+	require("plugins.telescope.mini-extras"),
 }
