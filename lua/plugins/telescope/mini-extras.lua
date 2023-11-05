@@ -63,8 +63,18 @@ return {
 						source = {
 							name = "Git Branches",
 							choose = function(item)
-								print(vim.inspect(item))
-								-- vim.cmd("Git switch " .. item.value)
+								local branch = item:match("%s+(%S+)%s+")
+								vim.fn.jobstart({ "git", "switch", branch }, {
+									stdout_buffered = true,
+									stderr_buffered = true,
+									on_stdout = function(_, data)
+										print("checked out " .. branch)
+									end,
+									on_stderr = function(_, data)
+										print("failed to check out " .. branch)
+										print(vim.inspect(data))
+									end,
+								})
 							end,
 						},
 					})

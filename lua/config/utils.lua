@@ -1,5 +1,26 @@
 local M = {}
 
+M.MoveBufferToOppositeWindow = function()
+	local current_buffer = vim.api.nvim_get_current_buf()
+	local current_window = vim.api.nvim_get_current_win()
+	local target_window = nil
+
+	for _, win in pairs(vim.api.nvim_list_wins()) do
+		if win ~= current_window then
+			if vim.bo.buftype == "" then
+				target_window = win
+				break
+			end
+		end
+	end
+
+	if target_window then
+		MiniBufremove.delete()
+		vim.api.nvim_set_current_win(target_window)
+		vim.api.nvim_set_current_buf(current_buffer)
+	end
+end
+
 M.getSubDirectories = function(dirname)
 	local dir = io.popen("ls " .. dirname)
 	local subdirectories = {}
