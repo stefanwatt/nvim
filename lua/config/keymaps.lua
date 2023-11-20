@@ -65,10 +65,10 @@ end, { silent = true, noremap = true })
 
 keymap("n", "<leader><leader>ff", "<cmd>lua MiniPick.builtin.files()<cr>", opts)
 
-keymap("n", "i", function()
-	if #vim.fn.getline(".") == 0 then
-		return [["_cc]]
-	else
-		return "i"
-	end
-end, { expr = true })
+-- keymap("n", "i", function()
+-- 	if #vim.fn.getline(".") == 0 then
+-- 		return [["_cc]]
+-- 	else
+-- 		return "i"
+-- 	end
+-- end, { expr = true })
