@@ -37,9 +37,6 @@ return {
 						show_help = "?",
 					},
 				},
-				context_commentstring = {
-					enable = true,
-				},
 			})
 
 			vim.lsp.handlers["textDocument/publishDiagnostics"] =

@@ -88,6 +88,12 @@ return {
 				"<cmd>lua vim.lsp.buf.format()<cr>",
 				desc = "Format",
 			},
+			{
+				"<leader>lr",
+				mode = { "n" },
+				"<cmd>lua vim.lsp.rename()<cr>",
+				desc = "LSP rename",
+			},
 		},
 	},
 }

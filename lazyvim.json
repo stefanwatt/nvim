@@ -1,15 +1,18 @@
 {
-  "hashes": { "/home/stefan/.local/share/nvim/lazy/LazyVim/NEWS.md": "2035" },
   "extras": [
-    "coding.copilot",
-    "coding.yanky",
-    "dap.core",
-    "dap.nlua",
-    "editor.mini-files",
-    "formatting.prettier",
-    "lang.tailwind",
-    "linting.eslint",
-    "test.core",
-    "ui.alpha"
-  ]
+    "lazyvim.plugins.extras.dap.core",
+    "lazyvim.plugins.extras.test.core",
+    "lazyvim.plugins.extras.coding.copilot",
+    "lazyvim.plugins.extras.coding.yanky",
+    "lazyvim.plugins.extras.dap.nlua",
+    "lazyvim.plugins.extras.editor.mini-files",
+    "lazyvim.plugins.extras.formatting.prettier",
+    "lazyvim.plugins.extras.lang.tailwind",
+    "lazyvim.plugins.extras.linting.eslint",
+    "lazyvim.plugins.extras.ui.alpha"
+  ],
+  "news": {
+    "NEWS.md": "2123"
+  },
+  "version": 2
 }
