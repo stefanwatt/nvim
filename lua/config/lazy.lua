@@ -6,7 +6,7 @@ if not vim.loop.fs_stat(lazypath) then
     lazypath })
 end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
-
+vim.g.sqlite_clib_path = os.getenv("SQLITE3_LIB")
 require("lazy").setup({
 	dev = {
 		path = "~/Projects/",
@@ -24,7 +24,8 @@ require("lazy").setup({
 			},
 		},
 		-- import any extras modules here
-		-- { import = "lazyvim.plugins.extras.lang.typescript" },
+		{ import = "lazyvim.plugins.extras.lang.java" },
+		{ import = "lazyvim.plugins.extras.lang.typescript" },
 		-- { import = "lazyvim.plugins.extras.lang.json" },
 		-- { import = "lazyvim.plugins.extras.ui.mini-animate" },
 		-- import/override with your plugins
