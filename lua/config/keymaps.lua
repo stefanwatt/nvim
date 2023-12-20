@@ -64,6 +64,7 @@ keymap("n", "s", function()
 end, { silent = true, noremap = true })
 
 keymap("n", "<leader><leader>ff", "<cmd>lua MiniPick.builtin.files()<cr>", opts)
+keymap("n", "<leader><leader>c", "<cmd>Col<cr>", opts)
 
 -- keymap("n", "i", function()
 -- 	if #vim.fn.getline(".") == 0 then
