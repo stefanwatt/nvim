@@ -1,13 +1,18 @@
 function show_col_in_hover_window()
+	vim.cmd("highlight InvisibleCursor guibg=bg guifg=bg")
 	local col = vim.api.nvim_eval('col(".")')
 	local Popup = require("nui.popup")
 
+	local originalWinNr = vim.api.nvim_get_current_win()
 	if not col then
 		print("No column number found")
 		return
 	end
 	local popup = Popup({
-		position = 1,
+		position = {
+			row = 0,
+			col = 2,
+		},
 		size = {
 			width = 3,
 			height = 1,
@@ -31,7 +36,7 @@ function show_col_in_hover_window()
 		},
 		win_options = {
 			winblend = 10,
-			winhighlight = "Normal:Normal,FloatBorder:FloatBorder",
+			winhighlight = "Normal:Normal,FloatBorder:FloatBorder,Cursor:InvisibleCursor",
 		},
 	})
 	popup:map("n", "q", function()
@@ -40,6 +45,7 @@ function show_col_in_hover_window()
 	popup:mount()
 	local bufnr = vim.api.nvim_get_current_buf()
 	vim.api.nvim_buf_set_lines(bufnr, 0, 1, false, { tostring(col) })
+	-- vim.api.nvim_set_current_win(originalWinNr)
 end
 
 vim.api.nvim_create_user_command("Col", "lua show_col_in_hover_window()", {
