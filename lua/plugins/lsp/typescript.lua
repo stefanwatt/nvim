@@ -10,7 +10,7 @@ return {
 				settings = {
 					separate_diagnostic_server = true,
 					publish_diagnostic_on = "insert_leave",
-          tsserver_path = "/run/current-system/sw/bin/tsserver",
+					tsserver_path = "/run/current-system/sw/bin/typescript-language-server",
 					tsserver_plugins = {},
 					tsserver_file_preferences = {
 						includeInlayParameterNameHints = "all",
