@@ -1,21 +1,4 @@
 local M = {}
--- M.highlightMatches = function(searchTerm, originalBufNr)
--- 	vim.api.nvim_buf_clear_namespace(originalBufNr, -1, 0, -1) -- Clear existing highlights
--- 	if searchTerm and #searchTerm > 0 then
--- 		vim.api.nvim_buf_clear_namespace(originalBufNr, -1, 0, -1) -- Clear existing highlights
---
--- 		local lines = vim.api.nvim_buf_get_lines(originalBufNr, 0, -1, false)
--- 		for i, line in ipairs(lines) do
--- 			local start, finish = string.find(line, searchTerm)
--- 			while start and finish do
--- 				vim.api.nvim_buf_add_highlight(originalBufNr, -1, "Search", i - 1, start - 1, finish)
--- 				start, finish = string.find(line, searchTerm, finish + 1)
--- 			end
--- 		end
--- 	else
--- 		vim.api.nvim_buf_clear_namespace(originalBufNr, -1, 0, -1) -- Clear highlights if search term is empty
--- 	end
--- end
 M.highlightMatches = function(searchTerm, originalBufNr, currentMatch)
 	vim.api.nvim_buf_clear_namespace(originalBufNr, -1, 0, -1) -- Clear existing highlights
 

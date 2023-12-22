@@ -46,7 +46,7 @@ function SearchInput.new(original_buf_id, original_window_id)
 	input = require("nui.input")(default_popup_options, {
 		on_change = function(value)
 			self.search_term = value
-			utils.highlightMatches(value, original_buf_id)
+			utils.highlightMatches(value, self.original_buf_id)
 		end,
 	})
 
