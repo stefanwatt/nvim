@@ -8,7 +8,8 @@
         "vim",
         "jit",
         "MiniPick",
-        "MiniExtra"
+        "MiniExtra",
+        "len"
     ],
     "workspace.library": [
         "/home/stefan/.local/share/nvim/lazy/neodev.nvim/types/stable",

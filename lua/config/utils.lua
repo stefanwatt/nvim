@@ -142,4 +142,12 @@ M.format = function(icon, text)
 	return M.icons[icon] .. " " .. text
 end
 
+local keymap = vim.keymap.set
+-- Silent keymap option
+local opts = { silent = true }
+
+M.keymap = function(mode, lhs, rhs, extra_opts)
+	local combined_opts = vim.tbl_extend("force", opts, extra_opts or {})
+	keymap(mode, lhs, rhs, combined_opts)
+end
 return M
