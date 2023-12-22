@@ -10,6 +10,10 @@ local original_buf_id = nil
 local original_window_id = nil
 ---@type string
 local search_term = ""
+---@type number
+local input_buf_id = nil
+---@type number
+local input_window_id = nil
 
 ---@type NuiInput
 local input = nil
@@ -58,6 +62,10 @@ function SearchInput.new(original_buf_id, original_window_id)
 		input:hide()
 	end, { noremap = true })
 
+	input:on("BufLeave", function()
+		input_buf_id = vim.api.nvim_get_current_buf()
+		input_window_id = vim.api.nvim_get_current_win()
+	end, {})
 	return self
 end
 
@@ -72,7 +80,8 @@ end
 function SearchInput:show()
 	if mounted then
 		input:show()
-		vim.api.nvim_win_set_cursor(input.winid, { 1, 1 })
+		local col = self.search_term ~= nil and #self.search_term + 1 or 1
+		vim.api.nvim_set_current_win(input_window_id)
 		return
 	end
 	input:mount()
