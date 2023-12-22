@@ -91,7 +91,7 @@ return {
 			{
 				"<leader>lr",
 				mode = { "n" },
-				"<cmd>lua vim.lsp.rename()<cr>",
+				"<cmd>lua vim.lsp.buf.rename()<cr>",
 				desc = "LSP rename",
 			},
 		},
