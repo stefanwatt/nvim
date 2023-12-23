@@ -1,0 +1,7 @@
+-- orchestrate showing/hiding of search and replace inputs
+-- get current match from search input
+-- get replace term from replace input
+-- handle the acutal replacing
+-- so search input must store/update current match when pressing enter
+--
+--
