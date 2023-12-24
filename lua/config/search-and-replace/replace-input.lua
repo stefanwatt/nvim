@@ -69,12 +69,7 @@ end
 function ReplaceInput:show()
 	if self.mounted then
 		self.nui_input:show()
-		local col = self.replace_term ~= nil and #self.replace_term + 1 or 1
-		vim.api.nvim_set_current_win(self.nui_input.winid)
-		if self.replace_term ~= nil then
-			vim.api.nvim_win_set_cursor(self.nui_input.winid, { 1, #self.replace_term })
-		end
-		vim.api.nvim_command("startinsert!")
+		self:focus()
 		return
 	end
 	self.nui_input:mount()
@@ -92,6 +87,15 @@ end
 
 function ReplaceInput:get_popup_opts()
 	return self.popup_options
+end
+
+function ReplaceInput:focus()
+	local col = self.replace_term ~= nil and #self.replace_term + 1 or 1
+	vim.api.nvim_set_current_win(self.nui_input.winid)
+	if self.replace_term ~= nil then
+		vim.api.nvim_win_set_cursor(self.nui_input.winid, { 1, #self.replace_term })
+	end
+	vim.api.nvim_command("startinsert!")
 end
 
 return ReplaceInput

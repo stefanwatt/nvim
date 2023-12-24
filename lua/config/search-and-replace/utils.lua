@@ -111,14 +111,14 @@ M.replace_current_match = function(replace_term, current_match, buf_id)
 		{}
 	)
 
-	vim.api.nvim_buf_set_text(
-		buf_id,
-		current_match.start_row,
-		current_match.start_col,
-		current_match.start_row,
-		current_match.start_col,
-		{ replace_term }
-	)
+	-- vim.api.nvim_buf_set_text(
+	-- 	buf_id,
+	-- 	current_match.start_row,
+	-- 	current_match.start_col,
+	-- 	current_match.start_row,
+	-- 	current_match.start_col,
+	-- 	{ replace_term }
+	-- )
 end
 
 ---@param search_term string

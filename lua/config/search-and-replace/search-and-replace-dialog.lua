@@ -13,6 +13,7 @@ local default_props = {
 	visible = false,
 	search_input = nil,
 	replace_input = nil,
+	focused_input = nil,
 	layout_options = nil,
 }
 
@@ -27,8 +28,29 @@ function SearchAndReplaceDialog.new(original_buf_id, original_window_id)
 	self.replace_input.nui_input:map("i", "<CR>", function()
 		outer_self:replace_current_match()
 	end, { noremap = true })
+
+	self.replace_input.nui_input:map("i", "<TAB>", function()
+		outer_self:focus_input(outer_self.search_input)
+	end, { noremap = true })
+	self.replace_input.nui_input:map("n", "<TAB>", function()
+		outer_self:focus_input(outer_self.search_input)
+	end, { noremap = true })
+
+	self.search_input.nui_input:map("i", "<TAB>", function()
+		outer_self:focus_input(outer_self.replace_input)
+	end, { noremap = true })
+	self.search_input.nui_input:map("n", "<TAB>", function()
+		outer_self:focus_input(outer_self.replace_input)
+	end, { noremap = true })
+
 	local outer_self = self
 	return self
+end
+
+---@param input SearchInput | ReplaceInput
+function SearchAndReplaceDialog:focus_input(input)
+	input:focus()
+	self.focused_input = input
 end
 
 function SearchAndReplaceDialog:replace_current_match()

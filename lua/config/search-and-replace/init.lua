@@ -12,7 +12,8 @@ local keymap = require("config.utils").keymap
 
 --foo
 --barfoobar
---bazfpppbaz
+--bazfoopbaz
+--foo
 -- TODO current_match seems to have off by one error
 -- add tab binding to switch between search and replace
 -- when opening search and replace dialog, set cursor on search input

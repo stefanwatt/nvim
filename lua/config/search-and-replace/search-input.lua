@@ -95,12 +95,7 @@ function SearchInput:show()
 	-- TODO dont need to run this logic if standalone == false
 	if self.mounted then
 		self.nui_input:show()
-		local col = self.search_term ~= nil and #self.search_term + 1 or 1
-		vim.api.nvim_set_current_win(self.nui_input.winid)
-		if self.search_term ~= nil then
-			vim.api.nvim_win_set_cursor(self.nui_input.winid, { 1, #self.search_term })
-		end
-		vim.api.nvim_command("startinsert!")
+		self:focus()
 		return
 	end
 	self.nui_input:mount()
@@ -121,6 +116,15 @@ end
 ---@return nui_popup_options
 function SearchInput:get_popup_opts()
 	return self.popup_options
+end
+
+function SearchInput:focus()
+	local col = self.search_term ~= nil and #self.search_term + 1 or 1
+	vim.api.nvim_set_current_win(self.nui_input.winid)
+	if self.search_term ~= nil then
+		vim.api.nvim_win_set_cursor(self.nui_input.winid, { 1, #self.search_term })
+	end
+	vim.api.nvim_command("startinsert!")
 end
 
 return SearchInput
