@@ -1,20 +1,33 @@
+---@class Match
+---@field start_col number
+---@field start_row number
+---@field end_row number
+---@field end_col number
+
 local utils = require("config.search-and-replace.utils")
+---@class SearchInput
+---@field mounted boolean
+---@field visible boolean
+---@field standalone boolean
+---@field original_buf_id? number
+---@field original_window_id? number
+---@field search_term? string
+---@field current_match? Match
+---@field nui_input? NuiInput
+---@field popup_options? nui_popup_options
 local SearchInput = {}
+
 SearchInput.__index = SearchInput
 
+---@type SearchInput
 local default_props = {
-	---@type boolean
 	mounted = false,
-	---@type number
+	visible = false,
+	standalone = true, -- is the search input being used on its own or in conjunction with a replace input?
 	original_buf_id = nil,
-	---@type number
 	original_window_id = nil,
-	---@type string
 	search_term = "",
-	---@type table {row: number, col: number}
 	current_match = nil,
-	---@type nui_popup_options
-	---@type NuiInput
 	nui_input = nil,
 	popup_options = {
 		enter = true,
@@ -37,27 +50,29 @@ local default_props = {
 	},
 }
 
--- Constructor
----comment
 ---@param original_buf_id number
 ---@param original_window_id number
-function SearchInput.new(original_buf_id, original_window_id)
+---@return SearchInput
+function SearchInput.new(original_buf_id, original_window_id, standalone)
 	local props = default_props
 	local self = setmetatable(props, SearchInput)
 	local outer_self = self
 	self.original_buf_id = original_buf_id
 	self.original_window_id = original_window_id
+	if standalone ~= nil then
+		self.standalone = standalone
+	end
 
 	self.nui_input = require("nui.input")(props.popup_options, {
 		on_change = function(value)
 			outer_self.search_term = value
-			utils.highlightMatches(value, outer_self.original_buf_id)
+			outer_self.current_match = utils.highlight_matches(value, outer_self.original_buf_id)
 		end,
 	})
 
 	self.nui_input:map("i", "<CR>", function()
 		outer_self.current_match =
-			utils.jumpToNextMatch(outer_self.search_term, outer_self.original_buf_id, outer_self.original_window_id)
+			utils.jump_to_next_match(outer_self.search_term, outer_self.original_buf_id, outer_self.original_window_id)
 	end, { noremap = true })
 
 	-- self.nui_input:map("i", "<Esc>", function()
@@ -66,15 +81,18 @@ function SearchInput.new(original_buf_id, original_window_id)
 	return self
 end
 
+---@param original_buf_id number
 function SearchInput:set_original_buf_id(original_buf_id)
 	self.original_buf_id = original_buf_id
 end
 
+---@param original_window_id number
 function SearchInput:set_original_window_id(original_window_id)
 	self.original_window_id = original_window_id
 end
 
 function SearchInput:show()
+	-- TODO dont need to run this logic if standalone == false
 	if self.mounted then
 		self.nui_input:show()
 		local col = self.search_term ~= nil and #self.search_term + 1 or 1
@@ -87,6 +105,7 @@ function SearchInput:show()
 	end
 	self.nui_input:mount()
 	self.mounted = true
+	self.visible = true
 end
 
 function SearchInput:hide()
@@ -96,10 +115,12 @@ function SearchInput:hide()
 	end
 	self.nui_input:unmount()
 	self.mounted = false
+	self.visible = false
 end
 
+---@return nui_popup_options
 function SearchInput:get_popup_opts()
-	return self.props.popup_options
+	return self.popup_options
 end
 
 return SearchInput

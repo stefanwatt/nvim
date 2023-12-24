@@ -24,6 +24,9 @@ end
 M.getSubDirectories = function(dirname)
 	local dir = io.popen("ls " .. dirname)
 	local subdirectories = {}
+	if not dir then
+		return subdirectories
+	end
 	for name in dir:lines() do
 		table.insert(subdirectories, name)
 	end
