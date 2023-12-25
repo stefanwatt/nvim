@@ -3,6 +3,7 @@
 ---@field start_row number
 ---@field end_row number
 ---@field end_col number
+---@field index number
 
 local utils = require("config.search-and-replace.utils")
 ---@class SearchInput
@@ -13,6 +14,7 @@ local utils = require("config.search-and-replace.utils")
 ---@field original_window_id? number
 ---@field search_term? string
 ---@field current_match? Match
+---@field matches? Match[]
 ---@field nui_input? NuiInput
 ---@field popup_options? nui_popup_options
 local SearchInput = {}
@@ -66,13 +68,25 @@ function SearchInput.new(original_buf_id, original_window_id, standalone)
 	self.nui_input = require("nui.input")(props.popup_options, {
 		on_change = function(value)
 			outer_self.search_term = value
-			outer_self.current_match = utils.highlight_matches(value, outer_self.original_buf_id)
+			outer_self.matches = utils.get_matches(value, outer_self.original_buf_id)
+			outer_self.current_match = outer_self.matches[1]
+			outer_self:apply_highlights()
 		end,
 	})
 
 	self.nui_input:map("i", "<CR>", function()
-		outer_self.current_match =
-			utils.jump_to_next_match(outer_self.search_term, outer_self.original_buf_id, outer_self.original_window_id)
+		if outer_self.current_match == nil or #outer_self.matches == 0 then
+			print("no matches")
+			return
+		end
+		if #outer_self.matches == 1 then
+			print("no other matches")
+			return
+		end
+
+		utils.apply_highlight(outer_self.current_match, outer_self.original_buf_id, "Search")
+		outer_self.current_match = outer_self:get_next_match(outer_self.current_match.index)
+		outer_self:apply_highlights()
 	end, { noremap = true })
 
 	-- self.nui_input:map("i", "<Esc>", function()
@@ -81,6 +95,16 @@ function SearchInput.new(original_buf_id, original_window_id, standalone)
 	return self
 end
 
+function SearchInput:apply_highlights()
+	vim.api.nvim_buf_clear_namespace(self.original_buf_id, -1, 0, -1) -- Clear existing highlights
+	for _, match in ipairs(self.matches) do
+		local hl_group = "Search"
+		if match == self.current_match then
+			hl_group = "IncSearch"
+		end
+		utils.apply_highlight(match, self.original_buf_id, hl_group)
+	end
+end
 ---@param original_buf_id number
 function SearchInput:set_original_buf_id(original_buf_id)
 	self.original_buf_id = original_buf_id
@@ -125,6 +149,25 @@ function SearchInput:focus()
 		vim.api.nvim_win_set_cursor(self.nui_input.winid, { 1, #self.search_term })
 	end
 	vim.api.nvim_command("startinsert!")
+end
+
+---@param current_index number
+function SearchInput:get_next_match(current_index)
+	if #self.matches[current_index] ~= nil then
+		return current_index + 1 > #self.matches and self.matches[1] or self.matches[current_index + 1]
+	end
+end
+
+---@param match Match
+function SearchInput:remove_match(match)
+	for i, m in ipairs(self.matches) do
+		if m == match then
+			table.remove(self.matches, i)
+			self.current_match = self:get_next_match(i)
+			break
+		end
+	end
+	self:apply_highlights()
 end
 
 return SearchInput

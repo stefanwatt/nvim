@@ -11,12 +11,15 @@ local Input = require("nui.input")
 local keymap = require("config.utils").keymap
 
 --foo
---barfoobar
---bazfoopbaz
+--barfoobarfoo
+--bazfoobaz
 --foo
--- TODO current_match seems to have off by one error
--- add tab binding to switch between search and replace
+
+-- TODO
 -- when opening search and replace dialog, set cursor on search input
+-- refactor
+-- when original buffer is updated -> update matches
+-- why dose tab binding no longer work after hiding+showing the dialog?
 
 ---@type SearchInput
 local search_input = nil

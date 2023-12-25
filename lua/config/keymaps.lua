@@ -65,3 +65,4 @@ end, { silent = true, noremap = true })
 
 keymap("n", "<leader><leader>ff", "<cmd>lua MiniPick.builtin.files()<cr>")
 keymap("n", "<leader><leader>c", "<cmd>Col<cr>")
+keymap("n", "<F5>", "<cmd>lua require('osv').launch({port=8086})<cr>")

@@ -2,40 +2,44 @@ local M = {}
 
 ---@param search_term string
 ---@param buf_id number
----@return Match?
-M.highlight_matches = function(search_term, buf_id)
-	vim.api.nvim_buf_clear_namespace(buf_id, -1, 0, -1) -- Clear existing highlights
-	local match = nil -- Initialize the Match object
+---@return table<Match>
+function M.get_matches(search_term, buf_id)
+	local matches = {}
 
 	if search_term and #search_term > 0 then
-		local cursor_pos = vim.api.nvim_win_get_cursor(0)
 		local lines = vim.api.nvim_buf_get_lines(buf_id, 0, -1, false)
-		local current_row, current_col = cursor_pos[1], cursor_pos[2] + 1 -- Cursor position in Lua is 1-based, and we need to convert to 0-based for indexing
+		local index = 1
 
 		for i, line in ipairs(lines) do
 			local start, finish = string.find(line, search_term)
 
 			while start and finish do
-				local hl_group = (i - 1 == current_row - 1 and start == current_col) and "IncSearch" or "Search"
-				vim.api.nvim_buf_add_highlight(buf_id, -1, hl_group, i - 1, start - 1, finish)
-
-				-- Populate the Match object if the current match corresponds to the cursor position
-				if not match then
-					match = {
-						start_col = start - 1,
-						start_row = current_row,
-						end_col = finish - 1,
-						end_row = current_row,
-					}
-				end
-
+				local match = {
+					start_col = start - 1,
+					start_row = i,
+					end_col = finish,
+					end_row = i,
+					index = index,
+				}
+				index = index + 1
+				table.insert(matches, match)
 				start, finish = string.find(line, search_term, finish + 1)
 			end
 		end
 	end
 
-	return match -- Return the Match object
+	return matches
 end
+
+---@param match Match
+---@param buf_id number
+---@param hl_group string
+function M.apply_highlight(match, buf_id, hl_group)
+	if match then
+		vim.api.nvim_buf_add_highlight(buf_id, -1, hl_group, match.start_row - 1, match.start_col, match.end_col)
+	end
+end
+
 local current_line, current_col
 
 ---@param search_term string
@@ -87,15 +91,10 @@ local function jump_to_next_match(search_term, original_buffer, original_window)
 				end
 			end
 		end
-
-		if match then
-			M.highlight_matches(search_term, original_buffer)
-		end
 	end
-
 	return match
 end
-M.jump_to_next_match = jump_to_next_match
+M.get_next_match = jump_to_next_match
 
 ---@param replace_term string
 ---@param current_match Match
@@ -104,21 +103,12 @@ M.jump_to_next_match = jump_to_next_match
 M.replace_current_match = function(replace_term, current_match, buf_id)
 	vim.api.nvim_buf_set_text(
 		buf_id,
-		current_match.start_row,
+		current_match.start_row - 1,
 		current_match.start_col,
-		current_match.end_row,
+		current_match.end_row - 1,
 		current_match.end_col,
-		{}
+		{ replace_term }
 	)
-
-	-- vim.api.nvim_buf_set_text(
-	-- 	buf_id,
-	-- 	current_match.start_row,
-	-- 	current_match.start_col,
-	-- 	current_match.start_row,
-	-- 	current_match.start_col,
-	-- 	{ replace_term }
-	-- )
 end
 
 ---@param search_term string
