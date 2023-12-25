@@ -124,4 +124,24 @@ M.replace_all = function(search_term, replace_term, buf_id)
 	vim.api.nvim_buf_set_lines(buf_id, 0, -1, false, lines)
 end
 
+M.is_match_in_viewport = function(match, winid)
+	local win_top = vim.api.nvim_win_get_cursor(winid)[1]
+	local win_bot = vim.api.nvim_win_get_height(winid) + win_top
+	return match.start_row >= win_top and match.end_row <= win_bot
+end
+
+---@param matches table<Match>
+M.get_closest_match_after_cursor = function(matches, win_id)
+	local closest_match = nil
+	local cursor_row, cursor_col = unpack(vim.api.nvim_win_get_cursor(win_id))
+	for _, match in ipairs(matches) do
+		local on_line_after = match.start_row > cursor_row
+		local on_same_line = match.start_row == cursor_row
+		local cursor_on_match = on_same_line and match.start_col <= cursor_col and match.end_col >= cursor_col
+		local on_same_line_after = not cursor_on_match and on_same_line and match.start_col >= cursor_col
+		if on_line_after or cursor_on_match or on_same_line_after then
+			return match
+		end
+	end
+end
 return M

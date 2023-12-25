@@ -60,7 +60,7 @@ function SearchAndReplaceDialog:replace_current_match()
 		utils.replace_current_match(replace_term, current_match, self.replace_input.original_buf_id)
 		local updated_matches = utils.get_matches(self.search_input.search_term, self.search_input.original_buf_id)
 		local updated_current_match = updated_matches[current_match.index]
-		self.search_input.current_match = updated_current_match
+		self.search_input:set_current_match(updated_current_match)
 		self.search_input.matches = updated_matches
 		self.search_input:apply_highlights()
 	end
@@ -69,6 +69,8 @@ end
 function SearchAndReplaceDialog:show()
 	self.search_input:show()
 	self.replace_input:show()
+	self.search_input:focus()
+	self.search_input:apply_highlights()
 	self.visible = true
 end
 
@@ -76,6 +78,7 @@ function SearchAndReplaceDialog:hide()
 	self.search_input:hide()
 	self.replace_input:hide()
 	self.visible = false
+	vim.api.nvim_buf_clear_namespace(self.search_input.original_buf_id, -1, 0, -1)
 end
 
 return SearchAndReplaceDialog

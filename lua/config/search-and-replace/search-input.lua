@@ -55,12 +55,13 @@ local default_props = {
 ---@param original_buf_id number
 ---@param original_window_id number
 ---@return SearchInput
-function SearchInput.new(original_buf_id, original_window_id, standalone)
+function SearchInput.new(original_buf_id, original_window_id, standalone, prefilled_search_term)
 	local props = default_props
 	local self = setmetatable(props, SearchInput)
 	local outer_self = self
 	self.original_buf_id = original_buf_id
 	self.original_window_id = original_window_id
+	self.search_term = prefilled_search_term
 	if standalone ~= nil then
 		self.standalone = standalone
 	end
@@ -68,9 +69,7 @@ function SearchInput.new(original_buf_id, original_window_id, standalone)
 	self.nui_input = require("nui.input")(props.popup_options, {
 		on_change = function(value)
 			outer_self.search_term = value
-			outer_self.matches = utils.get_matches(value, outer_self.original_buf_id)
-			outer_self.current_match = outer_self.matches[1]
-			outer_self:apply_highlights()
+			outer_self:update_matches(value)
 		end,
 	})
 
@@ -85,18 +84,18 @@ function SearchInput.new(original_buf_id, original_window_id, standalone)
 		end
 
 		utils.apply_highlight(outer_self.current_match, outer_self.original_buf_id, "Search")
-		outer_self.current_match = outer_self:get_next_match(outer_self.current_match.index)
+		local next_match = outer_self:get_next_match(outer_self.current_match.index)
+		outer_self:set_current_match(next_match)
 		outer_self:apply_highlights()
 	end, { noremap = true })
-
-	-- self.nui_input:map("i", "<Esc>", function()
-	--   self.nui_input:hide()
-	-- end, { noremap = true })
 	return self
 end
 
 function SearchInput:apply_highlights()
 	vim.api.nvim_buf_clear_namespace(self.original_buf_id, -1, 0, -1) -- Clear existing highlights
+	if not self.search_term or #self.search_term == 0 or self.matches == nil or #self.matches == 0 then
+		return
+	end
 	for _, match in ipairs(self.matches) do
 		local hl_group = "Search"
 		if match == self.current_match then
@@ -105,6 +104,7 @@ function SearchInput:apply_highlights()
 		utils.apply_highlight(match, self.original_buf_id, hl_group)
 	end
 end
+
 ---@param original_buf_id number
 function SearchInput:set_original_buf_id(original_buf_id)
 	self.original_buf_id = original_buf_id
@@ -117,23 +117,22 @@ end
 
 function SearchInput:show()
 	-- TODO dont need to run this logic if standalone == false
-	if self.mounted then
-		self.nui_input:show()
-		self:focus()
+	if not self.mounted then
+		self.nui_input:mount()
+		self.mounted = true
+		self.visible = true
 		return
 	end
-	self.nui_input:mount()
-	self.mounted = true
+	self.nui_input:show()
 	self.visible = true
+	self:focus()
 end
 
 function SearchInput:hide()
 	if not self.mounted then
-		self.nui_input:hide()
 		return
 	end
-	self.nui_input:unmount()
-	self.mounted = false
+	self.nui_input:hide()
 	self.visible = false
 end
 
@@ -163,10 +162,39 @@ function SearchInput:remove_match(match)
 	for i, m in ipairs(self.matches) do
 		if m == match then
 			table.remove(self.matches, i)
-			self.current_match = self:get_next_match(i)
+			self:set_current_match(self:get_next_match(i))
 			break
 		end
 	end
+	self:apply_highlights()
+end
+
+---@param match Match
+function SearchInput:set_current_match(match)
+	self.current_match = match
+	if match and not utils.is_match_in_viewport(match, self.original_window_id) then
+		vim.api.nvim_win_set_cursor(self.original_window_id, { match.start_row, match.start_col })
+		vim.api.nvim_set_current_win(self.original_window_id)
+		vim.api.nvim_command("normal zz")
+		self:focus()
+	end
+end
+
+---@param search_term? string
+function SearchInput:set_search_term(search_term)
+	if not search_term then
+		return
+	end
+	self.search_term = search_term
+	vim.api.nvim_buf_set_lines(self.nui_input.bufnr, 0, 1, false, { search_term })
+	self:update_matches(search_term)
+end
+
+---@param search_term? string
+function SearchInput:update_matches(search_term)
+	self.matches = utils.get_matches(search_term or self.search_term or "", self.original_buf_id)
+	local closest_match = utils.get_closest_match_after_cursor(self.matches, self.original_window_id)
+	self:set_current_match(closest_match)
 	self:apply_highlights()
 end
 

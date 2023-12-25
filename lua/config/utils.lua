@@ -153,4 +153,63 @@ M.keymap = function(mode, lhs, rhs, extra_opts)
 	local combined_opts = vim.tbl_extend("force", opts, extra_opts or {})
 	keymap(mode, lhs, rhs, combined_opts)
 end
+
+M.buf_vtext = function()
+	local a_orig = vim.fn.getreg("a")
+	local mode = vim.fn.mode()
+	if mode ~= "v" and mode ~= "V" then
+		vim.cmd([[normal! gv]])
+	end
+	vim.cmd([[silent! normal! "aygv]])
+	local text = vim.fn.getreg("a")
+	vim.fn.setreg("a", a_orig)
+	return tostring(text)
+end
+
+M.get_visual_selection = function()
+	vim.fn.setpos("'<", vim.fn.getpos("'<"))
+	vim.fn.setpos("'>", vim.fn.getpos("'>"))
+	local start_pos = vim.fn.getpos("'<") -- Get the start position of the visual selection
+	local end_pos = vim.fn.getpos("'>") -- Get the end position of the visual selection
+	if not start_pos or not end_pos then
+		return nil
+	end
+	local lines = vim.fn.getline(start_pos[2], end_pos[2]) -- Get the lines within the visual selection
+	if type(lines) == "string" then
+		local start_col = start_pos[3] - 1 -- Convert to 0-based indexing
+		local end_col = end_pos[3] - 1
+
+		-- Check for valid column values
+		if not start_col or not end_col then
+			return nil
+		end
+
+		return lines:sub(start_col + 1, end_col + 1)
+	end
+
+	if not lines then
+		return nil
+	end
+
+	if #lines == 1 then
+		local start_col = start_pos[3] - 1 -- Convert to 0-based indexing
+		local end_col = end_pos[3] - 1
+		return lines[1]:sub(start_col + 1, end_col + 1)
+	else
+		local result = {}
+		for i, line in ipairs(lines) do
+			if i == 1 then
+				local start_col = start_pos[3] - 1 -- Convert to 0-based indexing
+				result[#result + 1] = line:sub(start_col + 1)
+			elseif i == #lines then
+				local end_col = end_pos[3] - 1
+				result[#result + 1] = line:sub(1, end_col + 1)
+			else
+				result[#result + 1] = line
+			end
+		end
+		return table.concat(result, "\n")
+	end
+end
+
 return M

@@ -67,22 +67,20 @@ function ReplaceInput:set_original_window_id(original_window_id)
 end
 
 function ReplaceInput:show()
-	if self.mounted then
-		self.nui_input:show()
-		self:focus()
-		return
+	if not self.mounted then
+		print("mounting new replace input")
+		self.nui_input:mount()
+		self.mounted = true
 	end
-	self.nui_input:mount()
-	self.mounted = true
+	self.nui_input:show()
+	self:focus()
 end
 
 function ReplaceInput:hide()
 	if not self.mounted then
-		self.nui_input:hide()
 		return
 	end
-	self.nui_input:unmount()
-	self.mounted = false
+	self.nui_input:hide()
 end
 
 function ReplaceInput:get_popup_opts()

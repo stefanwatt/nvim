@@ -35,7 +35,6 @@ return {
 					},
 				},
 				marksman = {},
-				nil_ls = {},
 				sqlls = {},
 				svelte = {},
 				tailwindcss = {},
