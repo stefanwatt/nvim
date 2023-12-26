@@ -212,4 +212,19 @@ M.get_visual_selection = function()
 	end
 end
 
+M.merge_tables = function(...)
+	local tables = { ... }
+	local result = {}
+
+	for _, tbl in ipairs(tables) do
+		if type(tbl) == "table" then
+			for key, value in pairs(tbl) do
+				result[key] = value
+			end
+		end
+	end
+
+	return result
+end
+
 return M

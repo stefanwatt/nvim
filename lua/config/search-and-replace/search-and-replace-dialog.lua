@@ -55,10 +55,10 @@ end
 
 function SearchAndReplaceDialog:replace_current_match()
 	local current_match = self.search_input.current_match
-	local replace_term = self.replace_input.replace_term
+	local replace_term = self.replace_input.value
 	if replace_term and current_match then
 		utils.replace_current_match(replace_term, current_match, self.replace_input.original_buf_id)
-		local updated_matches = utils.get_matches(self.search_input.search_term, self.search_input.original_buf_id)
+		local updated_matches = utils.get_matches(self.search_input.value, self.search_input.original_buf_id)
 		local updated_current_match = updated_matches[current_match.index]
 		self.search_input:set_current_match(updated_current_match)
 		self.search_input.matches = updated_matches

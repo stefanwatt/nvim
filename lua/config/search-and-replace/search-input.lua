@@ -1,10 +1,3 @@
----@class Match
----@field start_col number
----@field start_row number
----@field end_row number
----@field end_col number
----@field index number
-
 local utils = require("config.search-and-replace.utils")
 ---@class SearchInput
 ---@field mounted boolean
@@ -12,7 +5,7 @@ local utils = require("config.search-and-replace.utils")
 ---@field standalone boolean
 ---@field original_buf_id? number
 ---@field original_window_id? number
----@field search_term? string
+---@field value? string
 ---@field current_match? Match
 ---@field matches? Match[]
 ---@field nui_input? NuiInput
@@ -21,84 +14,50 @@ local SearchInput = {}
 
 SearchInput.__index = SearchInput
 
----@type SearchInput
-local default_props = {
-	mounted = false,
-	visible = false,
-	standalone = true, -- is the search input being used on its own or in conjunction with a replace input?
-	original_buf_id = nil,
-	original_window_id = nil,
-	search_term = "",
-	current_match = nil,
-	nui_input = nil,
-	popup_options = {
-		enter = true,
-		focusable = true,
-		border = {
-			style = "rounded",
-			text = {
-				top = "Search",
-				top_align = "center",
-			},
-		},
-		position = {
-			row = 0,
-			col = "99%",
-		},
-		size = {
-			width = 15,
-			height = 1,
-		},
-	},
-}
-
 ---@param original_buf_id number
 ---@param original_window_id number
 ---@return SearchInput
 function SearchInput.new(original_buf_id, original_window_id, standalone, prefilled_search_term)
-	local props = default_props
+	local props = require("config.search-and-replace.constants").get_search_input_props()
 	local self = setmetatable(props, SearchInput)
 	local outer_self = self
 	self.original_buf_id = original_buf_id
 	self.original_window_id = original_window_id
-	self.search_term = prefilled_search_term
+	self.value = prefilled_search_term
 	if standalone ~= nil then
 		self.standalone = standalone
 	end
-
-	self:attach_nui_input(props)
+	self.nui_input = require("nui.input")(props.popup_options, {
+		on_change = function(value)
+			outer_self.value = value
+			outer_self:update_matches(value)
+		end,
+	})
 	self.nui_input:map("i", "<CR>", function()
-		if outer_self.current_match == nil or #outer_self.matches == 0 then
-			print("no matches")
-			return
-		end
-		if #outer_self.matches == 1 then
-			print("no other matches")
-			return
-		end
-
-		utils.apply_highlight(outer_self.current_match, outer_self.original_buf_id, "Search")
-		local next_match = outer_self:get_next_match(outer_self.current_match.index)
-		outer_self:set_current_match(next_match)
-		outer_self:apply_highlights()
+		outer_self:go_to_next_match()
 	end, { noremap = true })
 	return self
 end
 
----@param props SearchInput
-function SearchInput:attach_nui_input(props)
-	local outer_self = self
-	self.nui_input = require("nui.input")(props.popup_options, {
-		on_change = function(value)
-			outer_self.search_term = value
-			outer_self:update_matches(value)
-		end,
-	})
+function SearchInput:go_to_next_match()
+	if self.current_match == nil or #self.matches == 0 then
+		print("no matches")
+		return
+	end
+	if #self.matches == 1 then
+		print("no other matches")
+		return
+	end
+
+	utils.apply_highlight(self.current_match, self.original_buf_id, "Search")
+	local next_match = self:get_next_match(self.current_match.index)
+	self:set_current_match(next_match)
+	self:apply_highlights()
 end
 
 function SearchInput:apply_highlights()
 	vim.api.nvim_buf_clear_namespace(self.original_buf_id, -1, 0, -1) -- Clear existing highlights
-	if not self.search_term or #self.search_term == 0 or self.matches == nil or #self.matches == 0 then
+	if not self.value or #self.value == 0 or self.matches == nil or #self.matches == 0 then
 		return
 	end
 	for _, match in ipairs(self.matches) do
@@ -130,7 +89,6 @@ function SearchInput:show()
 	end
 	self.nui_input:update_layout({
 		relative = {
-			type = "win",
 			winid = self.original_window_id,
 		},
 	})
@@ -153,10 +111,10 @@ function SearchInput:get_popup_opts()
 end
 
 function SearchInput:focus()
-	local col = self.search_term ~= nil and #self.search_term + 1 or 1
+	local col = self.value ~= nil and #self.value + 1 or 1
 	vim.api.nvim_set_current_win(self.nui_input.winid)
-	if self.search_term ~= nil then
-		vim.api.nvim_win_set_cursor(self.nui_input.winid, { 1, #self.search_term })
+	if self.value ~= nil then
+		vim.api.nvim_win_set_cursor(self.nui_input.winid, { 1, #self.value })
 	end
 	vim.api.nvim_command("startinsert!")
 end
@@ -196,14 +154,14 @@ function SearchInput:set_search_term(search_term)
 	if not search_term then
 		return
 	end
-	self.search_term = search_term
+	self.value = search_term
 	vim.api.nvim_buf_set_lines(self.nui_input.bufnr, 0, 1, false, { search_term })
 	self:update_matches(search_term)
 end
 
 ---@param search_term? string
 function SearchInput:update_matches(search_term)
-	self.matches = utils.get_matches(search_term or self.search_term or "", self.original_buf_id)
+	self.matches = utils.get_matches(search_term or self.value or "", self.original_buf_id)
 	local closest_match = utils.get_closest_match_after_cursor(self.matches, self.original_window_id)
 	self:set_current_match(closest_match)
 	self:apply_highlights()

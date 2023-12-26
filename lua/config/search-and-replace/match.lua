@@ -1,0 +1,6 @@
+---@class Match
+---@field start_col number
+---@field start_row number
+---@field end_row number
+---@field end_col number
+---@field index number
