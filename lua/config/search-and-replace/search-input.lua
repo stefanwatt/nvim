@@ -43,7 +43,7 @@ local default_props = {
 		},
 		position = {
 			row = 0,
-			col = "100%",
+			col = "99%",
 		},
 		size = {
 			width = 15,
@@ -66,13 +66,7 @@ function SearchInput.new(original_buf_id, original_window_id, standalone, prefil
 		self.standalone = standalone
 	end
 
-	self.nui_input = require("nui.input")(props.popup_options, {
-		on_change = function(value)
-			outer_self.search_term = value
-			outer_self:update_matches(value)
-		end,
-	})
-
+	self:attach_nui_input(props)
 	self.nui_input:map("i", "<CR>", function()
 		if outer_self.current_match == nil or #outer_self.matches == 0 then
 			print("no matches")
@@ -89,6 +83,17 @@ function SearchInput.new(original_buf_id, original_window_id, standalone, prefil
 		outer_self:apply_highlights()
 	end, { noremap = true })
 	return self
+end
+
+---@param props SearchInput
+function SearchInput:attach_nui_input(props)
+	local outer_self = self
+	self.nui_input = require("nui.input")(props.popup_options, {
+		on_change = function(value)
+			outer_self.search_term = value
+			outer_self:update_matches(value)
+		end,
+	})
 end
 
 function SearchInput:apply_highlights()
@@ -123,6 +128,12 @@ function SearchInput:show()
 		self.visible = true
 		return
 	end
+	self.nui_input:update_layout({
+		relative = {
+			type = "win",
+			winid = self.original_window_id,
+		},
+	})
 	self.nui_input:show()
 	self.visible = true
 	self:focus()

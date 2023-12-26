@@ -10,21 +10,15 @@ local Input = require("nui.input")
 
 local keymap = require("config.utils").keymap
 
---foo
---barfoobarfoo
---bazfoobaz
---foo
-
 -- TODO
--- 1. dialog will always spawn relative to original window
--- 2. refactor
--- 6. you need to be able to search first(ctrl+f) then hit ctrl+h and have the search term and matches
+-- 1. refactor
+-- 2. you need to be able to search first(ctrl+f) then hit ctrl+h and have the search term and matches
 --    carry over to start replacing
--- 7. Add replace modes/flags (regex, ignore case, match whole word)
+-- 3. Add replace modes/flags (regex, ignore case, match whole word)
 --    toggle modes with keymap
 --    show mode indicator in the dialog
--- 8. when original buffer is updated -> update matches
--- 9. is multi-line replace working?
+-- 4. when original buffer is updated -> update matches
+-- 5. is multi-line replace working?
 
 ---@type SearchInput
 local search_input = nil
@@ -33,7 +27,6 @@ local search_and_replace_dialog = nil
 
 ---@param prefilled_search_term? string
 local function toggle_search_input(prefilled_search_term)
-	print(tostring(prefilled_search_term))
 	if search_input and search_input.visible then
 		search_input:hide()
 		return
@@ -59,7 +52,6 @@ end, { noremap = true, silent = true })
 keymap("v", "<C-f>", function()
 	-- get current selection and set it as the search term
 	local selection = require("config.utils").buf_vtext()
-	print("selection: " .. tostring(selection))
 	toggle_search_input(selection)
 end, { noremap = true, silent = true })
 
