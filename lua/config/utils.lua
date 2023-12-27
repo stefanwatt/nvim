@@ -227,4 +227,15 @@ M.merge_tables = function(...)
 	return result
 end
 
+---@param table table
+---@param cb function(value: any): boolean
+M.index_of = function(table, cb)
+	for index, value in ipairs(table) do
+		if cb(value) then
+			return index
+		end
+	end
+	return nil
+end
+
 return M

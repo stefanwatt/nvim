@@ -1,8 +1,14 @@
 local merge_tables = require("config.utils").merge_tables
 local M = {}
 
+local SEARCH_DIALOG_TITLE = "Search"
+local SEARCH_DIALOG_ROW = 1
+local REPLACE_DIALOG_TITLE = "Replace"
+local REPLACE_DIALOG_ROW = 4
+
 ---@param title string
 ---@param row number
+---@return nui_popup_options
 local function get_popup_options(title, row)
 	return {
 		enter = true,
@@ -28,30 +34,13 @@ local function get_popup_options(title, row)
 	}
 end
 
-local default_input_props = {
-	mounted = false,
-	original_buf_id = nil,
-	original_window_id = nil,
-	value = "",
-	nui_input = nil,
-	popup_options = {},
-}
----@type SearchInput
----@param user_props? SearchInput
-M.get_search_input_props = function(user_props)
-	local popup_options = merge_tables(get_popup_options("Search", 0), user_props and user_props.popup_options or {})
-	return merge_tables(default_input_props, {
-		visible = false,
-		standalone = true, -- is the search input being used on its own or in conjunction with a replace input?
-		current_match = nil,
-	}, user_props or {})
+---@return nui_popup_options
+M.get_search_dialog_popup_options = function()
+	return get_popup_options(SEARCH_DIALOG_TITLE, SEARCH_DIALOG_ROW)
 end
 
----@type ReplaceInput
----@param user_props? ReplaceInput
-M.get_replace_input_props = function(user_props)
-	local popup_options = merge_tables(get_popup_options("Replace", 4), user_props and user_props.popup_options or {})
-	return merge_tables(default_input_props, {}, user_props or {})
+---@return nui_popup_options
+M.get_replace_dialog_popup_options = function()
+	return get_popup_options(REPLACE_DIALOG_TITLE, REPLACE_DIALOG_ROW)
 end
-
 return M
