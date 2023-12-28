@@ -3,10 +3,11 @@ local event = require("nui.utils.autocmd").event
 
 local last_search_term = nil -- Global variable to store the last search term
 local Input = require("nui.input")
-
 local keymap = require("config.utils").keymap
+require("config.search-and-replace.commands")
 
 -- TODO
+-- 1. broken after toggling off then on
 -- 2. you need to be able to search first(ctrl+f) then hit ctrl+h and have the search term and matches
 --    carry over to start replacing
 -- 3. Add replace modes/flags (regex, ignore case, match whole word)

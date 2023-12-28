@@ -15,6 +15,14 @@ end
 ---@param matches Match[]
 ---
 M.highlight_matches = function(matches, current_match, buf_id)
+	if not matches then
+		print("no matches to be highlighted")
+		return
+	end
+	if not current_match then
+		print("must provide current match to highlight")
+		return
+	end
 	vim.api.nvim_buf_clear_namespace(buf_id, -1, 0, -1)
 	for _, match in ipairs(matches) do
 		local hl_group = match_equals(match, current_match) and HL_GROUP_CURRENT_MATCH or HL_GROUP_DEFAULT

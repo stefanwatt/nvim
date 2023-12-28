@@ -34,8 +34,16 @@ end
 function on_search_input_change(value)
 	search_dialog.value = value
 	search_dialog.matches = match.get_matches(value, search_dialog.source_buf_id)
+	if not search_dialog.matches then
+		print("no matches after on_change")
+		return
+	end
 	search_dialog.current_match =
 		match.get_closest_match_after_cursor(search_dialog.matches, search_dialog.source_win_id)
+	if not search_dialog.current_match then
+		print("no current match after on_change")
+		return
+	end
 	highlight.highlight_matches(search_dialog.matches, search_dialog.current_match, search_dialog.source_buf_id)
 end
 
@@ -59,7 +67,10 @@ end
 
 function apply_search_input_keymaps()
 	search_dialog.nui_input:map("i", "<CR>", function()
-		match.go_to_next_match()
+		local updated_current_match = match.get_next_match(search_dialog.current_match, search_dialog.matches)
+		print("next match: " .. tostring(vim.inspect(updated_current_match)))
+		update_current_match(updated_current_match)
+		highlight.highlight_matches(search_dialog.matches, search_dialog.current_match, search_dialog.source_buf_id)
 	end, { noremap = true })
 
 	search_dialog.nui_input:map("i", "<TAB>", function()
@@ -70,16 +81,26 @@ function apply_search_input_keymaps()
 	end, { noremap = true })
 end
 
----@param current_match Match
+---@param current_match? Match
 function update_current_match(current_match)
-	current_match = current_match
-	if current_match and not match.is_match_in_viewport(current_match, search_dialog.source_win_id) then
+	if not current_match then
+		return
+	end
+	search_dialog.current_match = current_match
+	if not match.is_match_in_viewport(current_match, search_dialog.source_win_id) then
 		vim.api.nvim_win_set_cursor(search_dialog.source_win_id, { current_match.start_row, current_match.start_col })
 		vim.api.nvim_set_current_win(search_dialog.source_win_id)
 		vim.api.nvim_command("normal zz")
 		focus_dialog(search_dialog)
 	end
 end
+
+function init_search_dialog()
+	local popup_options = constants.get_search_dialog_popup_options()
+	search_dialog.nui_input = create_search_input(popup_options)
+	apply_search_input_keymaps()
+end
+
 ------------------------------------------------------------------------------------------
 -----------------------------------REPLACE------------------------------------------------
 ------------------------------------------------------------------------------------------
@@ -99,7 +120,7 @@ end
 
 function apply_replace_input_keymaps()
 	replace_dialog.nui_input:map("i", "<CR>", function()
-		match.replace_current_match(replace_dialog.value, search_dialog.current_match, replace_dialog.source_buf_id)()
+		replace_current_match()
 	end, { noremap = true })
 
 	replace_dialog.nui_input:map("i", "<TAB>", function()
@@ -114,13 +135,19 @@ function replace_current_match()
 	local current_match = search_dialog.current_match
 	local replace_term = replace_dialog.value
 	if replace_term and current_match then
-		match.replace_current_match(replace_term, current_match, replace_dialog.source_buf_id)()
+		match.replace_current_match(replace_term, current_match, replace_dialog.source_buf_id)
 		local updated_matches = match.get_matches(search_dialog.value, search_dialog.source_buf_id)
 		local updated_current_match = updated_matches[current_match.index]
 		update_current_match(updated_current_match)
 		search_dialog.matches = updated_matches
 		highlight.highlight_matches(search_dialog.matches, updated_current_match, search_dialog.source_buf_id)
 	end
+end
+
+function init_replace_dialog()
+	local popup_options = constants.get_replace_dialog_popup_options()
+	replace_dialog.nui_input = create_replace_input(popup_options)
+	apply_replace_input_keymaps()
 end
 
 ------------------------------------------------------------------------------------------
@@ -139,6 +166,9 @@ end
 
 ---@param dialog SearchDialog | ReplaceDialog
 function show_dialog(dialog)
+	if dialog.visible then
+		return
+	end
 	if not dialog.mounted then
 		dialog.nui_input:mount()
 		dialog.mounted = true
@@ -160,7 +190,7 @@ end
 
 ---@param dialog SearchDialog | ReplaceDialog
 function hide_dialog(dialog, dialog_type)
-	if not dialog.mounted then
+	if not dialog.mounted or not dialog.visible then
 		return
 	end
 	dialog.nui_input:hide()
@@ -185,19 +215,24 @@ M.toggle_dialog = function(dialog_type, prefilled_search_term, source_buf_id, so
 	dialog.source_win_id = source_win_id
 	if not dialog.nui_input then
 		if dialog_type == "search" then
-			local popup_options = constants.get_search_dialog_popup_options()
-			dialog.nui_input = create_search_input(popup_options)
-			apply_search_input_keymaps()
+			init_search_dialog()
 		elseif dialog_type == "replace" then
-			local popup_options = constants.get_replace_dialog_popup_options()
-			dialog.nui_input = create_replace_input(popup_options)
-			apply_replace_input_keymaps()
+			if not search_dialog.visible then
+				init_search_dialog()
+				search_dialog.source_buf_id = source_buf_id
+				search_dialog.source_win_id = source_win_id
+				show_dialog(search_dialog)
+			end
+			init_replace_dialog()
 		end
 	end
 	if not dialog.visible then
 		show_dialog(dialog)
 	else
 		hide_dialog(dialog)
+		if dialog_type == "replace" then
+			hide_dialog(search_dialog)
+		end
 	end
 end
 

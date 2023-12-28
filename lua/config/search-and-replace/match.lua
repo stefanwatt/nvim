@@ -1,4 +1,4 @@
-local utils = require("config.utils")
+local utils = require("config.search-and-replace.utils")
 ---
 ---@class Match
 ---@field start_col number
@@ -14,6 +14,7 @@ local M = {}
 ---@param buf_id number
 ---@return table<Match>
 function M.get_matches(search_term, buf_id)
+	print("get_matches, buf_i/d", buf_id)
 	local matches = {}
 
 	if search_term and #search_term > 0 then
@@ -76,6 +77,8 @@ M.replace_current_match = function(replace_term, current_match, buf_id)
 	)
 end
 
+---@param match1 Match
+---@param match2 Match
 M.equals = function(match1, match2)
 	return match1.start_col == match2.start_col
 		and match1.start_row == match2.start_row
@@ -91,14 +94,14 @@ M.get_next_match = function(current_match, matches)
 		return
 	end
 
-	local current_index = utils.index_of(table, function(match)
+	local current_index = utils.index_of(matches, function(match)
 		return M.equals(match, current_match)
 	end)
 	if current_index == nil then
 		print("couldnt locate match in list of matches")
 		return
 	end
-	return current_index + 1 > matches and matches[1] or matches[current_index + 1]
+	return current_index + 1 > #matches and matches[1] or matches[current_index + 1]
 end
 
 return M
