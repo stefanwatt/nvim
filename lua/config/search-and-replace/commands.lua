@@ -14,6 +14,7 @@ end, {
 })
 
 vim.api.nvim_create_user_command("SearchAndReplaceDialogToggle", function()
+	print("search and replace toggle")
 	local source_buf_id = vim.api.nvim_get_current_buf()
 	local source_win_id = vim.api.nvim_get_current_win()
 	dialog_manager.toggle_dialog("replace", nil, source_buf_id, source_win_id)

@@ -4,7 +4,7 @@ local M = {}
 local SEARCH_DIALOG_TITLE = "Search"
 local SEARCH_DIALOG_ROW = 1
 local REPLACE_DIALOG_TITLE = "Replace"
-local REPLACE_DIALOG_ROW = 4
+local REPLACE_DIALOG_ROW = 3
 
 ---@param title string
 ---@param row number

@@ -189,13 +189,14 @@ function show_dialog(dialog)
 end
 
 ---@param dialog SearchDialog | ReplaceDialog
-function hide_dialog(dialog, dialog_type)
+function hide_dialog(dialog)
 	if not dialog.mounted or not dialog.visible then
 		return
 	end
 	dialog.nui_input:hide()
 	dialog.visible = false
 	if dialog.matches then
+		print("clear highlighths;source_buf_id=" .. tostring(dialog.source_buf_id))
 		vim.api.nvim_buf_clear_namespace(search_dialog.source_buf_id, -1, 0, -1)
 	end
 end
@@ -205,35 +206,45 @@ end
 ------------------------------------------------------------------------------------------
 local M = {}
 
----@param dialog_type "search" | "replace"
----@param prefilled_search_term? string
 ---@param source_buf_id number
 ---@param source_win_id number
-M.toggle_dialog = function(dialog_type, prefilled_search_term, source_buf_id, source_win_id)
-	local dialog = dialog_type == "search" and search_dialog or replace_dialog
-	dialog.source_buf_id = source_buf_id
-	dialog.source_win_id = source_win_id
-	if not dialog.nui_input then
-		if dialog_type == "search" then
-			init_search_dialog()
-		elseif dialog_type == "replace" then
-			if not search_dialog.visible then
-				init_search_dialog()
-				search_dialog.source_buf_id = source_buf_id
-				search_dialog.source_win_id = source_win_id
-				show_dialog(search_dialog)
-			end
-			init_replace_dialog()
-		end
+---@param prefilled_search_term? string
+M.toggle_search_dialog = function(source_buf_id, source_win_id, prefilled_search_term)
+	if not search_dialog.nui_input then
+		init_search_dialog()
 	end
-	if not dialog.visible then
-		show_dialog(dialog)
+	if not search_dialog.visible then
+		search_dialog.source_buf_id = source_buf_id
+		search_dialog.source_win_id = source_win_id
+		show_dialog(search_dialog)
 	else
-		hide_dialog(dialog)
-		if dialog_type == "replace" then
-			hide_dialog(search_dialog)
-		end
+		hide_dialog(search_dialog)
 	end
 end
 
+---@param source_buf_id number
+---@param source_win_id number
+---@param prefilled_search_term? string
+M.toggle_replace_dialog = function(source_buf_id, source_win_id, prefilled_search_term)
+	if not search_dialog.nui_input then
+		init_search_dialog()
+	end
+
+	if not replace_dialog.nui_input then
+		init_replace_dialog()
+	end
+
+	if replace_dialog.visible then
+		hide_dialog(replace_dialog)
+		hide_dialog(search_dialog)
+		return
+	end
+
+	if not search_dialog.visible then
+		search_dialog.source_buf_id = source_buf_id
+		search_dialog.source_win_id = source_win_id
+		show_dialog(search_dialog)
+	end
+	show_dialog(replace_dialog)
+end
 return M
