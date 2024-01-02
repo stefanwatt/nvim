@@ -22,12 +22,6 @@ return {
 				desc = "Buffers",
 			},
 			{
-				"<leader>fh",
-				mode = { "n" },
-				"<cmd>Telescope help_tags<cr>",
-				desc = "Help",
-			},
-			{
 				"<leader>ft",
 				mode = { "n" },
 				name = "Tasks",

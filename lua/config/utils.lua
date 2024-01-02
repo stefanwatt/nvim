@@ -238,4 +238,32 @@ M.index_of = function(table, cb)
 	return nil
 end
 
+---@param list table
+---@param cb function(value: any): boolean
+M.filter = function(list, cb)
+	local result = {}
+	for _, value in ipairs(list) do
+		if cb(value) then
+			table.insert(result, value)
+		end
+	end
+	return result
+end
+
+---@param list table
+---@param cb function(value: any): boolean
+M.find = function(list, cb)
+	for _, value in ipairs(list) do
+		if cb(value) then
+			return value
+		end
+	end
+	return nil
+end
+
+---@param win number
+M.is_help_window = function(win)
+	return vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(win), "buftype") == "help"
+end
+
 return M

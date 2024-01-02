@@ -2,10 +2,7 @@ local Layout = require("nui.layout")
 local dialog_manager = require("config.search-and-replace.dialog-manager")
 local event = require("nui.utils.autocmd").event
 local utils = require("config.search-and-replace.utils")
-
-local last_search_term = nil -- Global variable to store the last search term
 local Input = require("nui.input")
-local keymap = require("config.utils").keymap
 require("config.search-and-replace.commands")
 
 -- TODO
@@ -18,34 +15,34 @@ require("config.search-and-replace.commands")
 -- 4. when original buffer is updated -> update matches
 -- 5. is multi-line replace working?
 
-keymap("n", "<C-f>", function()
+vim.keymap.set("n", "<C-f>", function()
 	local source_buf_id = vim.api.nvim_get_current_buf()
 	local source_win_id = vim.api.nvim_get_current_win()
 	dialog_manager.toggle_search_dialog(source_buf_id, source_win_id)
 end, { noremap = true, silent = true })
-keymap("i", "<C-f>", function()
+vim.keymap.set("i", "<C-f>", function()
 	local source_buf_id = vim.api.nvim_get_current_buf()
 	local source_win_id = vim.api.nvim_get_current_win()
 	dialog_manager.toggle_search_dialog(source_buf_id, source_win_id)
 end, { noremap = true, silent = true })
-keymap("v", "<C-f>", function()
+vim.keymap.set("v", "<C-f>", function()
 	local selection = utils.buf_vtext()
 	local source_buf_id = vim.api.nvim_get_current_buf()
 	local source_win_id = vim.api.nvim_get_current_win()
 	dialog_manager.toggle_search_dialog(source_buf_id, source_win_id, selection)
 end, { noremap = true, silent = true })
 
-keymap("n", "<C-h>", function()
+vim.keymap.set("n", "<C-h>", function()
 	local source_buf_id = vim.api.nvim_get_current_buf()
 	local source_win_id = vim.api.nvim_get_current_win()
 	dialog_manager.toggle_replace_dialog(source_buf_id, source_win_id)
 end, { noremap = true, silent = true })
-keymap("i", "<C-h>", function()
+vim.keymap.set("i", "<C-h>", function()
 	local source_buf_id = vim.api.nvim_get_current_buf()
 	local source_win_id = vim.api.nvim_get_current_win()
 	dialog_manager.toggle_replace_dialog(source_buf_id, source_win_id)
 end, { noremap = true, silent = true })
-keymap("v", "<C-h>", function()
+vim.keymap.set("v", "<C-h>", function()
 	local selection = utils.buf_vtext()
 	local source_buf_id = vim.api.nvim_get_current_buf()
 	local source_win_id = vim.api.nvim_get_current_win()

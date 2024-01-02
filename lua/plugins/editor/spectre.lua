@@ -1,6 +1,7 @@
 return {
 	{
 		"nvim-pack/nvim-spectre",
+		enabled = false,
 		keys = {
 			{
 				"<leader>r",
