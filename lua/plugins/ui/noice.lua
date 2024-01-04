@@ -2,6 +2,7 @@ return {
 	{
 		"folke/noice.nvim",
 		event = "VeryLazy",
+		enabled = false,
 		opts = {
 			-- add any options here
 		},
@@ -10,6 +11,8 @@ return {
 			"rcarriga/nvim-notify",
 		},
 		config = function()
+			--create new buffer
+			local substitute_buf = vim.api.nvim_create_buf(true, false)
 			require("noice").setup({
 				lsp = {
 					override = {
@@ -30,6 +33,23 @@ return {
 				},
 				notify = {
 					enabled = false,
+				},
+				---@type NoiceRouteConfig[]
+				routes = {
+					{
+						filter = {
+							-- cmdline = true,
+							find = ":s/",
+						},
+						view = "cmdline_popup",
+						opts = {
+							buf_options = { substitute_buf },
+							render = function(buf, _, _, config)
+								print("nui buffer: " .. tostring(buf))
+								print(vim.inspect(config))
+							end,
+						},
+					},
 				},
 				views = {
 					cmdline_popup = {

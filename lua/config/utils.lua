@@ -250,8 +250,10 @@ M.filter = function(list, cb)
 	return result
 end
 
----@param list table
----@param cb function(value: any): boolean
+---@generic T
+---@param list `T`[]
+---@param cb function(value: `T`): `T`
+---@return `T` | nil
 M.find = function(list, cb)
 	for _, value in ipairs(list) do
 		if cb(value) then
@@ -261,9 +263,31 @@ M.find = function(list, cb)
 	return nil
 end
 
+---@generic T
+---@param list Array<`T`>
+---@param cb function(value: `T`): `T`
+M.map = function(list, cb)
+	local result = {}
+	for _, value in ipairs(list) do
+		table.insert(result, cb(value))
+	end
+	return result
+end
+
 ---@param win number
 M.is_help_window = function(win)
 	return vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(win), "buftype") == "help"
+end
+
+---@param buffer number
+M.get_window_of_buffer = function(buffer)
+	local windows = vim.api.nvim_list_wins() -- List all windows
+
+	for _, win in ipairs(windows) do
+		if vim.api.nvim_win_get_buf(win) == buffer then
+			return win
+		end
+	end
 end
 
 return M

@@ -4,14 +4,14 @@ local M = {}
 local SEARCH_DIALOG_TITLE = "Search"
 local SEARCH_DIALOG_ROW = 1
 local REPLACE_DIALOG_TITLE = "Replace"
-local REPLACE_DIALOG_ROW = 3
+local REPLACE_DIALOG_ROW = 4
 
 ---@param title string
 ---@param row number
 ---@return nui_popup_options
 local function get_popup_options(title, row)
 	return {
-		enter = true,
+		enter = false,
 		focusable = true,
 		border = {
 			style = "rounded",
@@ -35,12 +35,12 @@ local function get_popup_options(title, row)
 end
 
 ---@return nui_popup_options
-M.get_search_dialog_popup_options = function()
+M.get_search_popup_options = function()
 	return get_popup_options(SEARCH_DIALOG_TITLE, SEARCH_DIALOG_ROW)
 end
 
 ---@return nui_popup_options
-M.get_replace_dialog_popup_options = function()
+M.get_replace_popup_options = function()
 	return get_popup_options(REPLACE_DIALOG_TITLE, REPLACE_DIALOG_ROW)
 end
 return M

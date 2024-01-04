@@ -34,7 +34,7 @@ return {
 						},
 					},
 				},
-				marksman = {},
+				marksman = { mason = false, cmd = { "/run/current-system/sw/bin/marksman" } },
 				sqlls = {},
 				svelte = {},
 				tailwindcss = {},
