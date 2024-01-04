@@ -2,9 +2,9 @@ local merge_tables = require("config.utils").merge_tables
 local M = {}
 
 local SEARCH_DIALOG_TITLE = "Search"
-local SEARCH_DIALOG_ROW = 1
+local SEARCH_DIALOG_ROW = 5
 local REPLACE_DIALOG_TITLE = "Replace"
-local REPLACE_DIALOG_ROW = 4
+local REPLACE_DIALOG_ROW = 8
 
 ---@param title string
 ---@param row number
