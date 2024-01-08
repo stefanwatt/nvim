@@ -1,6 +1,7 @@
 return {
 	{
-		"stefanwatt/sandr",
+		dir = "~/Projects/sandr/",
+		dev = true,
 		opts = {
 			jump_forward = "<Tab>",
 			jump_backward = "<S-Tab>",

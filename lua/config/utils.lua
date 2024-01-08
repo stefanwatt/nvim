@@ -290,4 +290,19 @@ M.get_window_of_buffer = function(buffer)
 	end
 end
 
+---@param cb function
+M.debounce = function(cb, delay, ...)
+	local timer_id = nil
+	return function(...)
+		if timer_id ~= nil then
+			vim.fn.timer_stop(timer_id)
+		end
+		local args = { ... }
+		timer_id = vim.fn.timer_start(delay, function()
+			-- cb(unpack(args))
+			cb()
+		end)
+	end
+end
+
 return M

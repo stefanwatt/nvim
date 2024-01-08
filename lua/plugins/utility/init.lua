@@ -1,5 +1,6 @@
 return {
 	require("plugins.utility.tasks"),
+	require("plugins.utility.persistence"),
 	require("plugins.utility.bigfile"),
 	require("plugins.utility.comment"),
 	require("plugins.utility.surround"),
