@@ -20,7 +20,6 @@ return {
 				cssls = {},
 				eslint = {},
 				html = {},
-				jsonls = {},
 				lua_ls = {
 					mason = false, -- set to false if you don't want this server to be installed with mason
 					settings = {
@@ -40,7 +39,6 @@ return {
 				tailwindcss = {},
 				vimls = {},
 				lemminx = {},
-				yamlls = {},
 				rust_analyzer = {},
 			},
 		},

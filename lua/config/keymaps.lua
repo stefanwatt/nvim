@@ -66,3 +66,5 @@ vim.keymap.set("n", "<leader><leader>ff", "<cmd>lua MiniPick.builtin.files()<cr>
 vim.keymap.set("n", "<leader><leader>c", "<cmd>Col<cr>", opts)
 vim.keymap.set("n", "<leader><leader>y", ":lua", opts)
 vim.keymap.set("n", "<F5>", "<cmd>lua require('osv').launch({port=8086})<cr>", opts)
+
+vim.keymap.set("n", "<S-CR>", "lua print('') print('shift enter pressed')", opts)

@@ -1,5 +1,5 @@
 return {
-	-- require("plugins.lsp.lsp-saga"),
+	require("plugins.lsp.schemastore"),
 	require("plugins.lsp.lsp-lines"),
 	require("plugins.lsp.mason"),
 	require("plugins.lsp.typescript"),
