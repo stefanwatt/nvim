@@ -1,12 +1,7 @@
 return {
-	"VonHeikemen/lsp-zero.nvim",
-	branch = "v3.x",
+	"neovim/nvim-lspconfig",
 	dependencies = {
 		"folke/neodev.nvim",
-		"neovim/nvim-lspconfig",
-		"hrsh7th/cmp-nvim-lsp",
-		"hrsh7th/nvim-cmp",
-		"L3MON4D3/LuaSnip",
 		"williamboman/mason.nvim",
 		"williamboman/mason-lspconfig.nvim",
 		"b0o/SchemaStore.nvim",
@@ -15,22 +10,42 @@ return {
 	},
 	event = "VeryLazy",
 	config = function()
-		local lsp_zero = require("lsp-zero")
-		lsp_zero.on_attach(function(_, bufnr)
-			lsp_zero.default_keymaps({ buffer = bufnr })
-		end)
+		require("neodev").setup()
 		local servers = { "cssls", "eslint", "html", "svelte", "tailwindcss", "vimls" }
 		require("mason").setup({})
 		require("mason-lspconfig").setup({
 			ensure_installed = servers,
-			handlers = {
-				lsp_zero.default_setup,
-			},
+			automatic_installation = true,
 		})
 		require("plugins.lsp.cmp")
-		require("plugins.lsp.deno")
 		local lspconfig = require("lspconfig")
-		lspconfig.lua_ls.setup(lsp_zero.nvim_lua_ls())
+
+		lspconfig.lua_ls.setup({
+			mason = false,
+			settings = {
+				Lua = {
+					completion = {
+						callSnippet = "Replace",
+					},
+				},
+			},
+		})
+		lspconfig.denols.setup({
+			filetypes = { "typescript" },
+			init_options = {
+				enable = true,
+				unstable = true,
+				-- importMap = "/home/stefan/Projects/LeafLinkerBackend/supabase/functions/import_map.json",
+				importMap = "./supabase/functions/import_map.json",
+			},
+			root_dir = require("lspconfig").util.root_pattern("deno.json"),
+		})
+		local capabilities = require("cmp_nvim_lsp").default_capabilities()
+		for _, server in ipairs(servers) do
+			lspconfig[server].setup({
+				capabilities = capabilities,
+			})
+		end
 	end,
 	keys = {
 		{

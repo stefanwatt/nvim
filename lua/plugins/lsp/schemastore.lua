@@ -1,8 +1,9 @@
 return {
 	"b0o/SchemaStore.nvim",
+	dependencies = {
+		"neovim/nvim-lspconfig",
+	},
 	config = function()
-		local lsp_zero = require("lsp-zero")
-		lsp_zero.extend_lspconfig()
 		local schemastore = require("schemastore")
 		local lspconfig = require("lspconfig")
 		local capabilities = vim.lsp.protocol.make_client_capabilities()

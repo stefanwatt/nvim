@@ -1,8 +1,7 @@
 return {
 	"pmizio/typescript-tools.nvim",
+	event = "BufReadPre",
 	config = function()
-		local lsp_zero = require("lsp-zero")
-		lsp_zero.extend_lspconfig()
 		require("typescript-tools").setup({
 			on_attach = function(bufnr) end,
 			settings = {
