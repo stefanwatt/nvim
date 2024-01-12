@@ -1,9 +1,11 @@
 return {
-  require("plugins.ui.catppuccin"),
-  {
-    "nvim-tree/nvim-web-devicons",
-    config=function ()
-      require'nvim-web-devicons'.setup({})
-    end
-  }
+	require("plugins.ui.alpha"),
+	require("plugins.ui.catppuccin"),
+	require("plugins.ui.colorizer"),
+	require("plugins.ui.devicons"),
+	require("plugins.ui.illuminate"),
+	require("plugins.ui.indent-blank-line"),
+	require("plugins.ui.lualine"),
+	require("plugins.ui.noice"),
+	require("plugins.ui.whichkey"),
 }

@@ -1,16 +1,17 @@
 return {
-  {
-    "kdheepak/lazygit.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-    keys = {
-      {
-        "<leader>gg",
-        mode={"n"},
-        "<cmd>LazyGit<cr>",
-        desc="LazyGit"
-      }
-    }
-  },
+	{
+		"kdheepak/lazygit.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
+		keys = {
+			{
+				"<leader>gg",
+				mode = { "n" },
+				"<cmd>LazyGit<cr>",
+				desc = "LazyGit",
+			},
+		},
+	},
+	require("plugins.git.gitsigns"),
 }

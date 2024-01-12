@@ -1,5 +1,5 @@
 -- Silent keymap option
-vim.g.mapleader =' '
+vim.g.mapleader = " "
 local opts = { silent = true }
 
 -- Normal --
@@ -65,4 +65,14 @@ vim.keymap.set("n", "s", function()
 end, { silent = true, noremap = true })
 
 vim.keymap.set("n", "<F5>", "<cmd>lua require('osv').launch({port=8086})<cr>", opts)
-
+vim.keymap.set("n", "<leader>v", "<cmd>vsplit<cr>", opts)
+vim.keymap.set("n", "<leader>H", "<cmd>nohlsearch<CR>", opts)
+vim.keymap.set("n", "<leader><leader>p", "Print", opts)
+vim.keymap.set("n", "<leader><leader>pw", "<cmd>lua print(vim.api.nvim_get_current_win())<CR>", opts)
+vim.keymap.set("n", "<leader><leader>pb", "<cmd>lua print(vim.api.nvim_get_current_buf())<CR>", opts)
+vim.keymap.set(
+	"n",
+	"<leader><leader>pft",
+	"<cmd>lua print(vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(0), 'buftype'))<CR>",
+	opts
+)
