@@ -1,7 +1,6 @@
 return {
-{ 
 	'stefanwatt/mini.files',
-	version = false,
+  commit="adf56c3c673c483d9c1d08f1b26db99defcf0204",
 	config=function()
 		require('mini.files').setup({
 				mappings = {
@@ -23,18 +22,16 @@ return {
 					close_on_file_opened = true,
 					open_on_current_dir = true,
 				},
-    }) 
+    })
 	end,
 	keys = {
 		{
 			"<leader>e",
 			mode={"n"},
 			function()
-				MiniFiles.open() 
+				MiniFiles.open()
 			end,
 			desc="File Explorer"
 		}
-
-		}
-	},
+  }
 }
