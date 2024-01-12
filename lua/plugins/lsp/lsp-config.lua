@@ -1,35 +1,22 @@
 return {
 	"neovim/nvim-lspconfig",
 	dependencies = {
-		"folke/neodev.nvim",
+		{ "folke/neodev.nvim", opts = {} },
 		"williamboman/mason.nvim",
 		"williamboman/mason-lspconfig.nvim",
-		"b0o/SchemaStore.nvim",
 		"nvim-lua/plenary.nvim",
-		"pmizio/typescript-tools.nvim",
 	},
 	event = "VeryLazy",
 	config = function()
 		require("neodev").setup()
-		local servers = { "cssls", "eslint", "html", "svelte", "tailwindcss", "vimls" }
+		local lspconfig = require("lspconfig")
+		local servers = { "cssls", "emmet_language_server", "eslint", "html", "svelte", "tailwindcss", "vimls" }
 		require("mason").setup({})
 		require("mason-lspconfig").setup({
 			ensure_installed = servers,
-			automatic_installation = true,
+			automatic_installation = false,
 		})
-		require("plugins.lsp.cmp")
-		local lspconfig = require("lspconfig")
 
-		lspconfig.lua_ls.setup({
-			mason = false,
-			settings = {
-				Lua = {
-					completion = {
-						callSnippet = "Replace",
-					},
-				},
-			},
-		})
 		lspconfig.denols.setup({
 			filetypes = { "typescript" },
 			init_options = {
@@ -46,6 +33,7 @@ return {
 				capabilities = capabilities,
 			})
 		end
+		require("plugins.lsp.lua_ls")
 	end,
 	keys = {
 		{
