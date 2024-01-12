@@ -10,15 +10,13 @@ return {
 		"williamboman/mason.nvim",
 		"williamboman/mason-lspconfig.nvim",
 		"b0o/SchemaStore.nvim",
-		"pmizio/typescript-tools.nvim",
 		"nvim-lua/plenary.nvim",
+		"pmizio/typescript-tools.nvim",
 	},
 	event = "VeryLazy",
 	config = function()
 		local lsp_zero = require("lsp-zero")
 		lsp_zero.extend_lspconfig()
-		require("plugins.lsp.typescript-tools")
-		require("plugins.lsp.schemastore")
 		lsp_zero.on_attach(function(_, bufnr)
 			lsp_zero.default_keymaps({ buffer = bufnr })
 		end)
@@ -30,6 +28,7 @@ return {
 			},
 		})
 		require("plugins.lsp.cmp")
+		require("plugins.lsp.deno")
 	end,
 	keys = {
 		{

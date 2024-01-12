@@ -7,6 +7,5 @@ return {
 			options = { "buffers", "curdir", "tabpages", "winsize", "skiprtp" }, -- sessionoptions used for saving
 			save_empty = false, -- don't save if there are no open file buffers
 		})
-		require("persistence").load({ last = true })
 	end,
 }
