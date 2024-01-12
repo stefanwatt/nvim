@@ -1,6 +1,7 @@
 return {
 	require("plugins.lsp.clear-action"),
 	require("plugins.lsp.conform"),
+	require("plugins.lsp.copilot"),
 	require("plugins.lsp.cmp"),
 	require("plugins.lsp.nvim-lint"),
 	require("plugins.lsp.lsp-config"),
