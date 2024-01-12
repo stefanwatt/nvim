@@ -141,7 +141,7 @@ M.icons = {
 	Download = "󰇚",
 }
 
-M.format = function(icon, text)
+M.format_icons = function(icon, text)
 	return M.icons[icon] .. " " .. text
 end
 
