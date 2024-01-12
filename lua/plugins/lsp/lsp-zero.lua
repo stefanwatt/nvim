@@ -16,19 +16,21 @@ return {
 	event = "VeryLazy",
 	config = function()
 		local lsp_zero = require("lsp-zero")
-		lsp_zero.extend_lspconfig()
 		lsp_zero.on_attach(function(_, bufnr)
 			lsp_zero.default_keymaps({ buffer = bufnr })
 		end)
+		local servers = { "cssls", "eslint", "html", "svelte", "tailwindcss", "vimls" }
 		require("mason").setup({})
 		require("mason-lspconfig").setup({
-			ensure_installed = { "cssls", "eslint", "html", "svelte", "tailwindcss", "vimls" },
+			ensure_installed = servers,
 			handlers = {
 				lsp_zero.default_setup,
 			},
 		})
 		require("plugins.lsp.cmp")
 		require("plugins.lsp.deno")
+		local lspconfig = require("lspconfig")
+		lspconfig.lua_ls.setup(lsp_zero.nvim_lua_ls())
 	end,
 	keys = {
 		{

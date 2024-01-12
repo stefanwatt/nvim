@@ -30,7 +30,7 @@ return {
 			"<leader>e",
 			mode = { "n" },
 			function()
-				MiniFiles.open()
+				require("mini.files").open()
 			end,
 			desc = "File Explorer",
 		},
