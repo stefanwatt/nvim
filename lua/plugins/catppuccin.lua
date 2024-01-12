@@ -1,8 +1,7 @@
 return {
-	{
 		"catppuccin/nvim",
-		lazy = true,
 		name = "catppuccin",
+    priority = 1000,
 		opts = {
 			flavour = "frappe",
 			integrations = {
@@ -33,6 +32,16 @@ return {
 				treesitter = true,
 				which_key = true,
 			},
+
 		},
-	},
+  config = function()
+    require("catppuccin").setup {
+      color_overrides = {
+          frappe = {
+              base = "#272a38",
+          },
+      }
+    }
+    vim.cmd.colorscheme "catppuccin-frappe"
+  end
 }
