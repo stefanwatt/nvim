@@ -1,8 +1,11 @@
 return {
 	{
 		dir = "~/Projects/sandr/",
-		enabled = false,
+		-- enabled = false,
 		dev = true,
+		config = function()
+			require("sandr").setup()
+		end,
 		opts = {
 			jump_forward = "<Tab>",
 			jump_backward = "<S-Tab>",
