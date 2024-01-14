@@ -10,7 +10,7 @@ return {
 	config = function()
 		require("neodev").setup()
 		local lspconfig = require("lspconfig")
-		local servers = { "cssls", "emmet_language_server", "eslint", "html", "svelte", "tailwindcss", "vimls" }
+		local servers = {"gopls", "cssls", "emmet_language_server", "eslint", "html", "svelte", "tailwindcss", "vimls" }
 		require("mason").setup({})
 		require("mason-lspconfig").setup({
 			ensure_installed = servers,

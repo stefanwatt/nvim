@@ -5,7 +5,6 @@ return {
 	},
 	event = "BufReadPre",
 	config = function()
-		print("setting up typescript")
 		require("typescript-tools").setup({
 			on_attach = function(bufnr) end,
 			settings = {
