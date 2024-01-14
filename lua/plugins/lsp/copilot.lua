@@ -4,7 +4,7 @@ return {
 	dependencies = {
 		"zbirenbaum/copilot.lua",
 	},
-	cmd = "Copilot",
+	event = "BufReadPre",
 	build = ":Copilot auth",
 	opts = {
 		suggestion = { enabled = false },
