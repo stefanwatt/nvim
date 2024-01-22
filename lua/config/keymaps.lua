@@ -40,8 +40,8 @@ vim.keymap.set("n", "<C-A-Right>", ":vertical resize +10<CR>", opts)
 vim.keymap.set("n", "<S-Right>", ":bnext<CR>", opts)
 vim.keymap.set("n", "<S-Left>", ":bprevious<CR>", opts)
 vim.keymap.set("n", "gb", "<C-o>", opts)
-vim.keymap.set("n", "db", "vdb", opts)
-vim.keymap.set("n", "cb", "vcb", opts)
+vim.keymap.set("n", "db", "vbd", opts)
+vim.keymap.set("n", "cb", "vbc", opts)
 -- Better paste
 vim.keymap.set("v", "p", '"_dP', opts)
 
