@@ -20,19 +20,7 @@ return {
 				cssls = {},
 				eslint = {},
 				html = {},
-				lua_ls = {
-					mason = false, -- set to false if you don't want this server to be installed with mason
-					settings = {
-						Lua = {
-							workspace = {
-								checkThirdParty = false,
-							},
-							completion = {
-								callSnippet = "Replace",
-							},
-						},
-					},
-				},
+				lua_ls = require("plugins.lsp.lua-ls"),
 				marksman = { mason = false, cmd = { "/run/current-system/sw/bin/marksman" } },
 				sqlls = {},
 				svelte = {},
