@@ -2,7 +2,10 @@ return {
 	{
 		"echasnovski/mini.files",
 		version = false,
-		event = "VeryLazy",
+		lazy = false,
+		opts = {
+			use_as_default_explorer = true,
+		},
 		keys = {
 			{
 				"<leader>e",

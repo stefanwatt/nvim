@@ -20,6 +20,7 @@ return {
 			desc = "Running",
 		},
 	},
+	enabled = false,
 	dependencies = {
 		"nvim-telescope/telescope.nvim",
 		"elianiva/telescope-npm.nvim",

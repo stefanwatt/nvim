@@ -53,7 +53,7 @@ vim.keymap.set("n", "s", function()
 end, { silent = true, noremap = true })
 
 vim.keymap.set("n", "<leader><leader>ff", "<cmd>lua MiniPick.builtin.files()<cr>", opts)
-vim.keymap.set("n", "<leader><leader>c", "<cmd>Col<cr>", opts)
+-- vim.keymap.set("n", "<leader><leader>c", "<cmd>Col<cr>", opts)
 vim.keymap.set("n", "<leader><leader>y", ":lua", opts)
 vim.keymap.set("n", "<F5>", "<cmd>lua require('osv').launch({port=8086})<cr>", opts)
 

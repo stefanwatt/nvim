@@ -20,13 +20,3 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 		})
 	end,
 })
-
--- local persistence = require("persistence")
--- vim.api.nvim_create_autocmd("BufWritePost", {
--- 	group = augroup("save_session"),
--- 	pattern = "*",
--- 	callback = function(args)
--- 		persistence.save()
--- 	end,
--- })
---

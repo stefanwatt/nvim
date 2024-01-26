@@ -1,7 +1,6 @@
 return {
 	"b0o/schemastore.nvim",
 	dependencies = { "neovim/nvim-lspconfig" },
-	enabled = false,
 	event = "VeryLazy",
 	version = false,
 	config = function()

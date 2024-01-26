@@ -1,6 +1,7 @@
 return {
 	{
 		"jemag/telescope-diff.nvim",
+		enabled = false,
 		dependencies = {
 			{ "nvim-telescope/telescope.nvim" },
 		},
