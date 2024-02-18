@@ -10,6 +10,14 @@ return {
 				name = "Find",
 			},
 			{
+				"<leader>/",
+				false,
+			},
+			{
+				"<leader>fr",
+				false,
+			},
+			{
 				"<leader>fd",
 				mode = { "n" },
 				"<cmd>lua require('telescope').extensions.diff.diff_current({ hidden = true })<cr>",

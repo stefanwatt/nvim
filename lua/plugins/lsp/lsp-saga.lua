@@ -27,6 +27,24 @@ return {
 				"<cmd>Lspsaga rename<CR>",
 				desc = "Rename",
 			},
+			{
+				"gD",
+				mode = { "n" },
+				"<cmd>Lspsaga peek_definition<CR>",
+				desc = "Peek definition",
+			},
+			{
+				"gd",
+				mode = { "n" },
+				"<cmd>lua vim.lsp.buf.definition()<CR>",
+				desc = "Go to definition",
+			},
+			{
+				"K",
+				mode = { "n" },
+				"<cmd>Lspsaga hover_doc()<CR>",
+				desc = "Hover doc",
+			},
 		},
 		dependencies = {
 			{ "nvim-tree/nvim-web-devicons" },
@@ -35,12 +53,10 @@ return {
 		config = function()
 			require("lspsaga").setup({
 				symbol_in_winbar = { enable = false },
+				ui = {
+					code_action = "",
+				},
 			})
-			local keymap = vim.keymap.set
-			local opts = { silent = true }
-			keymap("n", "gD", "<cmd>Lspsaga peek_definition<CR>", opts)
-			keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-			keymap("n", "K", "<cmd>Lspsaga hover_doc<CR>", opts)
 		end,
 	},
 }

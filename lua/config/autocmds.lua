@@ -20,3 +20,23 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 		})
 	end,
 })
+
+vim.api.nvim_create_autocmd("BufWritePost", {
+	group = augroup("persistence"),
+	pattern = "*",
+	callback = function()
+		require("persistence").save()
+	end,
+})
+
+-- vim.api.nvim_create_autocmd({ "VimEnter", "WinNew", "WinClosed" }, {
+-- 	group = augroup("NoNeckPain"),
+-- 	pattern = "*",
+-- 	callback = function()
+-- 		if #vim.api.nvim_list_wins() > 1 then
+-- 			NoNeckPain.disable()
+-- 		else
+-- 			NoNeckPain.enable()
+-- 		end
+-- 	end,
+-- })

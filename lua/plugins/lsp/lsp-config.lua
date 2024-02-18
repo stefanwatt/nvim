@@ -79,6 +79,12 @@ return {
 				"<cmd>lua vim.lsp.buf.rename()<cr>",
 				desc = "LSP rename",
 			},
+			{
+				"<leader>fr",
+				mode = { "n" },
+				"<cmd>lua vim.lsp.buf.references()<cr>",
+				desc = "find references",
+			},
 		},
 	},
 }

@@ -4,6 +4,7 @@ return {
 	{
 		"luckasRanarison/clear-action.nvim",
 		event = "VeryLazy",
+		enabled = false,
 		opts = {
 			signs = {
 				show_count = false,

@@ -1,6 +1,6 @@
 return {
 	require("plugins.utility.tasks"),
-	-- require("plugins.utility.persistence"),
+	require("plugins.utility.persistence"),
 	require("plugins.utility.cd-project-nvim"),
 	require("plugins.utility.copilot-chat"),
 	require("plugins.utility.bigfile"),

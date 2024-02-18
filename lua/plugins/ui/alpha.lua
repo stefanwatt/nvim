@@ -124,9 +124,10 @@ return {
 			local favorites = {
 				type = "group",
 				val = {
-					file_button("~/.config/i3/config", "w", "i3wm config"),
+					file_button("~/.config/my-hypr/hyprland.conf", "w", "wm config"),
+					file_button("~/.config/nixos/flake.nix", "x", "nixos config"),
 					file_button("~/.config/nvim/init.lua", "n", "nvim config"),
-					button("p", "  projects", ":Telescope projects<CR>"),
+					button("p", "  projects", ":CdProject<CR>"),
 				},
 				position = "center",
 			}

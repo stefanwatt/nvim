@@ -2,14 +2,6 @@ return {
 	{
 		dir = "~/Projects/sandr/",
 		dev = true,
-		enabled = false,
-		opts = {
-			jump_forward = "<Tab>",
-			jump_backward = "<S-Tab>",
-			completion = "<C-Space>",
-			flags = "gc",
-			range = "%",
-		},
 		keys = {
 			{
 				"<C-h>",

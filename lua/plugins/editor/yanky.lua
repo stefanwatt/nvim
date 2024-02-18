@@ -1,6 +1,7 @@
 return {
 	{
 		"gbprod/yanky.nvim",
+		pin = true,
 		event = "VeryLazy",
 		dependencies = { { "kkharji/sqlite.lua", enabled = not jit.os:find("Windows") } },
 		opts = {
