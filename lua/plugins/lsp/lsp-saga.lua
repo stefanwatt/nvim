@@ -2,6 +2,7 @@ return {
 	{
 		"glepnir/lspsaga.nvim",
 		event = "LspAttach",
+		enabled = false,
 		keys = {
 			{
 				"<leader>la",

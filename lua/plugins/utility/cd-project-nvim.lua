@@ -1,6 +1,7 @@
 return {
 	{
 		dir = "~/Projects/cd-project.nvim/",
+		enabled = false,
 		dev = true,
 		lazy = false,
 		keys = {

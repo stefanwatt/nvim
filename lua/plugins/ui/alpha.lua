@@ -121,13 +121,14 @@ return {
 				return file_button_el
 			end
 
+			local paths = require("config.paths")
 			local favorites = {
 				type = "group",
 				val = {
-					file_button("~/.config/my-hypr/hyprland.conf", "w", "wm config"),
+					file_button(paths.wm_config, "w", "wm config"),
 					file_button("~/.config/nixos/flake.nix", "x", "nixos config"),
 					file_button("~/.config/nvim/init.lua", "n", "nvim config"),
-					button("p", "  projects", ":CdProject<CR>"),
+					button("p", "  projects", ":Telescope projects<CR>"),
 				},
 				position = "center",
 			}

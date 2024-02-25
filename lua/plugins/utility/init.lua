@@ -1,5 +1,6 @@
 return {
 	require("plugins.utility.tasks"),
+	require("plugins.utility.auto-session"),
 	require("plugins.utility.persistence"),
 	require("plugins.utility.cd-project-nvim"),
 	require("plugins.utility.copilot-chat"),
