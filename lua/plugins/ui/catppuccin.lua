@@ -4,6 +4,9 @@ return {
 	priority = 1000,
 	opts = {
 		flavour = "frappe",
+		styles = {
+			comments = {},
+		},
 		integrations = {
 			alpha = true,
 			cmp = true,
@@ -22,7 +25,7 @@ return {
 					information = { "undercurl" },
 				},
 			},
-			navic = { enabled = false, custom_bg = "lualine" },
+			-- navic = { enabled = false, custom_bg = "lualine" },
 			neotest = true,
 			noice = true,
 			notify = true,
@@ -35,6 +38,9 @@ return {
 	},
 	config = function()
 		require("catppuccin").setup({
+			styles = {
+				comments = {},
+			},
 			color_overrides = {
 				frappe = {
 					base = "#272a38",

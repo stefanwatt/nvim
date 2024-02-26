@@ -1,7 +1,6 @@
 return {
 	{
 		"folke/noice.nvim",
-		enabled = false,
 		event = "VeryLazy",
 		opts = {
 			-- add any options here
@@ -34,23 +33,6 @@ return {
 				notify = {
 					enabled = false,
 				},
-				---@type NoiceRouteConfig[]
-				routes = {
-					{
-						filter = {
-							-- cmdline = true,
-							find = ":s/",
-						},
-						view = "cmdline_popup",
-						opts = {
-							buf_options = { substitute_buf },
-							render = function(buf, _, _, config)
-								print("nui buffer: " .. tostring(buf))
-								print(vim.inspect(config))
-							end,
-						},
-					},
-				},
 				views = {
 					cmdline_popup = {
 						position = {
@@ -65,7 +47,7 @@ return {
 					popupmenu = {
 						relative = "editor",
 						position = {
-							row = "55%",
+							row = "40%",
 							col = "50%",
 						},
 						size = {

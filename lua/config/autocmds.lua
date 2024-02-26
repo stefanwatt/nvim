@@ -78,3 +78,11 @@ vim.api.nvim_create_autocmd("VimEnter", {
 		vim.cmd("SessionRestore")
 	end,
 })
+
+vim.api.nvim_create_autocmd({ "BufWritePre", "WinNew", "BufEnter" }, {
+	group = augroup("auto-session"),
+	pattern = "*",
+	callback = function()
+		vim.cmd("SessionSave")
+	end,
+})

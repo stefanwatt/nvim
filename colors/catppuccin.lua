@@ -1,6 +1,8 @@
 -- Made with 'mini.colors' module of https://github.com/echasnovski/mini.nvim
 
-if vim.g.colors_name ~= nil then vim.cmd('highlight clear') end
+if vim.g.colors_name ~= nil then
+	vim.cmd("highlight clear")
+end
 vim.g.colors_name = "catppuccin"
 
 -- Highlight groups
@@ -35,7 +37,7 @@ hi(0, "@keyword.operator", { fg = "#ec9d73" })
 hi(0, "@keyword.return", { fg = "#ec9d73" })
 hi(0, "@label.json", { fg = "#c1ab5a" })
 hi(0, "@lsp.type.class", { link = "Structure" })
-hi(0, "@lsp.type.comment", { link = "@comment" })
+hi(0, "@lsp.type.comment", { link = "@comment", italic = false })
 hi(0, "@lsp.type.decorator", { link = "Function" })
 hi(0, "@lsp.type.enum", { link = "@type" })
 hi(0, "@lsp.type.enumMember", { link = "Constant" })
@@ -136,7 +138,11 @@ hi(0, "BufferLineDuplicateSelected", { bg = "#3d3422", fg = "#7f7259", italic = 
 hi(0, "BufferLineDuplicateVisible", { bg = "#382f1e", fg = "#7f7259", italic = true })
 hi(0, "BufferLineError", { bg = "#2d271a", fg = "#86795e", sp = "#d783bb" })
 hi(0, "BufferLineErrorDiagnostic", { bg = "#2d271a", fg = "#655a45", sp = "#a2628c" })
-hi(0, "BufferLineErrorDiagnosticSelected", { bg = "#3d3422", bold = true, fg = "#a2628c", italic = true, sp = "#a2628c" })
+hi(
+	0,
+	"BufferLineErrorDiagnosticSelected",
+	{ bg = "#3d3422", bold = true, fg = "#a2628c", italic = true, sp = "#a2628c" }
+)
 hi(0, "BufferLineErrorDiagnosticVisible", { bg = "#382f1e", fg = "#655a45" })
 hi(0, "BufferLineErrorSelected", { bg = "#3d3422", bold = true, fg = "#d783bb", italic = true, sp = "#d783bb" })
 hi(0, "BufferLineErrorVisible", { bg = "#382f1e", fg = "#86795e" })
@@ -145,7 +151,11 @@ hi(0, "BufferLineGroupLabel", { bg = "#86795e", fg = "#211c12" })
 hi(0, "BufferLineGroupSeparator", { bg = "#211c12", fg = "#86795e" })
 hi(0, "BufferLineHint", { bg = "#2d271a", fg = "#86795e", sp = "#85c8b6" })
 hi(0, "BufferLineHintDiagnostic", { bg = "#2d271a", fg = "#655a45", sp = "#639689" })
-hi(0, "BufferLineHintDiagnosticSelected", { bg = "#3d3422", bold = true, fg = "#639689", italic = true, sp = "#639689" })
+hi(
+	0,
+	"BufferLineHintDiagnosticSelected",
+	{ bg = "#3d3422", bold = true, fg = "#639689", italic = true, sp = "#639689" }
+)
 hi(0, "BufferLineHintDiagnosticVisible", { bg = "#382f1e", fg = "#655a45" })
 hi(0, "BufferLineHintSelected", { bg = "#3d3422", bold = true, fg = "#85c8b6", italic = true, sp = "#85c8b6" })
 hi(0, "BufferLineHintVisible", { bg = "#382f1e", fg = "#86795e" })
@@ -153,7 +163,11 @@ hi(0, "BufferLineIndicatorSelected", { bg = "#3d3422", fg = "#615741" })
 hi(0, "BufferLineIndicatorVisible", { bg = "#382f1e", fg = "#382f1e" })
 hi(0, "BufferLineInfo", { bg = "#2d271a", fg = "#86795e", sp = "#abd1b2" })
 hi(0, "BufferLineInfoDiagnostic", { bg = "#2d271a", fg = "#655a45", sp = "#809c84" })
-hi(0, "BufferLineInfoDiagnosticSelected", { bg = "#3d3422", bold = true, fg = "#809c84", italic = true, sp = "#809c84" })
+hi(
+	0,
+	"BufferLineInfoDiagnosticSelected",
+	{ bg = "#3d3422", bold = true, fg = "#809c84", italic = true, sp = "#809c84" }
+)
 hi(0, "BufferLineInfoDiagnosticVisible", { bg = "#382f1e", fg = "#655a45" })
 hi(0, "BufferLineInfoSelected", { bg = "#3d3422", bold = true, fg = "#abd1b2", italic = true, sp = "#abd1b2" })
 hi(0, "BufferLineInfoVisible", { bg = "#382f1e", fg = "#86795e" })
@@ -177,7 +191,11 @@ hi(0, "BufferLineTabSeparator", { bg = "#2d271a", fg = "#211c12" })
 hi(0, "BufferLineTabSeparatorSelected", { bg = "#3d3422", fg = "#211c12" })
 hi(0, "BufferLineWarning", { bg = "#2d271a", fg = "#86795e", sp = "#bec8ff" })
 hi(0, "BufferLineWarningDiagnostic", { bg = "#2d271a", fg = "#655a45", sp = "#8e96c0" })
-hi(0, "BufferLineWarningDiagnosticSelected", { bg = "#3d3422", bold = true, fg = "#8e96c0", italic = true, sp = "#8e96c0" })
+hi(
+	0,
+	"BufferLineWarningDiagnosticSelected",
+	{ bg = "#3d3422", bold = true, fg = "#8e96c0", italic = true, sp = "#8e96c0" }
+)
 hi(0, "BufferLineWarningDiagnosticVisible", { bg = "#382f1e", fg = "#655a45" })
 hi(0, "BufferLineWarningSelected", { bg = "#3d3422", bold = true, fg = "#bec8ff", italic = true, sp = "#bec8ff" })
 hi(0, "BufferLineWarningVisible", { bg = "#382f1e", fg = "#86795e" })

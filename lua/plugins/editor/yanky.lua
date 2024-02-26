@@ -3,7 +3,7 @@ return {
 		"gbprod/yanky.nvim",
 		pin = true,
 		event = "VeryLazy",
-		dependencies = { { "kkharji/sqlite.lua", enabled = not jit.os:find("Windows") } },
+		dependencies = { { "kkharji/sqlite.lua", pin = true, enabled = not jit.os:find("Windows") } },
 		opts = {
 			highlight = { timer = 250 },
 		},
