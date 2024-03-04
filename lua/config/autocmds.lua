@@ -86,3 +86,18 @@ vim.api.nvim_create_autocmd({ "BufWritePre", "WinNew", "BufEnter" }, {
 		vim.cmd("SessionSave")
 	end,
 })
+
+local function set_cwd_if_file_exists()
+	local cwd_file_path = vim.fn.expand("%:p:h") .. "/cwd.lua"
+	if vim.fn.filereadable(cwd_file_path) == 1 then
+		local cwd_change = loadfile(cwd_file_path)()
+		local new_cwd = vim.fn.fnamemodify(cwd_file_path, ":h:h") .. "/" .. cwd_change
+		vim.api.nvim_set_current_dir(new_cwd)
+	end
+end
+
+vim.api.nvim_create_autocmd("BufEnter", {
+	group = augroup("CwdAdjustment"),
+	pattern = "*", -- Apply to all files
+	callback = set_cwd_if_file_exists,
+})

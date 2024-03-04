@@ -3,7 +3,12 @@ local opts = { silent = true }
 
 -- Normal --
 vim.keymap.set("n", "<BS>", "ciw", opts)
-vim.keymap.set("n", "<CR>", "ggVGy", opts)
+vim.keymap.set("n", "<CR>", function()
+	local buftype = vim.api.nvim_buf_get_option(0, "buftype")
+	if buftype ~= "quickfix" then
+		vim.api.nvim_input("ggVGy")
+	end
+end, opts)
 vim.keymap.set("n", "<leader>q", ":q!<CR>", opts)
 vim.keymap.set("n", "<leader>w", ":w!<CR>", opts)
 vim.keymap.set("n", "<C-s>", ":wall<CR>", opts)

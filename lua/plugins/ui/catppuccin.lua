@@ -38,9 +38,6 @@ return {
 	},
 	config = function()
 		require("catppuccin").setup({
-			styles = {
-				comments = {},
-			},
 			color_overrides = {
 				frappe = {
 					base = "#272a38",

@@ -18,6 +18,15 @@ return {
 				false,
 			},
 			{
+				"<leader>fB",
+				mode = { "n" },
+				function()
+					local theme = require("telescope.themes").get_dropdown({ winblend = 10, previewer = false })
+					require("telescope.builtin").current_buffer_fuzzy_find(theme)
+				end,
+				desc = "Fuzzy Find in Buffer",
+			},
+			{
 				"<leader>fd",
 				mode = { "n" },
 				"<cmd>lua require('telescope').extensions.diff.diff_current({ hidden = true })<cr>",

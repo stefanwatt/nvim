@@ -1,3 +1,34 @@
+local disabled_keys = {
+	"<leader>td",
+	"<leader>tl",
+	"<leader>to",
+	"<leader>tO",
+	"<leader>r",
+	"<leader>s",
+	"<leader>S",
+	"<leader>T",
+}
+
+local keys = {
+	{
+		"<leader>tt",
+		mode = { "n" },
+		"<CMD>Trouble<CR>",
+		desc = "Toggle Trouble",
+	},
+	{
+
+		"<leader>tt",
+		mode = { "n" },
+		"<CMD>Trouble<CR>",
+		desc = "Toggle Trouble",
+	},
+}
+
+for _, key in ipairs(disabled_keys) do
+	table.insert(keys, { key, false })
+end
+
 return {
 	{
 		"mfussenegger/nvim-dap",
@@ -10,7 +41,9 @@ return {
 					table.insert(opts.ensure_installed, "js-debug-adapter")
 				end,
 			},
+			"leoluz/nvim-dap-go",
 		},
+		keys = keys,
 		opts = function()
 			local dap = require("dap")
 			if not dap.adapters["pwa-node"] then
@@ -50,5 +83,18 @@ return {
 				end
 			end
 		end,
+		require("dap-go").setup({
+			dap_configurations = {
+				{
+					type = "go",
+					name = "Attach remote",
+					mode = "remote",
+					request = "attach",
+					debugAdapter = "legacy",
+					port = 2345,
+					host = "127.0.0.1",
+				},
+			},
+		}),
 	},
 }

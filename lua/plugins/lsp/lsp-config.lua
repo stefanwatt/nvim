@@ -82,7 +82,9 @@ return {
 			{
 				"<leader>fr",
 				mode = { "n" },
-				"<cmd>lua vim.lsp.buf.references()<cr>",
+				function()
+					require("telescope.builtin").lsp_references()
+				end,
 				desc = "find references",
 			},
 		},
