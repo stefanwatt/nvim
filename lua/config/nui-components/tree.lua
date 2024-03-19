@@ -1,9 +1,9 @@
-local Component = require("plugins.nui-components.component")
+local Component = require("config.nui-components.component")
 
 local Line = require("nui.line")
 local NuiTree = require("nui.tree")
 
-local fn = require("utils.fn")
+local fn = require("config.nui-components.fn")
 
 local function focus_item(instance, direction, current_linenr)
   local actions = instance:get_actions()

@@ -2,7 +2,7 @@ local Popup = require("nui.popup")
 local Layout = require("nui.layout")
 
 local event = require("nui.utils.autocmd").event
-local fn = require("utils.fn")
+local fn = require("config.nui-components.fn")
 
 local Component = Popup:extend("Component")
 

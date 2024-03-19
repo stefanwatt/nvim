@@ -1,9 +1,9 @@
-local Tree = require("plugins.nui-components.tree")
+local Tree = require("config.nui-components.tree")
 
 local Line = require("nui.line")
 local NuiTree = require("nui.tree")
 
-local fn = require("utils.fn")
+local fn = require("config.nui-components.fn")
 local event = require("nui.utils.autocmd").event
 local is_type = require("nui.utils").is_type
 

@@ -1,6 +1,6 @@
-local Component = require("plugins.nui-components.component")
+local Component = require("config.nui-components.component")
 
-local fn = require("utils.fn")
+local fn = require("config.nui-components.fn")
 local event = require("nui.utils.autocmd").event
 
 local TextInput = Component:extend("TextInput")

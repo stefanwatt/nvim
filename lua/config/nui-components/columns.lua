@@ -1,7 +1,7 @@
-local Box = require("plugins.nui-components.box")
+local Box = require("config.nui-components.box")
 
 local Layout = require("nui.layout")
-local fn = require("utils.fn")
+local fn = require("config.nui-components.fn")
 
 local Columns = Box:extend("Columns")
 

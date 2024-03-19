@@ -1,18 +1,18 @@
 local Layout = require("nui.layout")
 
-local TextInput = require("plugins.nui-components.text-input")
-local Select = require("plugins.nui-components.select")
-local Button = require("plugins.nui-components.button")
-local Columns = require("plugins.nui-components.columns")
-local Rows = require("plugins.nui-components.rows")
-local Box = require("plugins.nui-components.box")
-local Gap = require("plugins.nui-components.gap")
-local Checkbox = require("plugins.nui-components.checkbox")
-local Tree = require("plugins.nui-components.tree")
-local Text = require("plugins.nui-components.text")
+local TextInput = require("config.nui-components.text-input")
+local Select = require("config.nui-components.select")
+local Button = require("config.nui-components.button")
+local Columns = require("config.nui-components.columns")
+local Rows = require("config.nui-components.rows")
+local Box = require("config.nui-components.box")
+local Gap = require("config.nui-components.gap")
+local Checkbox = require("config.nui-components.checkbox")
+local Tree = require("config.nui-components.tree")
+local Text = require("config.nui-components.text")
 
-local fn = require("plugins.nui-components.fn")
-local validators = require("plugins.nui-components.validators")
+local fn = require("config.nui-components.fn")
+local validators = require("config.nui-components.validators")
 
 local Renderer = {}
 

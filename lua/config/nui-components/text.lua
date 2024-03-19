@@ -1,7 +1,7 @@
-local Component = require("plugins.nui-components.component")
+local Component = require("config.nui-components.component")
 
 local Line = require("nui.line")
-local fn = require("utils.fn")
+local fn = require("config.nui-components.fn")
 
 local Text = Component:extend("Text")
 
