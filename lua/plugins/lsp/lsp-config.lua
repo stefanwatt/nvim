@@ -21,7 +21,7 @@ return {
 				eslint = {},
 				html = {},
 				lua_ls = require("plugins.lsp.lua-ls"),
-				marksman = { mason = false, cmd = { "/run/current-system/sw/bin/marksman" } },
+				marksman = { mason = false, cmd = { "/run/current-system/sw/bin/marksman", "server" } },
 				sqlls = {},
 				svelte = {},
 				tailwindcss = {},
