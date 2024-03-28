@@ -28,6 +28,10 @@ return {
 				vimls = {},
 				lemminx = {},
 				rust_analyzer = {},
+				gleam = {
+					mason = false,
+					cmd = { "/run/current-system/sw/bin/gleam", "lsp" },
+				},
 			},
 		},
 		keys = {

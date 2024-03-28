@@ -9,7 +9,34 @@ return {
 		config = function()
 			local configs = require("nvim-treesitter.configs")
 			configs.setup({
-				ensure_installed = "all", -- one of "all" or a list of languages
+				ensure_installed = {
+					"css",
+					"diff",
+					"git_config",
+					"git_rebase",
+					"gitattributes",
+					"gitcommit",
+					"gitignore",
+					"go",
+					"gomod",
+					"html",
+					"javascript",
+					"jsdoc",
+					"json",
+					"lua",
+					"luadoc",
+					"markdown",
+					"markdown_inline",
+					"nix",
+					"svelte",
+					"templ",
+					"toml",
+					"typescript",
+					"vim",
+					"vimdoc",
+					"xml",
+					"yaml",
+				},
 				ignore_install = { "" }, -- List of parsers to ignore installing
 				highlight = {
 					enable = true, -- false will disable the whole extension

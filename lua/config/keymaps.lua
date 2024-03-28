@@ -1,6 +1,14 @@
 -- Silent keymap option
 local opts = { silent = true }
 
+vim.keymap.set("n", "<leader>T", function()
+	local cwd = vim.fn.getcwd()
+	os.execute(
+		'i3-msg \'split v;exec wezterm start --class "term-bottom" --cwd '
+			.. cwd
+			.. ";' && sleep 0.2 && i3-msg 'resize set height 400'"
+	)
+end, opts)
 -- Normal --
 vim.keymap.set("n", "<BS>", "ciw", opts)
 vim.keymap.set("n", "<CR>", function()
