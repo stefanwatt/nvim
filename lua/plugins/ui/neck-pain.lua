@@ -4,6 +4,7 @@ return {
 	version = "*",
 	opts = {
 		width = 160,
+		minSideBufferWidth = 40,
 		autocmds = {
 			enableOnVimEnter = true,
 		},

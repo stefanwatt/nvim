@@ -13,10 +13,17 @@ end, opts)
 vim.keymap.set("n", "<BS>", "ciw", opts)
 vim.keymap.set("n", "<CR>", function()
 	local buftype = vim.api.nvim_buf_get_option(0, "buftype")
-	if buftype ~= "quickfix" then
-		vim.api.nvim_input("ggVGy")
+	if buftype == "quickfix" then
+		return
 	end
+	local cursor_pos = vim.api.nvim_win_get_cursor(0)
+	vim.api.nvim_input("ggVGy")
+	vim.schedule(function()
+		vim.api.nvim_win_set_cursor(0, cursor_pos)
+	end)
 end, opts)
+vim.keymap.set({ "n", "i", "v", "x" }, "<C-p>", ":cprev<CR>", opts)
+vim.keymap.set({ "n", "i", "v", "x" }, "<C-n>", ":cnext<CR>", opts)
 vim.keymap.set("n", "<leader>q", ":q!<CR>", opts)
 vim.keymap.set("n", "<leader>w", ":w!<CR>", opts)
 vim.keymap.set("n", "<C-s>", ":wall<CR>", opts)
