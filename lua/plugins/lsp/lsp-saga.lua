@@ -35,12 +35,6 @@ return {
 				desc = "Peek definition",
 			},
 			{
-				"gd",
-				mode = { "n" },
-				"<cmd>lua vim.lsp.buf.definition()<CR>",
-				desc = "Go to definition",
-			},
-			{
 				"K",
 				mode = { "n" },
 				"<cmd>Lspsaga hover_doc()<CR>",

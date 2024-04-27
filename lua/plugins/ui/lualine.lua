@@ -1,4 +1,3 @@
-local colors = require("catppuccin.palettes").get_palette("frappe")
 local visible = true
 
 return {

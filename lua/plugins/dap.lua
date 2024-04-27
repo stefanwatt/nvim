@@ -83,18 +83,18 @@ return {
 				end
 			end
 		end,
-		require("dap-go").setup({
-			dap_configurations = {
-				{
-					type = "go",
-					name = "Attach remote",
-					mode = "remote",
-					request = "attach",
-					debugAdapter = "legacy",
-					port = 2345,
-					host = "127.0.0.1",
-				},
-			},
-		}),
+		-- require("dap-go").setup({
+		-- 	dap_configurations = {
+		-- 		{
+		-- 			type = "go",
+		-- 			name = "Attach remote",
+		-- 			mode = "remote",
+		-- 			request = "attach",
+		-- 			debugAdapter = "legacy",
+		-- 			port = 2345,
+		-- 			host = "127.0.0.1",
+		-- 		},
+		-- 	},
+		-- }),
 	},
 }

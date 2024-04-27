@@ -2,7 +2,7 @@ return {
 	{
 		lazy = false,
 		"goolord/alpha-nvim",
-		dependencies = { "nvim-lua/plenary.nvim", "nvim-web-devicons" },
+		dependencies = { "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons" },
 		keys = {
 			{
 				"<leader>D",
