@@ -10,5 +10,6 @@ return {
 	require("plugins.ui.lualine"),
 	require("plugins.ui.todo-comments"),
 	require("plugins.ui.image"),
+	require("plugins.ui.inlay-hints"),
 	{ "stevearc/dressing.nvim" },
 }

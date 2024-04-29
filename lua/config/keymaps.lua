@@ -1,5 +1,6 @@
 -- Silent keymap option
 local opts = { silent = true }
+local nvim_float = require("config.utils").NvimFloat
 
 vim.keymap.set("n", "<leader>T", function()
 	local cwd = vim.fn.getcwd()
@@ -48,6 +49,20 @@ vim.keymap.set("n", "<C-A-Down>", ":resize +10<CR>", opts)
 vim.keymap.set("n", "<C-A-Left>", ":vertical resize -10<CR>", opts)
 vim.keymap.set("n", "<C-A-Right>", ":vertical resize +10<CR>", opts)
 
+vim.keymap.set("n", "<leader>v", ":vsplit<CR>", opts)
+
+vim.keymap.set("n", "<leader>gg", function()
+	nvim_float("lazygit")
+end, opts)
+
+vim.keymap.set("n", "<leader>ff", function()
+	nvim_float("git-files")
+end, opts)
+
+vim.keymap.set("n", "<leader>fw", function()
+	nvim_float("live-grep")
+end, opts)
+
 -- Navigate buffers
 vim.keymap.set("n", "<S-Right>", ":bnext<CR>", opts)
 vim.keymap.set("n", "<S-Left>", ":bprevious<CR>", opts)
@@ -76,7 +91,6 @@ vim.keymap.set("n", "s", function()
 	})
 end, { silent = true, noremap = true })
 
-vim.keymap.set("n", "<leader><leader>ff", "<cmd>lua MiniPick.builtin.files()<cr>", opts)
 -- vim.keymap.set("n", "<leader><leader>c", "<cmd>Col<cr>", opts)
 vim.keymap.set("n", "<leader><leader>y", ":lua", opts)
 vim.keymap.set("n", "<F5>", "<cmd>lua require('osv').launch({port=8086})<cr>", opts)

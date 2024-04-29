@@ -98,18 +98,18 @@ return {
 				"<cmd>lua MiniPick.builtin.buffers()<cr>",
 				desc = "Buffers",
 			},
-			{
-				"<leader>ff",
-				mode = { "n" },
-				"<cmd>lua MiniPick.builtin.files()<cr>",
-				desc = "Find files",
-			},
-			{
-				"<leader>fw",
-				mode = { "n" },
-				"<cmd>lua MiniPick.builtin.grep_live()<cr>",
-				desc = "Find word",
-			},
+			-- {
+			-- 	"<leader>ff",
+			-- 	mode = { "n" },
+			-- 	"<cmd>lua MiniPick.builtin.files()<cr>",
+			-- 	desc = "Find files",
+			-- },
+			-- {
+			-- 	"<leader>fw",
+			-- 	mode = { "n" },
+			-- 	"<cmd>lua MiniPick.builtin.grep_live()<cr>",
+			-- 	desc = "Find word",
+			-- },
 
 			{
 				"<leader>fh",

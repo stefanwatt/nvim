@@ -1,5 +1,20 @@
 local M = {}
 
+---@param command string
+M.NvimFloat = function(command)
+	local cwd = vim.fn.getcwd()
+	local servername = vim.v.servername
+	os.execute(
+		"/home/stefan/Projects/nvim-float/nvim-float"
+			.. " --servername "
+			.. servername
+			.. " --dir "
+			.. cwd
+			.. " "
+			.. command
+	)
+end
+
 M.MoveBufferToOppositeWindow = function()
 	local current_buffer = vim.api.nvim_get_current_buf()
 	local current_window = vim.api.nvim_get_current_win()
