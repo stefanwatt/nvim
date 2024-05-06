@@ -71,21 +71,21 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	end,
 })
 
-vim.api.nvim_create_autocmd("VimEnter", {
-	group = augroup("auto-session"),
-	pattern = "*",
-	callback = function()
-		vim.cmd("SessionRestore")
-	end,
-})
+-- vim.api.nvim_create_autocmd("VimEnter", {
+-- 	group = augroup("auto-session"),
+-- 	pattern = "*",
+-- 	callback = function()
+-- 		vim.cmd("SessionRestore")
+-- 	end,
+-- })
 
-vim.api.nvim_create_autocmd({ "BufWritePre", "WinNew", "BufEnter" }, {
-	group = augroup("auto-session"),
-	pattern = "*",
-	callback = function()
-		vim.cmd("SessionSave")
-	end,
-})
+-- vim.api.nvim_create_autocmd({ "BufWritePre", "WinNew", "BufEnter" }, {
+-- 	group = augroup("auto-session"),
+-- 	pattern = "*",
+-- 	callback = function()
+-- 		vim.cmd("SessionSave")
+-- 	end,
+-- })
 
 local function set_cwd_if_file_exists()
 	local cwd_file_path = vim.fn.expand("%:p:h") .. "/cwd.lua"

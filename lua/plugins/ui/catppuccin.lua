@@ -43,6 +43,11 @@ return {
 					base = "#272a38",
 				},
 			},
+			custom_highlights = function(colors)
+				return {
+					LspInlayHint = { bg = "NONE", fg = colors.overlay1, italic = true },
+				}
+			end,
 		})
 		vim.cmd.colorscheme("catppuccin-frappe")
 	end,

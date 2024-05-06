@@ -1,5 +1,25 @@
 local M = {}
 
+---@return string
+M.get_help_tags = function()
+	local help_tags = {}
+	local result = ""
+	for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
+		local tags_file = path .. "/doc/tags"
+		local file = io.open(tags_file, "r")
+		if file then
+			for line in file:lines() do
+				local tag = line:match("^(.-)\t")
+				if tag then
+					table.insert(help_tags, { text = tag, file = tags_file })
+				end
+			end
+			file:close()
+		end
+	end
+	return vim.inspect(help_tags)
+end
+
 ---@param command string
 M.NvimFloat = function(command)
 	local cwd = vim.fn.getcwd()
@@ -7,11 +27,14 @@ M.NvimFloat = function(command)
 	os.execute(
 		"/home/stefan/Projects/nvim-float/nvim-float"
 			.. " --servername "
+			.. '"'
 			.. servername
+			.. '"'
 			.. " --dir "
 			.. cwd
 			.. " "
 			.. command
+			.. "&"
 	)
 end
 

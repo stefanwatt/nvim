@@ -63,6 +63,10 @@ vim.keymap.set("n", "<leader>fw", function()
 	nvim_float("live-grep")
 end, opts)
 
+vim.keymap.set("n", "<leader>fh", function()
+	nvim_float("help-tags")
+end, opts)
+
 -- Navigate buffers
 vim.keymap.set("n", "<S-Right>", ":bnext<CR>", opts)
 vim.keymap.set("n", "<S-Left>", ":bprevious<CR>", opts)

@@ -70,6 +70,9 @@ return {
 			callback = function(event)
 				local client = vim.lsp.get_client_by_id(event.data.client_id)
 				if client and client.server_capabilities.documentHighlightProvider then
+					if client.name == "gopls" then
+						require("plugins.lsp.gopls").on_attach(client)
+					end
 					local highlight_augroup = vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
 					vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 						buffer = event.buf,
@@ -118,19 +121,7 @@ return {
 			svelte = {},
 			tailwindcss = {},
 			vimls = {},
-			gopls = {
-				settings = {
-					hints = {
-						rangeVariableTypes = true,
-						parameterNames = true,
-						constantValues = true,
-						assignVariableTypes = true,
-						compositeLiteralFields = true,
-						compositeLiteralTypes = true,
-						functionTypeParameters = true,
-					},
-				},
-			},
+			gopls = require("plugins.lsp.gopls").config,
 			lemminx = {},
 			rust_analyzer = {},
 			gleam = {

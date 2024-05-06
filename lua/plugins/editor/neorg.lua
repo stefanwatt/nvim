@@ -11,6 +11,7 @@ return {
 			"3rd/image.nvim",
 			"MunifTanjim/nui.nvim",
 			"nvim-neotest/nvim-nio",
+			"pysan3/pathlib.nvim",
 			"nvim-neorg/lua-utils.nvim",
 		},
 		build = ":Neorg sync-parsers",
