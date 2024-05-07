@@ -11,6 +11,5 @@ return {
 	require("plugins.ui.todo-comments"),
 	require("plugins.ui.image"),
 	{ "stevearc/dressing.nvim" },
-	{ "echasnovski/mini.indentscope", version = false },
 	{ "RRethy/vim-illuminate" },
 }
