@@ -78,7 +78,6 @@ return {
 				return file_button_el
 			end
 
-			local paths = require("config.paths")
 			local favorites = {
 				type = "group",
 				val = {
