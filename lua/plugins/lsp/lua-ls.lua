@@ -3,8 +3,6 @@ table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
 return {
-	cmd = { "/home/stefan/.nix-profile/bin/lua-language-server" },
-	mason = false,
 	settings = {
 		Lua = {
 			runtime = {
