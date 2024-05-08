@@ -73,6 +73,7 @@ return {
 					if client.name == "gopls" then
 						require("plugins.lsp.gopls").on_attach(client)
 					end
+					require("plugins.lsp.svelte").on_attach(client, event.buf)
 					local highlight_augroup = vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
 					vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 						buffer = event.buf,
@@ -97,6 +98,7 @@ return {
 		})
 		local capabilities = vim.lsp.protocol.make_client_capabilities()
 		capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+
 		local servers = {
 			-- denols = {
 			-- 	filetypes = { "typescript" },
@@ -118,7 +120,7 @@ return {
 			lua_ls = require("plugins.lsp.lua-ls"),
 			marksman = { mason = false, cmd = { "/run/current-system/sw/bin/marksman", "server" } },
 			sqlls = {},
-			svelte = {},
+			svelte = { capabilities = require("plugins.lsp.svelte") },
 			tailwindcss = {},
 			vimls = {},
 			gopls = require("plugins.lsp.gopls").config,
