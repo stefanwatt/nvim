@@ -120,7 +120,7 @@ return {
 			lua_ls = require("plugins.lsp.lua-ls"),
 			marksman = { mason = false, cmd = { "/run/current-system/sw/bin/marksman", "server" } },
 			sqlls = {},
-			svelte = { capabilities = require("plugins.lsp.svelte") },
+			svelte = {},
 			tailwindcss = {},
 			vimls = {},
 			gopls = require("plugins.lsp.gopls").config,
@@ -132,6 +132,7 @@ return {
 			},
 		}
 		require("mason").setup()
+		require("mason-lspconfig").setup()
 
 		local ensure_installed = vim.tbl_keys(servers or {})
 		vim.list_extend(ensure_installed, {
