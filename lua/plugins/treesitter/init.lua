@@ -103,4 +103,5 @@ return {
 	require("plugins.treesitter.splitjoin"),
 	require("plugins.treesitter.misc"),
 	require("plugins.treesitter.tagalong"),
+	require("plugins.treesitter.context"),
 }

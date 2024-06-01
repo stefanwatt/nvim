@@ -1,5 +1,92 @@
 local M = {}
 
+---@param name string
+local function augroup(name)
+	return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true })
+end
+
+---@return string[]
+M.get_buf_lines = function()
+	local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+	local result = {}
+	for i, line in ipairs(lines) do
+		local buf = vim.api.nvim_get_current_buf()
+		local signs = vim.fn.sign_getplaced(buf, { lnum = i })[1].signs
+		if not signs or #signs == 0 then
+			table.insert(result, { sign = "", row = i, line = line })
+		else
+			local sign = signs[1].name
+			table.insert(result, { sign = sign, row = i, line = line })
+		end
+	end
+	return result
+end
+
+---@param channel number
+M.listen_for_mode_change = function(channel)
+	local event_name = "nvim-gui-mode-changed"
+	vim.api.nvim_create_autocmd("ModeChanged", {
+		group = augroup(event_name),
+		pattern = "*",
+		callback = function()
+			local new_mode = vim.fn.mode()
+			vim.fn.rpcrequest(channel, event_name, {
+				new_mode,
+			})
+		end,
+	})
+	return "success"
+end
+
+---@param channel number
+M.listen_for_cursor_move = function(channel)
+	local event_name = "nvim-gui-cursor-moved"
+	vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+		group = augroup(event_name),
+		callback = function(event)
+			local cursor = vim.api.nvim_win_get_cursor(0)
+			local row = cursor[1]
+			local col = cursor[2]
+			local key_at_cursor = vim.fn.getline(row):sub(col + 1, col + 1)
+			local top_line = vim.fn.line("w0")
+			local bottom_line = vim.fn.line("w$")
+			vim.fn.rpcrequest(channel, event_name, {
+				row = row - 1,
+				col = col,
+				key = key_at_cursor,
+				top_line = top_line,
+				bottom_line = bottom_line,
+			})
+		end,
+	})
+	return "success"
+end
+
+---@param channel number
+M.attach_buffer = function(channel)
+	vim.api.nvim_buf_attach(0, false, {
+		on_lines = function(...)
+			vim.fn.rpcrequest(channel, "nvim-gui-current-buf-changed", { ... })
+		end,
+	})
+	return "success"
+end
+
+---@class CommandFlag
+---@field name string
+---@field value string
+
+---@param command string
+---@param flags CommandFlag
+M.i3_exec = function(command, flags)
+	local args = ""
+	for _, flag in ipairs(flags) do
+		local prefix = #flag.name == 1 and "-" or "--"
+		args = args .. " " .. prefix .. flag.name .. " " .. '"' .. flag.value .. '"'
+	end
+	os.execute("i3-msg 'exec " .. command .. args .. " ' >/dev/null 2>&1 &")
+end
+
 ---@return string
 M.get_help_tags = function()
 	local help_tags = {}
@@ -202,52 +289,6 @@ M.buf_vtext = function()
 	local text = vim.fn.getreg("a")
 	vim.fn.setreg("a", a_orig)
 	return tostring(text)
-end
-
-M.get_visual_selection = function()
-	vim.fn.setpos("'<", vim.fn.getpos("'<"))
-	vim.fn.setpos("'>", vim.fn.getpos("'>"))
-	local start_pos = vim.fn.getpos("'<") -- Get the start position of the visual selection
-	local end_pos = vim.fn.getpos("'>") -- Get the end position of the visual selection
-	if not start_pos or not end_pos then
-		return nil
-	end
-	local lines = vim.fn.getline(start_pos[2], end_pos[2]) -- Get the lines within the visual selection
-	if type(lines) == "string" then
-		local start_col = start_pos[3] - 1 -- Convert to 0-based indexing
-		local end_col = end_pos[3] - 1
-
-		-- Check for valid column values
-		if not start_col or not end_col then
-			return nil
-		end
-
-		return lines:sub(start_col + 1, end_col + 1)
-	end
-
-	if not lines then
-		return nil
-	end
-
-	if #lines == 1 then
-		local start_col = start_pos[3] - 1 -- Convert to 0-based indexing
-		local end_col = end_pos[3] - 1
-		return lines[1]:sub(start_col + 1, end_col + 1)
-	else
-		local result = {}
-		for i, line in ipairs(lines) do
-			if i == 1 then
-				local start_col = start_pos[3] - 1 -- Convert to 0-based indexing
-				result[#result + 1] = line:sub(start_col + 1)
-			elseif i == #lines then
-				local end_col = end_pos[3] - 1
-				result[#result + 1] = line:sub(1, end_col + 1)
-			else
-				result[#result + 1] = line
-			end
-		end
-		return table.concat(result, "\n")
-	end
 end
 
 M.merge_tables = function(...)

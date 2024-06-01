@@ -51,3 +51,12 @@ end
 vim.api.nvim_create_user_command("Col", "lua show_col_in_hover_window()", {
 	nargs = 0,
 })
+
+vim.api.nvim_create_user_command("NvimGui", function(args)
+	local command = "/home/stefan/Projects/spectre-gui/build/bin/spectre-gui"
+	local flags = {
+		{ name = "mode", value = "buffer" },
+		{ name = "servername", value = vim.v.servername },
+	}
+	require("config.utils").i3_exec(command, flags)
+end, { nargs = "*" })

@@ -13,27 +13,23 @@ local svelte_capabilities = {
 	},
 }
 
--- Extend the original capabilities with Svelte-specific ones
 M.capabilities = vim.tbl_deep_extend("force", capabilities, svelte_capabilities)
 
-function M.on_attach(client, bufnr)
-	if vim.bo[bufnr].filetype == "svelte" then
-		vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI", "BufWritePost" }, {
-			pattern = { "*.js", "*.ts", "*.svelte" },
-			callback = function(ctx)
-				print(vim.inspect(ctx.file))
-				client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.file })
-			end,
-		})
-	end
-	if client.name == "svelte" then
-		vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI", "BufWritePost" }, {
-			pattern = { "*.js", "*.ts", "*.svelte" },
-			callback = function(ctx)
-				print(vim.inspect(ctx.file))
-				client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.file })
-			end,
-		})
-	end
+local group = vim.api.nvim_create_augroup("svelte_ondidchangetsorjsfile", { clear = true })
+function M.on_attach(client, buf)
+	vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI", "BufWritePost" }, {
+		pattern = { "*.js", "*.ts" },
+		callback = function(ctx)
+			if client.name == "svelte" then
+				client.notify("$/onDidChangeTsOrJsFile", {
+					uri = ctx.file,
+					-- changes = {
+					-- 	text = table.concat(vim.api.nvim_buf_get_lines(ctx.buf, 0, -1, false), "\n"),
+					-- },
+				})
+			end
+		end,
+	})
 end
+
 return M

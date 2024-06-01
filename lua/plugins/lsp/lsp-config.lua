@@ -46,6 +46,11 @@ return {
 			desc = "Toggle Doc HL",
 		},
 		{
+			"<leader>lH",
+			"<cmd>lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())<cr>",
+			desc = "Toggle Inlay Hints",
+		},
+		{
 			"<leader>lf",
 			"<cmd>lua vim.lsp.buf.format()<cr>",
 			desc = "Format",
@@ -68,12 +73,13 @@ return {
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
 			callback = function(event)
+				vim.lsp.inlay_hint.enable(true)
 				local client = vim.lsp.get_client_by_id(event.data.client_id)
+				if client.name == "gopls" then
+					require("plugins.lsp.gopls").on_attach(client)
+				end
+				require("plugins.lsp.svelte").on_attach(client, event.buf)
 				if client and client.server_capabilities.documentHighlightProvider then
-					if client.name == "gopls" then
-						require("plugins.lsp.gopls").on_attach(client)
-					end
-					require("plugins.lsp.svelte").on_attach(client, event.buf)
 					local highlight_augroup = vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
 					vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 						buffer = event.buf,
@@ -123,14 +129,52 @@ return {
 			svelte = {},
 			tailwindcss = {},
 			vimls = {},
+			nil_ls = {
+				settings = {
+					nix = {
+						flake = {
+							autoArchive = true,
+							autoEvalInputs = true,
+						},
+					},
+				},
+			},
 			gopls = require("plugins.lsp.gopls").config,
 			lemminx = {},
+			clangd = {
+				cmd = { "/run/current-system/sw/bin/clangd" },
+				filetypes = { "arduino", "c", "cpp", "objc", "objcpp", "cuda", "proto" },
+				settings = {
+					clangd = {
+						compilationDatabasePath = "./output",
+						fallbackFlags = { "-std=c++17" },
+					},
+				},
+			},
 			rust_analyzer = {},
+			arduino_language_server = {
+				cmd = {
+					"/run/current-system/sw/bin/arduino-language-server",
+					"-cli-config",
+					vim.fn.expand("~/.config/arduino-cli/arduino-cli.yaml"),
+					"-cli",
+					"/run/current-system/sw/bin/arduino-cli",
+					"-clangd",
+					vim.fn.expand("~/.local/share/nvim/mason/bin/clangd"),
+					"-fqbn",
+					"arduino:avr:nano",
+				},
+				root_dir = require("lspconfig").util.root_pattern(".git", "sketch.yaml", "*.ino", "*.cpp", "*.c"),
+				on_attach = function(client)
+					print("arduino_language_server attached")
+				end,
+			},
 			gleam = {
 				mason = false,
 				cmd = { "/run/current-system/sw/bin/gleam", "lsp" },
 			},
 		}
+
 		require("mason").setup()
 		require("mason-lspconfig").setup()
 

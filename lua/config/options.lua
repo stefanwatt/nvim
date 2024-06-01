@@ -29,9 +29,9 @@ local opt = vim.opt
 opt.autowrite = true -- Enable auto write
 
 if not vim.env.SSH_TTY then
-  -- only set clipboard if not in ssh, to make sure the OSC 52
-  -- integration works automatically. Requires Neovim >= 0.10.0
-  opt.clipboard = "unnamedplus" -- Sync with system clipboard
+	-- only set clipboard if not in ssh, to make sure the OSC 52
+	-- integration works automatically. Requires Neovim >= 0.10.0
+	opt.clipboard = "unnamedplus" -- Sync with system clipboard
 end
 
 opt.completeopt = "menu,menuone,noselect"
@@ -68,7 +68,7 @@ opt.splitright = true -- Put new windows right of current
 opt.tabstop = 2 -- Number of spaces tabs count for
 opt.termguicolors = true -- True color support
 if not vim.g.vscode then
-  opt.timeoutlen = 300 -- Lower than default (1000) to quickly trigger which-key
+	opt.timeoutlen = 300 -- Lower than default (1000) to quickly trigger which-key
 end
 opt.undofile = true
 opt.undolevels = 10000
@@ -78,24 +78,24 @@ opt.wildmode = "longest:full,full" -- Command-line completion mode
 opt.winminwidth = 5 -- Minimum window width
 opt.wrap = false -- Disable line wrap
 opt.fillchars = {
-  foldopen = "",
-  foldclose = "",
-  fold = " ",
-  foldsep = " ",
-  diff = "╱",
-  eob = " ",
+	foldopen = "",
+	foldclose = "",
+	fold = " ",
+	foldsep = " ",
+	diff = "╱",
+	eob = " ",
 }
 
 if vim.fn.has("nvim-0.10") == 1 then
-  opt.smoothscroll = true
+	opt.smoothscroll = true
 end
 
 -- Folding
 vim.opt.foldlevel = 99
 
 if vim.fn.has("nvim-0.9.0") == 1 then
-  vim.opt.statuscolumn = [[%!v:lua.require'config.lazyvim.util.ui'.statuscolumn()]]
-  vim.opt.foldtext = "v:lua.require'config.lazyvim.util.ui'.foldtext()"
+	vim.opt.statuscolumn = [[%!v:lua.require'config.lazyvim.util.ui'.statuscolumn()]]
+	vim.opt.foldtext = "v:lua.require'config.lazyvim.util.ui'.foldtext()"
 end
 
 -- Fix markdown indentation settings
@@ -112,7 +112,7 @@ vim.opt.termguicolors = true
 
 vim.cmd([[
   if exists("g:neovide")
-    set guifont=VictorMono\ Nerd\ Font:h12
+    set guifont=VictorMono\ Nerd\ Font:h14
     let g:neovide_refresh_rate=144
     let g:neovide_refresh_rate_idle=5
     let g:neovide_floating_blur_amount_x = 4.0

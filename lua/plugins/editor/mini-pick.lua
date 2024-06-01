@@ -98,62 +98,8 @@ return {
 				"<cmd>lua MiniPick.builtin.buffers()<cr>",
 				desc = "Buffers",
 			},
-			-- {
-			-- 	"<leader>ff",
-			-- 	mode = { "n" },
-			-- 	"<cmd>lua MiniPick.builtin.files()<cr>",
-			-- 	desc = "Find files",
-			-- },
-			-- {
-			-- 	"<leader>fw",
-			-- 	mode = { "n" },
-			-- 	"<cmd>lua MiniPick.builtin.grep_live()<cr>",
-			-- 	desc = "Find word",
-			-- },
-
-			-- {
-			-- 	"<leader>fh",
-			-- 	mode = { "n" },
-			-- 	function()
-			-- 		MiniPick.start({
-			-- 			source = {
-			-- 				name = "Help",
-			-- 				items = get_help_tags(),
-			-- 				choose = function(item)
-			-- 					if not item then
-			-- 						return
-			-- 					end
-			-- 					local windows = vim.api.nvim_list_wins()
-			-- 					local utils = require("config.utils")
-			-- 					local current_help_windows = utils.filter(windows, utils.is_help_window)
-			-- 					vim.api.nvim_command("help " .. item.text)
-			-- 					windows = vim.api.nvim_list_wins()
-			-- 					local new_help_windows = utils.filter(windows, function(win)
-			-- 						return utils.is_help_window(win) and not vim.tbl_contains(current_help_windows, win)
-			-- 					end)
-			-- 					local focused_win = new_help_windows[1]
-			-- 					if #new_help_windows == 0 then
-			-- 						focused_win = utils.find(current_help_windows, function(win)
-			-- 							local filepath_without_last_dir = item.file:gsub("/[^/]+$", "")
-			-- 							local buf_of_win = vim.api.nvim_win_get_buf(win)
-			-- 							local bufname = vim.api.nvim_buf_get_name(buf_of_win)
-			-- 							return bufname:find(filepath_without_last_dir, 1, true)
-			-- 						end)
-			-- 					end
-			-- 					if not focused_win then
-			-- 						return
-			-- 					end
-			-- 					vim.schedule(function()
-			-- 						vim.api.nvim_set_current_win(focused_win)
-			-- 					end)
-			-- 				end,
-			-- 			},
-			-- 		})
-			-- 	end,
-			-- 	desc = "Find help",
-			-- },
 			{
-				"<leader>ftx",
+				"<leader>fT",
 				mode = { "n" },
 				function()
 					MiniPick.start({
