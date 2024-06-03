@@ -5,7 +5,21 @@ return {
 		"williamboman/mason-lspconfig.nvim",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		{ "j-hui/fidget.nvim", opts = {} },
-		{ "folke/neodev.nvim", opts = {} },
+		{ "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
+		{
+			"folke/lazydev.nvim",
+			ft = "lua",
+			opts = {
+				library = {
+					-- Library items can be absolute paths
+					-- "~/projects/my-awesome-lib",
+					-- Or relative, which means they will be resolved as a plugin
+					-- "LazyVim",
+					-- When relative, you can also provide a path to the library in the plugin dir
+					"luvit-meta/library", -- see below
+				},
+			},
+		},
 	},
 	keys = {
 		{ "gd", require("telescope.builtin").lsp_definitions, desc = "[G]oto [D]efinition" },
@@ -123,7 +137,8 @@ return {
 			cssls = {},
 			eslint = {},
 			html = {},
-			lua_ls = require("plugins.lsp.lua-ls"),
+			-- lua_ls = require("plugins.lsp.lua-ls"),
+			lua_ls = {},
 			marksman = { mason = false, cmd = { "/run/current-system/sw/bin/marksman", "server" } },
 			sqlls = {},
 			svelte = {},

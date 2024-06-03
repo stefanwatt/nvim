@@ -36,12 +36,11 @@ return { -- Autocompletion
 				end,
 			}),
 			sources = cmp.config.sources({
+				{ name = "lazydev" },
 				{ name = "luasnip" },
 				{ name = "copilot" },
 				{ name = "nvim_lsp" },
 				{ name = "path" },
-			}, {
-				{ name = "buffer" },
 			}),
 			formatting = {
 				format = function(_, item)

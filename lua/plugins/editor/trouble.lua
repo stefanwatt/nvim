@@ -1,7 +1,6 @@
 return {
 	"folke/trouble.nvim",
 	event = "VeryLazy",
-	branch = "dev",
 	opts = {
 		focus = true,
 		auto_preview = false,
