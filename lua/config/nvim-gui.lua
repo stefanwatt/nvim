@@ -85,13 +85,23 @@ M.listen_for_cursor_move = function(channel)
 	return "success"
 end
 
+local parsers = require("nvim-treesitter.parsers")
+local ts_utils = require("nvim-treesitter.ts_utils")
+local highlighter = vim.treesitter.highlighter
 ---@param channel number
 M.attach_buffer = function(channel)
-	vim.api.nvim_buf_attach(0, false, {
-		on_lines = function(...)
-			vim.fn.rpcrequest(channel, "nvim-gui-current-buf-changed", { ... })
+	local bufnr = vim.api.nvim_get_current_buf()
+	local language_tree = parsers.get_parser(bufnr)
+	if not language_tree then
+		return nil, {}
+	end
+	language_tree:register_cbs({
+		on_changedtree = function(_, ts_tree)
+			local tokens = M.get_tokens(ts_tree)
+			print("got tokens " .. tostring(#tokens))
+			vim.fn.rpcrequest(channel, "nvim-gui-buf-changed", tokens)
 		end,
-	})
+	}, true)
 	return "success"
 end
 
@@ -112,46 +122,34 @@ M.decimal_to_hex_color = function(decimal)
 	return string.format("#%06x", decimal)
 end
 
+local parser
+
 ---@alias HighlightIterator fun(end_line: integer?): integer, TSNode, vim.treesitter.query.TSMetadata, TSQueryMatch, table
 
 ---@param bufnr number
----@param start_row number
----@param end_row number
+---@param ts_tree vim.treesitter.LanguageTree
 ---@return HighlightIterator|nil, table
-local function get_hl_captures(bufnr, start_row, end_row)
-	local highlighter = vim.treesitter.highlighter
-	local parsers = require("nvim-treesitter.parsers")
-	local ts_utils = require("nvim-treesitter.ts_utils")
+local function get_hl_captures(bufnr, ts_tree)
+	local captures = {}
 
-	local parser = parsers.get_parser(bufnr)
+	local root = ts_tree:root()
+	if not parser then
+		parser = parsers.get_parser(bufnr)
+	end
 	if not parser then
 		return nil, {}
 	end
-
-	local tree = parser:parse()[1]
-	if not tree then
-		return nil, {}
-	end
-
-	local root = tree:root()
-	if not root then
-		return nil, {}
-	end
-
 	local query = vim.treesitter.query.get(parser:lang(), "highlights")
 	if not query then
 		return nil, {}
 	end
-	return query:iter_captures(root, bufnr, start_row, end_row), query.captures
+	return query:iter_captures(root, bufnr, 0, -1), query.captures
 end
 
----@param start_row number
----@param start_col number
----@param end_row number
----@param end_col number
-M.get_tokens = function(start_row, start_col, end_row, end_col)
+---@param ts_tree vim.treesitter.TSTree
+M.get_tokens = function(ts_tree)
 	local bufnr = vim.api.nvim_get_current_buf()
-	local iterator, captures = get_hl_captures(bufnr, start_row, end_row)
+	local iterator, captures = get_hl_captures(bufnr, ts_tree)
 	if not iterator or captures == {} then
 		return nil
 	end
@@ -160,12 +158,12 @@ M.get_tokens = function(start_row, start_col, end_row, end_col)
 	local seen = {}
 	for id, node, _ in iterator do
 		local node_start_row, node_start_col, node_end_row, node_end_col = node:range()
-		if
-			(end_row == node_start_row and node_start_col >= end_col)
-			or (start_row == node_end_row and node_end_col <= start_col)
-		then
-			goto continue
-		end
+		-- if
+		-- 	(end_row == node_start_row and node_start_col >= end_col)
+		-- 	or (start_row == node_end_row and node_end_col <= start_col)
+		-- then
+		-- 	goto continue
+		-- end
 		local token = {
 			start_row = node_start_row,
 			start_col = node_start_col,
@@ -192,6 +190,7 @@ M.get_tokens = function(start_row, start_col, end_row, end_col)
 		end
 		if capture_name then
 			token.hl_group = capture_name
+			-- TODO: check if its maybe to lower case
 			local ok, highlights = pcall(vim.api.nvim_get_hl_by_name, "@" .. capture_name, true)
 			if not ok then
 				ok, highlights = pcall(vim.api.nvim_get_hl_by_name, capture_name, true)
