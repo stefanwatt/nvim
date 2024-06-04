@@ -3,55 +3,13 @@ local opts = { silent = true }
 local utils = require("config.utils")
 local nvim_float = utils.NvimFloat
 
-vim.keymap.set("n", "<leader>fw", function()
-	local cwd = vim.fn.getcwd()
-	local command = "/home/stefan/Projects/spectre-gui/build/bin/spectre-gui"
-	local flags = {
-		{ name = "mode", value = "search" },
-		{ name = "dir", value = cwd },
-		{ name = "servername", value = vim.v.servername },
-	}
-	utils.i3_exec(command, flags)
-end, opts)
+vim.keymap.set("n", "<leader>fw", ":Telescope live_grep<CR>", opts)
 
-vim.keymap.set("v", "<leader>fw", function()
-	local search_term = utils.buf_vtext()
-	local cwd = vim.fn.getcwd()
-	local dir_arg = '--dir "' .. cwd .. '" '
-	local search_term_arg = '--search-term "' .. search_term .. "\"'"
-	local command = "/home/stefan/Projects/spectre-gui/build/bin/spectre-gui"
-	local flags = {
-		{ name = "mode", value = "search" },
-		{ name = "dir", value = cwd },
-		{ name = "search-term", value = search_term },
-		{ name = "servername", value = vim.v.servername },
-	}
-	utils.i3_exec(command, flags)
-end, opts)
+vim.keymap.set("v", "<leader>fw", "zy:Telescope live_grep default_text=<C-r>z<CR>", opts)
 
-vim.keymap.set("n", "<leader>r", function()
-	local cwd = vim.fn.getcwd()
-	local command = "/home/stefan/Projects/spectre-gui/build/bin/spectre-gui"
-	local flags = {
-		{ name = "mode", value = "search-and-replace" },
-		{ name = "dir", value = cwd },
-		{ name = "servername", value = vim.v.servername },
-	}
-	utils.i3_exec(command, flags)
-end, opts)
+vim.keymap.set("n", "<leader>r", ":%s///gc<Left><Left><Left><Left>", opts)
 
-vim.keymap.set("v", "<leader>r", function()
-	local search_term = utils.buf_vtext()
-	local cwd = vim.fn.getcwd()
-	local command = "/home/stefan/Projects/spectre-gui/build/bin/spectre-gui"
-	local flags = {
-		{ name = "mode", value = "search-and-replace" },
-		{ name = "dir", value = cwd },
-		{ name = "search-term", value = search_term },
-		{ name = "servername", value = vim.v.servername },
-	}
-	utils.i3_exec(command, flags)
-end, opts)
+vim.keymap.set("v", "<leader>r", "zy:%s/<C-r>z//gc<Left><Left><Left>", opts)
 
 vim.keymap.set("n", "<leader>T", function()
 	local cwd = vim.fn.getcwd()
@@ -103,22 +61,10 @@ vim.keymap.set("n", "<C-A-Right>", ":vertical resize +10<CR>", opts)
 vim.keymap.set("n", "<leader>v", ":vsplit<CR>", opts)
 
 vim.keymap.set("n", "<leader>gg", function()
-	nvim_float("lazygit")
+	os.execute("wezterm start --class 'term-bottom' --cwd " .. vim.fn.getcwd() .. " -- lazygit")
 end, opts)
 
-vim.keymap.set("n", "<leader>ff", function()
-	nvim_float("git-files")
-end, opts)
-
--- vim.keymap.set("n", "<leader>fw", function()
--- 	nvim_float("live-grep")
--- end, opts)
-
-vim.keymap.set("n", "<leader>fh", function()
-	nvim_float("help-tags")
-end, opts)
 vim.keymap.set("n", "<leader>ff", ":Telescope git_files<CR>", opts)
-vim.keymap.set("n", "<leader>fw", ":Telescope live_grep<CR>", opts)
 vim.keymap.set("n", "<leader>fh", ":Telescope help_tags<CR>", opts)
 
 -- Navigate buffers
