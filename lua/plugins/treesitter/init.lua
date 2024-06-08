@@ -10,6 +10,9 @@ return {
 		config = function()
 			local configs = require("nvim-treesitter.configs")
 			configs.setup({
+				modules = {},
+				sync_install = true,
+				auto_install = true,
 				textobjects = {
 					select = {
 						enable = true,

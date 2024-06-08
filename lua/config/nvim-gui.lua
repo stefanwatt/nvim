@@ -1,5 +1,50 @@
 local M = {}
 
+local counter = 0
+
+local function escape_special_characters(str)
+	local replacements = {
+		["="] = "eq",
+		["."] = "dot",
+		[","] = "comma",
+
+		[" "] = "space",
+		["/"] = "slash",
+		["\\"] = "backslash",
+		[":"] = "colon",
+		[";"] = "semicolon",
+		["("] = "lparen",
+		[")"] = "rparen",
+		["["] = "lbracket",
+		["]"] = "rbracket",
+		["{"] = "lbrace",
+		["}"] = "rbrace",
+		["<"] = "lt",
+		[">"] = "gt",
+		["?"] = "question",
+		["!"] = "exclamation",
+		["#"] = "hash",
+		["$"] = "dollar",
+		["%"] = "percent",
+		["^"] = "caret",
+		["&"] = "amp",
+		["*"] = "asterisk",
+		["+"] = "plus",
+		["-"] = "dash",
+		["_"] = "underscore",
+		["~"] = "tilde",
+		["|"] = "pipe",
+		["'"] = "apostrophe",
+		['"'] = "quote",
+	}
+
+	counter = counter + 1
+	if replacements[str] then
+		return replacements[str] .. tostring(counter)
+	end
+	return str
+end
+
 ---@param name string
 local function augroup(name)
 	return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true })
@@ -96,8 +141,8 @@ M.attach_buffer = function(channel)
 		return nil, {}
 	end
 	language_tree:register_cbs({
-		on_changedtree = function(_, ts_tree)
-			local tokens = M.get_tokens(ts_tree)
+		on_changedtree = function(ranges, ts_tree)
+			local tokens = M.get_tokens(ts_tree:root(), language_tree:lang())
 			print("got tokens " .. tostring(#tokens))
 			vim.fn.rpcrequest(channel, "nvim-gui-buf-changed", tokens)
 		end,
@@ -105,65 +150,60 @@ M.attach_buffer = function(channel)
 	return "success"
 end
 
-M.get_buffer = function()
-	local bufnr = vim.api.nvim_get_current_buf()
-	local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
-	local buffer = {}
-
-	for i, line in ipairs(lines) do
-		local hl_groups = get_hl_groups(bufnr, i)
-		table.insert(buffer, { line = line, row = i, hl_groups = hl_groups })
-	end
-
-	return buffer
-end
-
 M.decimal_to_hex_color = function(decimal)
 	return string.format("#%06x", decimal)
 end
 
-local parser
-
 ---@alias HighlightIterator fun(end_line: integer?): integer, TSNode, vim.treesitter.query.TSMetadata, TSQueryMatch, table
 
 ---@param bufnr number
----@param ts_tree vim.treesitter.LanguageTree
+---@param node TSNode
+---@param lang vim.treesitter.Language
 ---@return HighlightIterator|nil, table
-local function get_hl_captures(bufnr, ts_tree)
+local function get_hl_captures(bufnr, node, lang)
 	local captures = {}
 
-	local root = ts_tree:root()
-	if not parser then
-		parser = parsers.get_parser(bufnr)
-	end
-	if not parser then
-		return nil, {}
-	end
-	local query = vim.treesitter.query.get(parser:lang(), "highlights")
+	local query = vim.treesitter.query.get(lang, "highlights")
 	if not query then
 		return nil, {}
 	end
-	return query:iter_captures(root, bufnr, 0, -1), query.captures
+	return query:iter_captures(node, bufnr, 0, -1), query.captures
 end
 
----@param ts_tree vim.treesitter.TSTree
-M.get_tokens = function(ts_tree)
+---@param base_id string
+---@param seen_token_ids string[]
+local function generate_unique_id(base_id, seen_token_ids)
+	local token_id = base_id
+	local suffix = 0
+	while seen_token_ids[token_id] do
+		suffix = suffix + 1
+		token_id = base_id .. tostring(suffix)
+	end
+	return token_id
+end
+
+local function hash(str)
+	local hash = 5381
+	for i = 1, #str do
+		local char = str:byte(i)
+		hash = ((hash * 33) + char) % 2 ^ 32 -- Ensuring it stays within 32-bit integer range
+	end
+	return hash
+end
+
+---@param root TSNode
+---@param lang vim.treesitter.Language
+M.get_tokens = function(root, lang)
 	local bufnr = vim.api.nvim_get_current_buf()
-	local iterator, captures = get_hl_captures(bufnr, ts_tree)
+	local iterator, captures = get_hl_captures(bufnr, root, lang)
 	if not iterator or captures == {} then
 		return nil
 	end
 
 	local tokens = {}
-	local seen = {}
+	local seen_token_ids = {}
 	for id, node, _ in iterator do
 		local node_start_row, node_start_col, node_end_row, node_end_col = node:range()
-		-- if
-		-- 	(end_row == node_start_row and node_start_col >= end_col)
-		-- 	or (start_row == node_end_row and node_end_col <= start_col)
-		-- then
-		-- 	goto continue
-		-- end
 		local token = {
 			start_row = node_start_row,
 			start_col = node_start_col,
@@ -171,43 +211,102 @@ M.get_tokens = function(ts_tree)
 			end_col = node_end_col,
 		}
 		local capture_name = captures[id]
-		local key = tostring(node_start_row)
-			.. "-"
-			.. tostring(node_start_col)
-			.. "-"
-			.. tostring(node_end_row)
-			.. "-"
-			.. tostring(node_end_col)
-		-- if capture_name ~= "comment.documentation" and seen[key] then
-		-- 	goto continue
-		-- end
-		seen[key] = true
 		local ok, text =
 			pcall(vim.api.nvim_buf_get_text, bufnr, node_start_row, node_start_col, node_end_row, node_end_col, {})
 		token.text = ok and text[1] or ""
-		if capture_name ~= "string" and capture_name ~= "comment.documentation" and node:child_count() ~= 0 then
-			goto continue
-		end
-		if capture_name then
-			token.hl_group = capture_name
-			-- TODO: check if its maybe to lower case
-			local ok, highlights = pcall(vim.api.nvim_get_hl_by_name, "@" .. capture_name, true)
-			if not ok then
-				ok, highlights = pcall(vim.api.nvim_get_hl_by_name, capture_name, true)
-			end
-			for k, v in pairs(highlights) do
-				if k == "foreground" or k == "background" then
-					token[k] = tostring(M.decimal_to_hex_color(v))
-				else
-					token[k] = v
-				end
+
+		-- local base_id = node:id() .. escape_special_characters(token.text)
+		-- base_id = hash(base_id)
+		-- local token_id = generate_unique_id(base_id, seen_token_ids)
+
+		token.id = node:id() .. token.text
+		-- seen_token_ids[token_id] = true
+
+		token.hl_group = capture_name
+
+		local hl_id = vim.api.nvim_get_hl_id_by_name(capture_name)
+		local highlights = vim.api.nvim_get_hl(0, { name = "@" .. capture_name, link = false })
+			or vim.api.nvim_get_hl(0, { name = capture_name, link = false })
+
+		for k, v in pairs(highlights) do
+			if k == "fg" or k == "bg" then
+				token[k] = tostring(M.decimal_to_hex_color(v))
+			else
+				token[k] = v
 			end
 		end
 		table.insert(tokens, token)
-		::continue::
 	end
 
 	return tokens
 end
 
+local function get_hl_of_node(node, bufnr, query)
+	local start_row, start_col, end_row, end_col = node:range()
+	local iterator = query:iter_captures(node, bufnr, start_row, end_row)
+	local tokens = {}
+	for id, child, _ in iterator do
+		local child_start_row, child_start_col, child_end_row, child_end_col = child:range()
+		local token = {
+			start_row = child_start_row,
+			start_col = child_start_col,
+			end_row = child_end_row,
+			end_col = child_end_col,
+		}
+		local capture_name = query.captures[id]
+		local ok, text =
+			pcall(vim.api.nvim_buf_get_text, bufnr, child_start_row, child_start_col, child_end_row, child_end_col, {})
+		token.text = ok and text[1] or ""
+		token.hl_group = capture_name
+		local highlights = vim.api.nvim_get_hl(0, { id = id })
+		for k, v in pairs(highlights) do
+			if k == "foreground" or k == "background" then
+				token[k] = tostring(M.decimal_to_hex_color(v))
+			else
+				token[k] = v
+			end
+		end
+		table.insert(tokens, token)
+	end
+	local ok, text = pcall(vim.api.nvim_buf_get_text, bufnr, start_row, start_col, end_row, end_col, {})
+	return tokens, ok and text[1] or ""
+end
+
+local function walk_node(node, depth, query)
+	for child, name in node:iter_children() do
+		local hl, text = get_hl_of_node(child, 0, query)
+		local indentation = string.rep("  ", depth)
+		print(
+			indentation .. " text: '" .. text .. "' type:",
+			child:type(),
+			" name: ",
+			name,
+			" highlights: ",
+			vim.inspect(hl)
+		)
+		if child:child_count() > 0 then
+			walk_node(child, depth + 1, query)
+		end
+	end
+end
+
+M.get_tree_as_table = function()
+	local bufnr = vim.api.nvim_get_current_buf()
+	local language_tree = parsers.get_parser(bufnr)
+	local tree = language_tree:parse()[1]
+	local lang = language_tree:lang()
+	local root = tree:root()
+	local query = vim.treesitter.query.get(lang, "highlights")
+	walk_node(root, 0, query)
+end
+
+M.print_tokens = function()
+	local bufnr = vim.api.nvim_get_current_buf()
+	local language_tree = parsers.get_parser(bufnr)
+	local tree = language_tree:parse()[1]
+	local lang = language_tree:lang()
+	local root = tree:root()
+	local tokens = M.get_tokens(root, lang)
+	vim.print(tokens)
+end
 return M
