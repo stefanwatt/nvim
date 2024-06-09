@@ -7,7 +7,6 @@ local function escape_special_characters(str)
 		["="] = "eq",
 		["."] = "dot",
 		[","] = "comma",
-
 		[" "] = "space",
 		["/"] = "slash",
 		["\\"] = "backslash",
@@ -201,7 +200,6 @@ M.get_tokens = function(root, lang)
 	end
 
 	local tokens = {}
-	local seen_token_ids = {}
 	for id, node, _ in iterator do
 		local node_start_row, node_start_col, node_end_row, node_end_col = node:range()
 		local token = {
@@ -214,20 +212,11 @@ M.get_tokens = function(root, lang)
 		local ok, text =
 			pcall(vim.api.nvim_buf_get_text, bufnr, node_start_row, node_start_col, node_end_row, node_end_col, {})
 		token.text = ok and text[1] or ""
-
-		-- local base_id = node:id() .. escape_special_characters(token.text)
-		-- base_id = hash(base_id)
-		-- local token_id = generate_unique_id(base_id, seen_token_ids)
-
 		token.id = node:id() .. token.text
-		-- seen_token_ids[token_id] = true
-
 		token.hl_group = capture_name
-
 		local hl_id = vim.api.nvim_get_hl_id_by_name(capture_name)
 		local highlights = vim.api.nvim_get_hl(0, { name = "@" .. capture_name, link = false })
 			or vim.api.nvim_get_hl(0, { name = capture_name, link = false })
-
 		for k, v in pairs(highlights) do
 			if k == "fg" or k == "bg" then
 				token[k] = tostring(M.decimal_to_hex_color(v))
@@ -241,55 +230,104 @@ M.get_tokens = function(root, lang)
 	return tokens
 end
 
-local function get_hl_of_node(node, bufnr, query)
-	local start_row, start_col, end_row, end_col = node:range()
-	local iterator = query:iter_captures(node, bufnr, start_row, end_row)
-	local tokens = {}
-	for id, child, _ in iterator do
-		local child_start_row, child_start_col, child_end_row, child_end_col = child:range()
-		local token = {
-			start_row = child_start_row,
-			start_col = child_start_col,
-			end_row = child_end_row,
-			end_col = child_end_col,
+---@class NvimGuiNode
+---@field text string|nil
+---@field id string
+---@field hl_group string|nil
+---@field children NvimGuiNode[]
+---@field start_top number
+---@field start_left number
+---@field end_top number
+---@field end_left number
+
+local whitespace_count = 1
+
+---@param ts_node TSNode
+---@param parent NvimGuiNode
+---@param depth number
+---@param TSQuery query
+---@returns children NvimGuiNode[]
+local function walk_node(ts_node, parent, depth, query, bufnr)
+	local children = {}
+	local last_end_pos = { top = parent.start_top, left = parent.start_left }
+	for child, name in ts_node:iter_children() do
+		local id = child:id()
+		local start_row, start_col, end_row, end_col = child:range()
+		while start_row > last_end_pos.top do
+			local line_break = {
+				text = "\n",
+				id = id .. tostring(whitespace_count),
+				start_top = last_end_pos.top,
+				start_left = 0,
+				end_top = last_end_pos.top + 1,
+				end_left = 0,
+				children = {},
+			}
+			table.insert(children, line_break)
+			whitespace_count = whitespace_count + 1
+			last_end_pos.top = last_end_pos.top + 1
+		end
+		while start_col > last_end_pos.left do
+			local space = {
+				text = " ",
+				id = id .. tostring(whitespace_count),
+				start_top = last_end_pos.top,
+				start_left = last_end_pos.left,
+				end_top = last_end_pos.top,
+				end_left = last_end_pos.left + 1,
+				children = {},
+			}
+			table.insert(children, space)
+			whitespace_count = whitespace_count + 1
+			last_end_pos.left = last_end_pos.left + 1
+		end
+		local start_top = start_row - parent.start_top
+		local start_left = start_col - parent.start_left
+		local end_top = start_top + (end_row - start_row)
+		local end_left = end_top ~= start_top and end_col or (start_left + (end_col - start_col))
+		local child_node = {
+			id = id,
+			text = "",
+			hl_group = nil,
+			children = {},
+			start_top = start_top,
+			start_left = start_left,
+			end_top = end_top,
+			end_left = end_left,
 		}
-		local capture_name = query.captures[id]
-		local ok, text =
-			pcall(vim.api.nvim_buf_get_text, bufnr, child_start_row, child_start_col, child_end_row, child_end_col, {})
-		token.text = ok and text[1] or ""
-		token.hl_group = capture_name
-		local highlights = vim.api.nvim_get_hl(0, { id = id })
-		for k, v in pairs(highlights) do
-			if k == "foreground" or k == "background" then
-				token[k] = tostring(M.decimal_to_hex_color(v))
-			else
-				token[k] = v
+		last_end_pos = { top = child_node.end_top, left = child_node.end_left }
+		local ok, text = pcall(vim.treesitter.get_node_text, child, bufnr)
+		if ok then
+			child_node.text = text
+		end
+
+		for id, _ in query:iter_captures(child, bufnr, start_row, start_row + 1) do
+			if id then
+				child_node.hl_group = query.captures[id]
+				break
 			end
 		end
-		table.insert(tokens, token)
-	end
-	local ok, text = pcall(vim.api.nvim_buf_get_text, bufnr, start_row, start_col, end_row, end_col, {})
-	return tokens, ok and text[1] or ""
-end
-
-local function walk_node(node, depth, query)
-	for child, name in node:iter_children() do
-		local hl, text = get_hl_of_node(child, 0, query)
-		local indentation = string.rep("  ", depth)
-		print(
-			indentation .. " text: '" .. text .. "' type:",
-			child:type(),
-			" name: ",
-			name,
-			" highlights: ",
-			vim.inspect(hl)
-		)
 		if child:child_count() > 0 then
-			walk_node(child, depth + 1, query)
+			child_node.children = walk_node(child, child_node, depth + 1, query, bufnr)
+			-- if it has children,then the text will be on them
+			child_node.text = nil
 		end
+		table.insert(children, child_node)
 	end
+	return children
 end
 
+local function write_to_buffer(content)
+	-- Create a new buffer
+	local buf = vim.api.nvim_create_buf(false, true) -- {listed = false, scratch = true}
+
+	-- Set the buffer content
+	local lines = vim.split(vim.inspect(content), "\n")
+	vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+
+	-- Open a new window with the created buffer
+	vim.api.nvim_set_current_buf(buf)
+end
 M.get_tree_as_table = function()
 	local bufnr = vim.api.nvim_get_current_buf()
 	local language_tree = parsers.get_parser(bufnr)
@@ -297,7 +335,20 @@ M.get_tree_as_table = function()
 	local lang = language_tree:lang()
 	local root = tree:root()
 	local query = vim.treesitter.query.get(lang, "highlights")
-	walk_node(root, 0, query)
+	local start_row, start_col, end_row, end_col = root:range()
+	local root_node = {
+		id = root:id(),
+		start_top = start_row,
+		start_left = start_col,
+		end_top = end_row,
+		end_left = end_col,
+	}
+	local ok, text = pcall(vim.treesitter.get_node_text, root, bufnr)
+	if ok then
+		root_node.text = text
+	end
+	root_node.children = walk_node(root, root_node, 0, query, bufnr)
+	write_to_buffer(root_node)
 end
 
 M.print_tokens = function()
@@ -309,4 +360,5 @@ M.print_tokens = function()
 	local tokens = M.get_tokens(root, lang)
 	vim.print(tokens)
 end
+
 return M
