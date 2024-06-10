@@ -1,3 +1,10 @@
+vim.api.nvim_create_user_command("ToggleFormatOnSave", function(args)
+	vim.g.disable_autoformat = not vim.g.disable_autoformat
+end, {
+	desc = "Toggle autoformat-on-save",
+	bang = true,
+})
+
 function show_col_in_hover_window()
 	vim.cmd("highlight InvisibleCursor guibg=bg guifg=bg")
 	local col = vim.api.nvim_eval('col(".")')
