@@ -1,5 +1,6 @@
 return {
 	require("plugins.utility.tasks"),
+	require("plugins.utility.notify"),
 	require("plugins.utility.auto-session"),
 	require("plugins.utility.persistence"),
 	require("plugins.utility.cd-project-nvim"),

@@ -4,6 +4,7 @@ vim.tbl_add_reverse_lookup = function(tbl)
 	end
 end
 
+vim.g.disable_autoformat = true
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
