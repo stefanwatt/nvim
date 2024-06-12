@@ -5,7 +5,7 @@ return {
 		cmd = "Copilot",
 		keys = {
 			{
-				"<C-space>",
+				"<A-space>",
 				mode = { "i", "n" },
 				function()
 					vim.schedule(function()
