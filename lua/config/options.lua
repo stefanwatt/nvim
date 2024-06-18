@@ -2,10 +2,9 @@ vim.g.lazydev_enabled = true
 vim.g.disable_autoformat = true
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
-vim.g.markdown_recommended_style = 0
-vim.g.sql_clib_path = os.getenv("SQLITE3_LIB")
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+
+-- Enable LazyVim auto format
+vim.g.autoformat = false
 
 -- LazyVim root dir detection
 -- Each entry can be:
