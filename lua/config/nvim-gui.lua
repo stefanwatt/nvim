@@ -157,130 +157,130 @@ local counter = 0
 local M = {}
 
 local function escape_special_characters(str)
-	local replacements = {
-		["="] = "eq",
-		["."] = "dot",
-		[","] = "comma",
-		[" "] = "space",
-		["/"] = "slash",
-		["\\"] = "backslash",
-		[":"] = "colon",
-		[";"] = "semicolon",
-		["("] = "lparen",
-		[")"] = "rparen",
-		["["] = "lbracket",
-		["]"] = "rbracket",
-		["{"] = "lbrace",
-		["}"] = "rbrace",
-		["<"] = "lt",
-		[">"] = "gt",
-		["?"] = "question",
-		["!"] = "exclamation",
-		["#"] = "hash",
-		["$"] = "dollar",
-		["%"] = "percent",
-		["^"] = "caret",
-		["&"] = "amp",
-		["*"] = "asterisk",
-		["+"] = "plus",
-		["-"] = "dash",
-		["_"] = "underscore",
-		["~"] = "tilde",
-		["|"] = "pipe",
-		["'"] = "apostrophe",
-		['"'] = "quote",
-	}
+    local replacements = {
+        ["="] = "eq",
+        ["."] = "dot",
+        [","] = "comma",
+        [" "] = "space",
+        ["/"] = "slash",
+        ["\\"] = "backslash",
+        [":"] = "colon",
+        [";"] = "semicolon",
+        ["("] = "lparen",
+        [")"] = "rparen",
+        ["["] = "lbracket",
+        ["]"] = "rbracket",
+        ["{"] = "lbrace",
+        ["}"] = "rbrace",
+        ["<"] = "lt",
+        [">"] = "gt",
+        ["?"] = "question",
+        ["!"] = "exclamation",
+        ["#"] = "hash",
+        ["$"] = "dollar",
+        ["%"] = "percent",
+        ["^"] = "caret",
+        ["&"] = "amp",
+        ["*"] = "asterisk",
+        ["+"] = "plus",
+        ["-"] = "dash",
+        ["_"] = "underscore",
+        ["~"] = "tilde",
+        ["|"] = "pipe",
+        ["'"] = "apostrophe",
+        ['"'] = "quote",
+    }
 
-	counter = counter + 1
-	if replacements[str] then
-		return replacements[str] .. tostring(counter)
-	end
-	return str
+    counter = counter + 1
+    if replacements[str] then
+        return replacements[str] .. tostring(counter)
+    end
+    return str
 end
 
 ---@param name string
 local function augroup(name)
-	return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true })
+    return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true })
 end
 
 ---@return string[]
 M.get_buf_lines = function()
-	local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
-	local result = {}
-	for i, line in ipairs(lines) do
-		local buf = vim.api.nvim_get_current_buf()
-		local signs = vim.fn.sign_getplaced(buf, { lnum = i })[1].signs
-		if not signs or #signs == 0 then
-			table.insert(result, { sign = "", row = i, line = line })
-		else
-			local sign = signs[1].name
-			table.insert(result, { sign = sign, row = i, line = line })
-		end
-	end
-	return result
+    local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+    local result = {}
+    for i, line in ipairs(lines) do
+        local buf = vim.api.nvim_get_current_buf()
+        local signs = vim.fn.sign_getplaced(buf, { lnum = i })[1].signs
+        if not signs or #signs == 0 then
+            table.insert(result, { sign = "", row = i, line = line })
+        else
+            local sign = signs[1].name
+            table.insert(result, { sign = sign, row = i, line = line })
+        end
+    end
+    return result
 end
 
 ---@param channel number
 M.listen_for_mode_change = function(channel)
-	local event_name = "nvim-gui-mode-changed"
-	vim.api.nvim_create_autocmd("ModeChanged", {
-		group = augroup(event_name),
-		pattern = "*",
-		callback = function()
-			local new_mode = vim.fn.mode()
-			vim.fn.rpcrequest(channel, event_name, {
-				new_mode,
-			})
-		end,
-	})
-	return "success"
+    local event_name = "nvim-gui-mode-changed"
+    vim.api.nvim_create_autocmd("ModeChanged", {
+        group = augroup(event_name),
+        pattern = "*",
+        callback = function()
+            local new_mode = vim.fn.mode()
+            vim.fn.rpcrequest(channel, event_name, {
+                new_mode,
+            })
+        end,
+    })
+    return "success"
 end
 
 ---@param channel number
 M.listen_for_visual_selection_change = function(channel)
-	local event_name = "nvim-gui-visual-selection-changed"
-	vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "ModeChanged" }, {
-		group = augroup(event_name),
-		pattern = "*",
-		callback = function()
-			local mode = vim.fn.mode()
-			if mode == "v" or mode == "V" then
-				local _, start_row, start_col, _ = unpack(vim.fn.getpos("v"))
-				local _, end_row, end_col, _ = unpack(vim.fn.getpos("."))
-				vim.fn.rpcrequest(channel, event_name, {
-					start_row = math.max(start_row - 1, 0),
-					start_col = math.max(start_col - 1, 0),
-					end_row = math.max(end_row - 1, 0),
-					end_col = math.max(end_col - 1, 0),
-				})
-			end
-		end,
-	})
-	return "success"
+    local event_name = "nvim-gui-visual-selection-changed"
+    vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "ModeChanged" }, {
+        group = augroup(event_name),
+        pattern = "*",
+        callback = function()
+            local mode = vim.fn.mode()
+            if mode == "v" or mode == "V" then
+                local _, start_row, start_col, _ = unpack(vim.fn.getpos("v"))
+                local _, end_row, end_col, _ = unpack(vim.fn.getpos("."))
+                vim.fn.rpcrequest(channel, event_name, {
+                    start_row = math.max(start_row - 1, 0),
+                    start_col = math.max(start_col - 1, 0),
+                    end_row = math.max(end_row - 1, 0),
+                    end_col = math.max(end_col - 1, 0),
+                })
+            end
+        end,
+    })
+    return "success"
 end
 
 ---@param channel number
 M.listen_for_cursor_move = function(channel)
-	local event_name = "nvim-gui-cursor-moved"
-	vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-		group = augroup(event_name),
-		callback = function(event)
-			local cursor = vim.api.nvim_win_get_cursor(0)
-			local row = cursor[1]
-			local col = cursor[2]
-			local key_at_cursor = vim.fn.getline(row):sub(col + 1, col + 1)
-			local top_line = vim.fn.line("w0")
-			local bottom_line = vim.fn.line("w$")
-			vim.fn.rpcrequest(channel, event_name, {
-				row = row - 1,
-				col = col,
-				key = key_at_cursor,
-				top_line = top_line,
-				bottom_line = bottom_line,
-			})
-		end,
-	})
-	return "success"
+    local event_name = "nvim-gui-cursor-moved"
+    vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+        group = augroup(event_name),
+        callback = function(event)
+            local cursor = vim.api.nvim_win_get_cursor(0)
+            local row = cursor[1]
+            local col = cursor[2]
+            local key_at_cursor = vim.fn.getline(row):sub(col + 1, col + 1)
+            local top_line = vim.fn.line("w0")
+            local bottom_line = vim.fn.line("w$")
+            vim.fn.rpcrequest(channel, event_name, {
+                row = row - 1,
+                col = col,
+                key = key_at_cursor,
+                top_line = top_line,
+                bottom_line = bottom_line,
+            })
+        end,
+    })
+    return "success"
 end
 
 local parsers = require("nvim-treesitter.parsers")
@@ -304,7 +304,7 @@ M.attach_buffer = function(channel)
 end
 
 M.decimal_to_hex_color = function(decimal)
-	return string.format("#%06x", decimal)
+    return string.format("#%06x", decimal)
 end
 
 ---@alias HighlightIterator fun(end_line: integer?): integer, TSNode, vim.treesitter.query.TSMetadata, TSQueryMatch, table
@@ -314,23 +314,23 @@ end
 ---@param lang vim.treesitter.Language
 ---@return HighlightIterator|nil, table
 local function get_hl_captures(bufnr, node, lang)
-	local captures = {}
+    local captures = {}
 
-	local query = vim.treesitter.query.get(lang, "highlights")
-	if not query then
-		return nil, {}
-	end
-	return query:iter_captures(node, bufnr, 0, -1), query.captures
+    local query = vim.treesitter.query.get(lang, "highlights")
+    if not query then
+        return nil, {}
+    end
+    return query:iter_captures(node, bufnr, 0, -1), query.captures
 end
 
 ---@param root TSNode
 ---@param lang vim.treesitter.Language
 M.get_tokens = function(root, lang)
-	local bufnr = vim.api.nvim_get_current_buf()
-	local iterator, captures = get_hl_captures(bufnr, root, lang)
-	if not iterator or captures == {} then
-		return nil
-	end
+    local bufnr = vim.api.nvim_get_current_buf()
+    local iterator, captures = get_hl_captures(bufnr, root, lang)
+    if not iterator or captures == {} then
+        return nil
+    end
 
 	local tokens = {}
 	for id, node, _ in iterator do
@@ -360,7 +360,7 @@ M.get_tokens = function(root, lang)
 		table.insert(tokens, token)
 	end
 
-	return tokens
+    return tokens
 end
 
 ---@class NvimGuiNode
