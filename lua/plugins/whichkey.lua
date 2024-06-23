@@ -2,6 +2,7 @@ return {
 	{
 		"folke/which-key.nvim",
 		lazy = false,
+		-- enabled = false,
 		opts = {
 			plugins = { spelling = true },
 			defaults = {

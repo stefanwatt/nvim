@@ -12,6 +12,11 @@ local keys = {
 		end,
 		desc = "Fuzzy Find in Buffer",
 	},
+
+		{ "gd", require("telescope.builtin").lsp_definitions, desc = "[G]oto [D]efinition" },
+		{ "<leader>fr", require("telescope.builtin").lsp_references, desc = "[G]oto [R]eferences" },
+		{ "gI", require("telescope.builtin").lsp_implementations, desc = "[G]oto [I]mplementation" },
+		{ "<leader>fs", require("telescope.builtin").lsp_document_symbols, desc = "[D]ocument [S]ymbols" },
 	{
 		"<leader>fd",
 		mode = { "n" },
@@ -125,4 +130,5 @@ return {
 	require("plugins.telescope.projects"),
 	require("plugins.telescope.diff"),
 	require("plugins.telescope.mini-extras"),
+	require("plugins.telescope.fzf"),
 }

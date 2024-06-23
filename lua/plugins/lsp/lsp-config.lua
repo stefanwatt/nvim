@@ -3,6 +3,7 @@ return {
 	dependencies = {
 		{ "williamboman/mason.nvim", config = true },
 		"williamboman/mason-lspconfig.nvim",
+		"nvim-telescope/telescope.nvim",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		{ "j-hui/fidget.nvim", opts = {} },
 		{ "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
@@ -22,11 +23,11 @@ return {
 		},
 	},
 	keys = {
-		{ "gd", require("telescope.builtin").lsp_definitions, desc = "[G]oto [D]efinition" },
-		{ "<leader>fr", require("telescope.builtin").lsp_references, desc = "[G]oto [R]eferences" },
-		{ "gI", require("telescope.builtin").lsp_implementations, desc = "[G]oto [I]mplementation" },
+		-- { "gd", require("telescope.builtin").lsp_definitions, desc = "[G]oto [D]efinition" },
+		-- { "<leader>fr", require("telescope.builtin").lsp_references, desc = "[G]oto [R]eferences" },
+		-- { "gI", require("telescope.builtin").lsp_implementations, desc = "[G]oto [I]mplementation" },
+		-- { "<leader>fs", require("telescope.builtin").lsp_document_symbols, desc = "[D]ocument [S]ymbols" },
 		{ "<leader>D", ":Alpha<CR>", desc = "Dashboard" },
-		{ "<leader>fs", require("telescope.builtin").lsp_document_symbols, desc = "[D]ocument [S]ymbols" },
 		{ "K", vim.lsp.buf.hover, desc = "Hover Documentation" },
 		{ "gD", vim.lsp.buf.declaration, desc = "[G]oto [D]eclaration" },
 		{
@@ -74,15 +75,7 @@ return {
 			"<cmd>lua vim.lsp.buf.rename()<cr>",
 			desc = "LSP rename",
 		},
-		{
-			"<leader>fr",
-			function()
-				require("telescope.builtin").lsp_references()
-			end,
-			desc = "find references",
-		},
 	},
-
 	config = function()
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),

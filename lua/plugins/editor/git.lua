@@ -1,27 +1,5 @@
 return {
-	{
-		"NeogitOrg/neogit",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"sindrets/diffview.nvim",
-			"nvim-telescope/telescope.nvim",
-		},
-		keys = {
-			{
-				"<leader>ngg",
-				mode = { "n" },
-				":Neogit<CR>",
-				desc = "Neogit",
-			},
-			{
-				"<leader>ngc",
-				mode = { "n" },
-				":Neogit commit<CR>",
-				desc = "Neogit Commit",
-			},
-		},
-		config = true,
-	},
+	{ "tpope/vim-fugitive", event = "VeryLazy" },
 	{
 		"f-person/git-blame.nvim",
 		config = function()

@@ -3,9 +3,13 @@ local opts = { silent = true }
 local utils = require("config.utils")
 local nvim_float = utils.NvimFloat
 
+-- vim.keymap.set("n", "<leader>ff", function()
+-- 	nvim_float("git-files")
+-- end, opts)
+
 vim.keymap.set("n", "<leader>fw", function()
 	local cwd = vim.fn.getcwd()
-	local command = "/home/stefan/Projects/spectre-gui/build/bin/spectre-gui"
+	local command = "/home/stefan/Applications/spectre-gui"
 	local flags = {
 		{ name = "mode", value = "search" },
 		{ name = "dir", value = cwd },
@@ -19,7 +23,7 @@ vim.keymap.set("v", "<leader>fw", function()
 	local cwd = vim.fn.getcwd()
 	local dir_arg = '--dir "' .. cwd .. '" '
 	local search_term_arg = '--search-term "' .. search_term .. "\"'"
-	local command = "/home/stefan/Projects/spectre-gui/build/bin/spectre-gui"
+	local command = "/home/stefan/Applications/spectre-gui"
 	local flags = {
 		{ name = "mode", value = "search" },
 		{ name = "dir", value = cwd },
@@ -31,7 +35,7 @@ end, opts)
 
 vim.keymap.set("n", "<leader>r", function()
 	local cwd = vim.fn.getcwd()
-	local command = "/home/stefan/Projects/spectre-gui/build/bin/spectre-gui"
+	local command = "/home/stefan/Applications/spectre-gui"
 	local flags = {
 		{ name = "mode", value = "search-and-replace" },
 		{ name = "dir", value = cwd },
@@ -43,7 +47,7 @@ end, opts)
 vim.keymap.set("v", "<leader>r", function()
 	local search_term = utils.buf_vtext()
 	local cwd = vim.fn.getcwd()
-	local command = "/home/stefan/Projects/spectre-gui/build/bin/spectre-gui"
+	local command = "/home/stefan/Applications/spectre-gui"
 	local flags = {
 		{ name = "mode", value = "search-and-replace" },
 		{ name = "dir", value = cwd },
@@ -106,9 +110,6 @@ vim.keymap.set("n", "<leader>gg", function()
 	nvim_float("lazygit")
 end, opts)
 
-vim.keymap.set("n", "<leader>ff", function()
-	nvim_float("git-files")
-end, opts)
 
 -- vim.keymap.set("n", "<leader>fw", function()
 -- 	nvim_float("live-grep")
