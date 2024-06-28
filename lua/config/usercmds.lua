@@ -55,8 +55,30 @@ vim.api.nvim_create_user_command("Col", "lua show_col_in_hover_window()", {
 vim.api.nvim_create_user_command("NvimGui", function(args)
 	local command = "/home/stefan/Projects/spectre-gui/build/bin/spectre-gui"
 	local flags = {
-		{ name = "mode", value = "buffer" },
+		{ name = "mode",       value = "buffer" },
 		{ name = "servername", value = vim.v.servername },
 	}
 	require("config.utils").i3_exec(command, flags)
 end, { nargs = "*" })
+
+local function capture_highlights_to_new_buffer()
+	local hl_output = vim.api.nvim_exec('silent! highlight', true)
+
+	vim.cmd('enew')
+
+	vim.bo.buftype = 'nofile'
+	vim.bo.bufhidden = 'wipe'
+	vim.bo.swapfile = false
+	vim.bo.filetype = 'diff' 
+
+	local lines = vim.split(hl_output, '\n')
+	vim.api.nvim_buf_set_lines(0, 0, -1, false, lines)
+
+	for _, line in ipairs(lines) do
+		if line:match("^%s*hi%s+") then
+			vim.api.nvim_command(line)
+		end
+	end
+end
+
+vim.api.nvim_create_user_command("Highlight", capture_highlights_to_new_buffer, { nargs = 0 })

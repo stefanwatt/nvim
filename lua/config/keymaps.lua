@@ -1,11 +1,6 @@
--- Silent keymap option
 local opts = { silent = true }
 local utils = require("config.utils")
 local nvim_float = utils.NvimFloat
-
--- vim.keymap.set("n", "<leader>ff", function()
--- 	nvim_float("git-files")
--- end, opts)
 
 vim.keymap.set("n", "<leader>fw", function()
 	local cwd = vim.fn.getcwd()
@@ -65,7 +60,6 @@ vim.keymap.set("n", "<leader>T", function()
 			.. ";' && sleep 0.2 && i3-msg 'resize set height 400'"
 	)
 end, opts)
--- Normal --
 vim.keymap.set("n", "<BS>", "ciw", opts)
 vim.keymap.set("n", "<CR>", function()
 	local buftype = vim.api.nvim_buf_get_option(0, "buftype")
@@ -110,15 +104,6 @@ vim.keymap.set("n", "<leader>gg", function()
 	nvim_float("lazygit")
 end, opts)
 
-
--- vim.keymap.set("n", "<leader>fw", function()
--- 	nvim_float("live-grep")
--- end, opts)
-
-vim.keymap.set("n", "<leader>fh", function()
-	nvim_float("help-tags")
-end, opts)
-
 -- Navigate buffers
 vim.keymap.set("n", "<S-Right>", ":bnext<CR>", opts)
 vim.keymap.set("n", "<S-Left>", ":bprevious<CR>", opts)
@@ -128,11 +113,6 @@ vim.keymap.set("n", "cb", "vbc", opts)
 -- Better paste
 vim.keymap.set("v", "p", '"_dP', opts)
 
--- Insert --
--- Press jk fast to enter
--- keymap("i", "ne", "<ESC>")
-
--- Visual --
 -- Stay in indent mode
 vim.keymap.set("v", "<", "<gv", opts)
 vim.keymap.set("v", ">", ">gv", opts)
@@ -147,7 +127,6 @@ vim.keymap.set("n", "s", function()
 	})
 end, { silent = true, noremap = true })
 
--- vim.keymap.set("n", "<leader><leader>c", "<cmd>Col<cr>", opts)
 vim.keymap.set("n", "<leader><leader>y", ":lua", opts)
 vim.keymap.set("n", "<F5>", "<cmd>lua require('osv').launch({port=8086})<cr>", opts)
 

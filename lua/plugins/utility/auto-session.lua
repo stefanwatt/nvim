@@ -3,7 +3,7 @@ return {
 	lazy = false,
 	keys = {
 		{
-			"<C-p>",
+			"<C-S-p>",
 			mode = { "n", "i", "v", "x" },
 			function()
 				require("auto-session.session-lens").search_session()

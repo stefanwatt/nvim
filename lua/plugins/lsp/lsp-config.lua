@@ -5,21 +5,17 @@ return {
 		"williamboman/mason-lspconfig.nvim",
 		"nvim-telescope/telescope.nvim",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
-		{ "j-hui/fidget.nvim", opts = {} },
-		{ "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
+		{ "j-hui/fidget.nvim",       opts = {} },
+
 		{
-			"folke/lazydev.nvim",
-			ft = "lua",
-			opts = {
-				library = {
-					-- Library items can be absolute paths
-					-- "~/projects/my-awesome-lib",
-					-- Or relative, which means they will be resolved as a plugin
-					-- "LazyVim",
-					-- When relative, you can also provide a path to the library in the plugin dir
-					"luvit-meta/library", -- see below
-				},
+			"folke/neodev.nvim",
+			dependencies = {
+				{ "Bilal2453/luvit-meta", lazy = true },
 			},
+			event = "VeryLazy",
+			config=function ()
+				require("neodev").setup({})
+			end
 		},
 	},
 	keys = {
@@ -27,9 +23,9 @@ return {
 		-- { "<leader>fr", require("telescope.builtin").lsp_references, desc = "[G]oto [R]eferences" },
 		-- { "gI", require("telescope.builtin").lsp_implementations, desc = "[G]oto [I]mplementation" },
 		-- { "<leader>fs", require("telescope.builtin").lsp_document_symbols, desc = "[D]ocument [S]ymbols" },
-		{ "<leader>D", ":Alpha<CR>", desc = "Dashboard" },
-		{ "K", vim.lsp.buf.hover, desc = "Hover Documentation" },
-		{ "gD", vim.lsp.buf.declaration, desc = "[G]oto [D]eclaration" },
+		{ "<leader>D", ":Alpha<CR>",            desc = "Dashboard" },
+		{ "K",         vim.lsp.buf.hover,       desc = "Hover Documentation" },
+		{ "gD",        vim.lsp.buf.declaration, desc = "[G]oto [D]eclaration" },
 		{
 			"<leader>lR",
 			"<cmd>lua vim.lsp.buf.references()<cr>",
@@ -113,16 +109,6 @@ return {
 		capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
 		local servers = {
-			-- denols = {
-			-- 	filetypes = { "typescript" },
-			-- 	init_options = {
-			-- 		enable = true,
-			-- 		unstable = true,
-			-- 		-- importMap = "/home/stefan/Projects/LeafLinkerBackend/supabase/functions/import_map.json",
-			-- 		importMap = "./supabase/functions/import_map.json",
-			-- 	},
-			-- 	root_dir = require("lspconfig").util.root_pattern("deno.json"),
-			-- },
 			pyright = {},
 			angularls = {},
 			astro = {},
@@ -130,8 +116,7 @@ return {
 			cssls = {},
 			eslint = {},
 			html = {},
-			-- lua_ls = require("plugins.lsp.lua-ls"),
-			lua_ls = {},
+			lua_ls = require("plugins.lsp.lua-ls"),
 			marksman = { mason = false, cmd = { "/run/current-system/sw/bin/marksman", "server" } },
 			sqlls = {},
 			svelte = {},

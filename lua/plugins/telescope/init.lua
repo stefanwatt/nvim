@@ -5,7 +5,6 @@ local keys = {
 	},
 	{
 		"<leader>fB",
-		mode = { "n" },
 		function()
 			local theme = require("telescope.themes").get_dropdown({ winblend = 10, previewer = false })
 			require("telescope.builtin").current_buffer_fuzzy_find(theme)
@@ -13,44 +12,22 @@ local keys = {
 		desc = "Fuzzy Find in Buffer",
 	},
 
-		{ "gd", require("telescope.builtin").lsp_definitions, desc = "[G]oto [D]efinition" },
-		{ "<leader>fr", require("telescope.builtin").lsp_references, desc = "[G]oto [R]eferences" },
-		{ "gI", require("telescope.builtin").lsp_implementations, desc = "[G]oto [I]mplementation" },
-		{ "<leader>fs", require("telescope.builtin").lsp_document_symbols, desc = "[D]ocument [S]ymbols" },
+	{ "gd",         require("telescope.builtin").lsp_definitions,      desc = "[G]oto [D]efinition" },
+	{ "<leader>fr", require("telescope.builtin").lsp_references,       desc = "[f]ind [R]eferences" },
+	{ "<leader>fs", require("telescope.builtin").lsp_document_symbols, desc = "[f]ind [S]ymbols" },
+	{ "<leader>fh", require("telescope.builtin").help_tags, desc = "[f]ind [h]help" },
 	{
-		"<leader>fd",
-		mode = { "n" },
+		"<leader>dc",
 		"<cmd>lua require('telescope').extensions.diff.diff_current({ hidden = true })<cr>",
-		desc = "Buffers",
+		desc = "[d]iff [c]urrent",
 	},
 	{
-		"<leader>fD",
-		mode = { "n" },
+		"<leader>df",
 		"<cmd>lua require('telescope').extensions.diff.diff_files({ hidden = true })<cr>",
-		desc = "Buffers",
-	},
-	{
-		"<leader>ft",
-		mode = { "n" },
-		name = "Tasks",
-		keys = {
-			{
-				"<leader>fts",
-				mode = { "n" },
-				"<cmd>Telescope tasks specs<cr>",
-				desc = "Specs",
-			},
-			{
-				"<leader>ftr",
-				mode = { "n" },
-				"<cmd>Telescope tasks running<cr>",
-				desc = "Running",
-			},
-		},
+		desc = "[d]iff [f]ile",
 	},
 	{
 		"<leader>fp",
-		mode = { "n" },
 		"<cmd>Telescope projects<cr>",
 		desc = "Keymaps",
 	},
@@ -101,9 +78,6 @@ end
 return {
 	{
 		"nvim-telescope/telescope.nvim",
-		dependencies = {
-			"nvim-telescope/telescope-file-browser.nvim",
-		},
 		keys = keys,
 		cmd = "Telescope",
 		config = function()
@@ -120,6 +94,7 @@ return {
 							["<Up>"] = actions.move_selection_previous,
 							["<C-Down>"] = actions.cycle_history_next,
 							["<C-Up>"] = actions.cycle_history_prev,
+							["<C-q>"] = actions.smart_send_to_qflist,
 						},
 					},
 				},

@@ -3,7 +3,6 @@ return {
 	require("plugins.utility.notify"),
 	require("plugins.utility.auto-session"),
 	require("plugins.utility.persistence"),
-	require("plugins.utility.cd-project-nvim"),
 	require("plugins.utility.copilot-chat"),
 	require("plugins.utility.bigfile"),
 	require("plugins.utility.comment"),
