@@ -13,7 +13,7 @@ vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 vim.g.sqlite_clib_path = os.getenv("SQLITE3_LIB")
 require("lazy").setup({
 	dev = {
-		path = "~/Projects/",
+		path = "/home/Stefan/Projects",
 	},
 	import = "plugins",
 	defaults = {

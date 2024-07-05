@@ -4,10 +4,6 @@ return {
 	require("plugins.lsp.typescript"),
 	require("plugins.lsp.lsp-config"),
 	require("plugins.lsp.lsp-saga"),
-	require("plugins.lsp.clear-action"),
 	require("plugins.lsp.cmp"),
 	require("plugins.lsp.luasnip"),
-
-
-	-- require("plugins.lsp.mason"),
 }
