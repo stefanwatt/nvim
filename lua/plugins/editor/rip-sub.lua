@@ -1,5 +1,8 @@
 return {
-	"chrisgrieser/nvim-rip-substitute",
+	-- "chrisgrieser/nvim-rip-substitute",
+	"rip-substitute",
+	name = "nvim-rip-substitute",
+	dir = "/home/stefan/Projects/nvim-rip-substitute",
 	keys = {
 		{
 			"<C-h>",
@@ -10,14 +13,15 @@ return {
 			desc = " rip sub",
 		},
 	},
+	event = "VeryLazy",
 	config = function()
 		require("rip-substitute").setup({
 			popupWin = {
 				position = "top",
 			},
 			prefill = {
-				normal =false, -- "cursorWord"|false
-				visual =  "selectionFirstLine", -- "selectionFirstLine"|false
+				normal = false,             -- "cursorWord"|false
+				visual = "selectionFirstLine", -- "selectionFirstLine"|false
 				startInReplaceLineIfPrefill = true,
 			},
 		})
