@@ -1,6 +1,6 @@
 require("config.options")
 require("config.usercmds")
-require("config.autocmds")
+require("config.autocmds") --require
 require("config.keymaps")
 require("config.lazy")
 -- require("config.cmdline")
