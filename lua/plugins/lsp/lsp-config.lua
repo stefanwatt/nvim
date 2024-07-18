@@ -164,7 +164,7 @@ return {
 			},
 			gleam = {
 				mason = false,
-				cmd = { "/run/current-system/sw/bin/gleam", "lsp" },
+				cmd = { "/home/stefan/.nix-profile/bin/gleam", "lsp" },
 			},
 		}
 

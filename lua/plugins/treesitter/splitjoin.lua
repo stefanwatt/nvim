@@ -4,13 +4,13 @@ return {
 		event = "VeryLazy",
 		keys = {
 			{
-				"<space>bj",
-				"<cmd>TSJJoin",
+				"<leader>j",
+				"<cmd>TSJJoin<cr>",
 				desc = "Block Join",
 			},
 			{
-				"<space>bs",
-				"<cmd>TSJJoin",
+				"<leader>s",
+				"<cmd>TSJSplit<cr>",
 				desc = "Block Split",
 			},
 		},
