@@ -60,5 +60,27 @@ return {
 			end,
 			desc = "[p]rev diagnostic",
 		},
+		{
+			"<C-n>",
+			mode = { "n", "i" },
+			function()
+				local trouble = require("trouble")
+				if not trouble.is_open() then return end
+				trouble.next()
+				trouble.jump_only()
+			end,
+			desc = "[n]ext diagnostic",
+		},
+		{
+			"<C-p>",
+			mode = { "n", "i" },
+			function()
+				local trouble = require("trouble")
+				if not trouble.is_open() then return end
+				trouble.prev()
+				trouble.jump_only()
+			end,
+			desc = "[p]rev diagnostic",
+		},
 	},
 }
