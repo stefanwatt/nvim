@@ -46,7 +46,6 @@ local disabled = {
 	"<leader>ff",
 	"<leader>fF",
 	"<leader>fg",
-	"<leader>fr",
 	"<leader>fR",
 	"<leader>gc",
 	"<leader>gs",

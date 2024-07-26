@@ -3,6 +3,14 @@ return {
 		"pmizio/typescript-tools.nvim",
 		dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
 		opts = {},
+		keys = {
+			{
+				"<leader>lo",
+				"<cmd>TSToolsAddMissingImports<cr><cmd>TSToolsRemoveUnusedImports<cr>",
+				desc = "[l]sp [o]rganize imports",
+			},
+		},
+		event="VeryLazy",
 		config = function()
 			vim.keymap.set({ "n", "x", "v" }, "<leader>la", vim.lsp.buf.code_action, { silent = true })
 			require("typescript-tools").setup({

@@ -17,24 +17,6 @@ return {
 				desc = "Diagnostics",
 			},
 			{
-				"<leader>lF",
-				mode = { "n" },
-				"<cmd>Lspsaga lsp_finder<CR>",
-				desc = "LSP finder",
-			},
-			{
-				"<leader>lr",
-				mode = { "n" },
-				"<cmd>Lspsaga rename<CR>",
-				desc = "Rename",
-			},
-			{
-				"gD",
-				mode = { "n" },
-				"<cmd>Lspsaga peek_definition<CR>",
-				desc = "Peek definition",
-			},
-			{
 				"K",
 				mode = { "n" },
 				"<cmd>Lspsaga hover_doc()<CR>",
