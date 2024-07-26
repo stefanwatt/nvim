@@ -32,11 +32,6 @@ return {
 			desc = "Virtual Text current line",
 		},
 		{
-			"<leader>lo",
-			"<cmd>LSoutlineToggle<CR>",
-			desc = "Toggle Outline",
-		},
-		{
 			"<leader>lI",
 			"<cmd>Mason<cr>",
 			desc = "Installer Info",
@@ -64,7 +59,7 @@ return {
 		{
 			"<leader>lr",
 			"<cmd>lua vim.lsp.buf.rename()<cr>",
-			desc = "LSP rename",
+			desc = "[l]sp [r]ename",
 		},
 	},
 	config = function()
@@ -73,6 +68,9 @@ return {
 			callback = function(event)
 				vim.lsp.inlay_hint.enable(true)
 				local client = vim.lsp.get_client_by_id(event.data.client_id)
+				if client.name == "angularls" then
+					client.server_capabilities.renameProvider = false
+				end
 				if client.name == "gopls" then
 					require("plugins.lsp.gopls").on_attach(client)
 				end
@@ -109,7 +107,12 @@ return {
 			astro = {},
 			bashls = {},
 			cssls = {},
+			erlangls = {},
 			eslint = {},
+			gleam = {
+				mason = false,
+				cmd = { "/home/stefan/.cargo/bin/gleam", "lsp" },
+			},
 			html = {},
 			lua_ls = require("plugins.lsp.lua-ls"),
 			marksman = { mason = false, cmd = { "/run/current-system/sw/bin/marksman", "server" } },
@@ -157,11 +160,6 @@ return {
 					print("arduino_language_server attached")
 				end,
 			},
-			gleam = {
-				mason = false,
-				cmd = { "/home/stefan/.nix-profile/bin/gleam", "lsp" },
-			},
-			jdtls = {},
 		}
 
 		require("mason").setup()

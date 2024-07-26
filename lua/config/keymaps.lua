@@ -69,6 +69,7 @@ vim.keymap.set("n", "<leader>fh", ":Telescope help_tags<CR>", opts)
 vim.keymap.set("n", "<S-Right>", ":bnext<CR>", opts)
 vim.keymap.set("n", "<S-Left>", ":bprevious<CR>", opts)
 vim.keymap.set("n", "gb", "<C-o>", opts)
+vim.keymap.set("n", "gf", "<C-i>", opts)
 vim.keymap.set("n", "db", "vbd", opts)
 vim.keymap.set("n", "cb", "vbc", opts)
 -- Better paste
@@ -91,3 +92,18 @@ end, { silent = true, noremap = true })
 vim.keymap.set("n", "<F5>", "<cmd>lua require('osv').launch({port=8086})<cr>", opts)
 
 vim.keymap.set("n", "<S-CR>", "lua print('') print('shift enter pressed')", opts)
+
+
+
+
+
+function RunNgTestForCurrentFile()
+  local current_file = vim.fn.expand('%:p')
+  local project_root = vim.fn.getcwd()
+  local relative_path = string.gsub(current_file, project_root .. '/', '')
+  local command = 'ng test drug-preparation-list --watch=false --include=' .. relative_path
+  vim.cmd('!' .. command)
+end
+
+
+vim.keymap.set("n", "tr",RunNgTestForCurrentFile, opts)
