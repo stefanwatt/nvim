@@ -61,16 +61,16 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz", opts)
 -- end, { noremap = true, silent = true, desc = "Open cmdline with visual selection" })
 
 -- Better window navigation
-vim.keymap.set("n", "<C-Up>", "<C-w>k", opts)
-vim.keymap.set("n", "<C-Down>", "<C-w>j", opts)
-vim.keymap.set("n", "<C-Left>", "<C-w>h", opts)
-vim.keymap.set("n", "<C-Right>", "<C-w>l", opts)
-
--- Resize with arrows
-vim.keymap.set("n", "<C-A-Up>", ":resize -10<CR>", opts)
-vim.keymap.set("n", "<C-A-Down>", ":resize +10<CR>", opts)
-vim.keymap.set("n", "<C-A-Left>", ":vertical resize -10<CR>", opts)
-vim.keymap.set("n", "<C-A-Right>", ":vertical resize +10<CR>", opts)
+-- vim.keymap.set("n", "<C-Up>", "<C-w>k", opts)
+-- vim.keymap.set("n", "<C-Down>", "<C-w>j", opts)
+-- vim.keymap.set("n", "<C-Left>", "<C-w>h", opts)
+-- vim.keymap.set("n", "<C-Right>", "<C-w>l", opts)
+--
+-- -- Resize with arrows
+-- vim.keymap.set("n", "<C-A-Up>", ":resize -10<CR>", opts)
+-- vim.keymap.set("n", "<C-A-Down>", ":resize +10<CR>", opts)
+-- vim.keymap.set("n", "<C-A-Left>", ":vertical resize -10<CR>", opts)
+-- vim.keymap.set("n", "<C-A-Right>", ":vertical resize +10<CR>", opts)
 
 vim.keymap.set("n", "<leader>v", ":vsplit<CR>", opts)
 
