@@ -1,9 +1,8 @@
 return {
 	require("plugins.ui.alpha"),
 	require("plugins.ui.markdown"),
-	require("plugins.ui.moody"),
 	require("plugins.ui.catppuccin"),
-	require("plugins.ui.headlines"),
+	require("plugins.ui.helpview"),
 	require("plugins.ui.neck-pain"),
 	require("plugins.ui.colorizer"),
 	require("plugins.ui.noice"),

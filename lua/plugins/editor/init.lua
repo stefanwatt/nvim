@@ -5,7 +5,7 @@ return {
 	require("plugins.editor.trouble"),
 	require("plugins.editor.git"),
 	require("plugins.editor.neorg"),
-	require("plugins.editor.rip-sub"),
+	require("plugins.editor.search-and-replace"),
 	require("plugins.editor.luasnip"),
 	require("plugins.editor.guess-indent"),
 	require("plugins.editor.yanky"),

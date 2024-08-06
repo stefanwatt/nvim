@@ -128,7 +128,7 @@ return {
 					file_button(paths.wm_config, "w", "wm config"),
 					file_button("~/.config/nixos/flake.nix", "x", "nixos config"),
 					file_button("~/.config/nvim/init.lua", "n", "nvim config"),
-					button("p", "  projects", ":Telescope projects<CR>"),
+					button("p", " projects", ":Telescope projects<CR>"),
 				},
 				position = "center",
 			}
@@ -136,7 +136,9 @@ return {
 				type = "group",
 				val = {
 					button("e", "  New file", ":ene <BAR> startinsert <CR>"),
-					button("l", "🖫  Restore last session", ":lua require('persistence').load({last=true})<CR>"),
+					button("l", "  Restore last session", ":lua require('persistence').load({last=true})<CR>"),
+					button("f", "󱦞  [f]ind session", ":lua require('persistence').select()<CR>"),
+					button("c", "  [c]urrent dir's session", ":lua require('persistence').load()<CR>"),
 				},
 				position = "center",
 			}
