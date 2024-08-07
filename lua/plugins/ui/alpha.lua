@@ -14,54 +14,11 @@ return {
 		config = function()
 			local alpha = require("alpha")
 			local plenary_path = require("plenary.path")
-			local isometric = {
-				[[      ___          ___          ___                                 ___     ]],
-				[[     /__/\        /  /\        /  /\         ___       ___         /__/\    ]],
-				[[     \  \:\      /  /:/_      /  /::\       /__/\     /  /\       |  |::\   ]],
-				[[      \  \:\    /  /:/ /\    /  /:/\:\      \  \:\   /  /:/       |  |:|:\  ]],
-				[[  _____\__\:\  /  /:/ /:/_  /  /:/  \:\      \  \:\ /__/::\     __|__|:|\:\ ]],
-				[[ /__/::::::::\/__/:/ /:/ /\/__/:/ \__\:\ ___  \__\:\\__\/\:\__ /__/::::| \:\]],
-				[[ \  \:\~~\~~\/\  \:\/:/ /:/\  \:\ /  /://__/\ |  |:|   \  \:\/\\  \:\~~\__\/]],
-				[[  \  \:\  ~~~  \  \::/ /:/  \  \:\  /:/ \  \:\|  |:|    \__\::/ \  \:\      ]],
-				[[   \  \:\       \  \:\/:/    \  \:\/:/   \  \:\__|:|    /__/:/   \  \:\     ]],
-				[[    \  \:\       \  \::/      \  \::/     \__\::::/     \__\/     \  \:\    ]],
-				[[     \__\/        \__\/        \__\/          ~~~~                 \__\/    ]],
-			}
-			local slanted = {
-				[[                                                                   ]],
-				[[      ████ ██████           █████      ██                    ]],
-				[[     ███████████             █████                            ]],
-				[[     █████████ ███████████████████ ███   ███████████  ]],
-				[[    █████████  ███    █████████████ █████ ██████████████  ]],
-				[[   █████████ ██████████ █████████ █████ █████ ████ █████  ]],
-				[[ ███████████ ███    ███ █████████ █████ █████ ████ █████ ]],
-				[[██████  █████████████████████ ████ █████ █████ ████ ██████]],
-			}
-			local neovim = {
-				[[                                           ██             ]],
-				[[                                           ▀▀             ]],
-				[[██▄████▄   ▄████▄    ▄████▄   ██▄  ▄██   ████     ████▄██▄]],
-				[[██▀   ██  ██▄▄▄▄██  ██▀  ▀██   ██  ██      ██     ██ ██ ██]],
-				[[██    ██  ██▀▀▀▀▀▀  ██    ██   ▀█▄▄█▀      ██     ██ ██ ██]],
-				[[██    ██  ▀██▄▄▄▄█  ▀██▄▄██▀    ████    ▄▄▄██▄▄▄  ██ ██ ██]],
-				[[▀▀    ▀▀    ▀▀▀▀▀     ▀▀▀▀       ▀▀     ▀▀▀▀▀▀▀▀  ▀▀ ▀▀ ▀▀]],
-			}
 
-			local bloody = {
-				[[ ███▄    █ ▓█████  ▒█████   ██▒   █▓ ██▓ ███▄ ▄███▓]],
-				[[ ██ ▀█   █ ▓█   ▀ ▒██▒  ██▒▓██░   █▒▓██▒▓██▒▀█▀ ██▒]],
-				[[▓██  ▀█ ██▒▒███   ▒██░  ██▒ ▓██  █▒░▒██▒▓██    ▓██░]],
-				[[▓██▒  ▐▌██▒▒▓█  ▄ ▒██   ██░  ▒██ █░░░██░▒██    ▒██ ]],
-				[[▒██░   ▓██░░▒████▒░ ████▓▒░   ▒▀█░  ░██░▒██▒   ░██▒]],
-				[[░ ▒░   ▒ ▒ ░░ ▒░ ░░ ▒░▒░▒░    ░ ▐░  ░▓  ░ ▒░   ░  ░]],
-				[[░ ░░   ░ ▒░ ░ ░  ░  ░ ▒ ▒░    ░ ░░   ▒ ░░  ░      ░]],
-				[[   ░   ░ ░    ░   ░ ░ ░ ▒       ░░   ▒ ░░      ░   ]],
-				[[         ░    ░  ░    ░ ░        ░   ░         ░   ]],
-				[[                                ░                  ]],
-			}
+
 			local header = {
 				type = "text",
-				val = bloody,
+				val = require("plugins.ui.ascii-art").slanted,
 				opts = {
 					position = "center",
 					hl = "Type",
@@ -125,10 +82,10 @@ return {
 			local favorites = {
 				type = "group",
 				val = {
-					file_button(paths.wm_config, "w", "wm config"),
-					file_button("~/.config/nixos/flake.nix", "x", "nixos config"),
-					file_button("~/.config/nvim/init.lua", "n", "nvim config"),
-					button("p", " projects", ":Telescope projects<CR>"),
+					button("w", "  wm config", ":e " .. paths.wm_config .. "<CR>"),
+					button("x", "  nixos config", ":e ~/.config/nixos/flake.nix<CR>"),
+					button("n", "  nvim config", ":e ~/.config/nvim/init.lua<CR>"),
+					button("p", "  projects", ":Telescope projects<CR>"),
 				},
 				position = "center",
 			}
@@ -137,8 +94,8 @@ return {
 				val = {
 					button("e", "  New file", ":ene <BAR> startinsert <CR>"),
 					button("l", "  Restore last session", ":lua require('persistence').load({last=true})<CR>"),
-					button("f", "󱦞  [f]ind session", ":lua require('persistence').select()<CR>"),
-					button("c", "  [c]urrent dir's session", ":lua require('persistence').load()<CR>"),
+					button("f", "  find session", ":lua require('persistence').select()<CR>"),
+					button("c", "  current dir's session", ":lua require('persistence').load()<CR>"),
 				},
 				position = "center",
 			}

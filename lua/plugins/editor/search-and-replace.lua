@@ -39,7 +39,6 @@ return {
 	},
 	{
 		"MagicDuck/grug-far.nvim",
-		enabled = false,
 		keys = {
 			{
 				"<leader>r",
@@ -52,14 +51,30 @@ return {
 			{
 				"<leader>r",
 				mode = { "v", "x" },
-				function()
-					require("grug-far").with_visual_selection()
-				end,
+				':<C-u>lua require("grug-far").with_visual_selection()<CR>',
 				desc = "search and replace",
 			},
 		},
 		config = function()
-			require("grug-far").setup()
+			require("grug-far").setup({
+				keymaps = {
+					replace = { n = "<CR>" },
+					qflist = { n = "<localleader>q" },
+					syncLocations = { n = "<localleader>s" },
+					syncLine = { n = "<localleader>l" },
+					close = { n = "q" },
+					historyOpen = { n = "<localleader>t" },
+					historyAdd = { n = "<localleader>a" },
+					refresh = { n = "r" },
+					openLocation = { n = "<localleader>o" },
+					gotoLocation = { n = "<C-CR>" },
+					pickHistoryEntry = { n = "<C-CR>" },
+					abort = { n = "<localleader>b" },
+					help = { n = "?" },
+					toggleShowCommand = { n = "<localleader>p" },
+					swapEngine = { n = "<localleader>e" },
+				},
+			})
 		end,
 	},
 }

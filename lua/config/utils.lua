@@ -6,7 +6,7 @@ local M = {}
 
 ---@param command string
 ---@param flags CommandFlag
-M.i3_exec = function(command, flags)
+function M.i3_exec(command, flags)
 	local args = ""
 	for _, flag in ipairs(flags) do
 		local prefix = #flag.name == 1 and "-" or "--"
@@ -15,8 +15,12 @@ M.i3_exec = function(command, flags)
 	os.execute("i3-msg 'exec " .. command .. args .. " ' >/dev/null 2>&1 &")
 end
 
+function M.exec(command)
+	os.execute("i3-msg 'exec " .. command .. "' >/dev/null 2>&1 &")
+end
+
 ---@return string
-M.get_help_tags = function()
+function M.get_help_tags()
 	local help_tags = {}
 	local result = ""
 	for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
@@ -36,7 +40,7 @@ M.get_help_tags = function()
 end
 
 ---@param command string
-M.NvimFloat = function(command)
+function M.NvimFloat(command)
 	local cwd = vim.fn.getcwd()
 	local servername = vim.v.servername
 	os.execute(
@@ -53,7 +57,7 @@ M.NvimFloat = function(command)
 	)
 end
 
-M.MoveBufferToOppositeWindow = function()
+function M.MoveBufferToOppositeWindow ()
 	local current_buffer = vim.api.nvim_get_current_buf()
 	local current_window = vim.api.nvim_get_current_win()
 	local target_window = nil
@@ -74,7 +78,7 @@ M.MoveBufferToOppositeWindow = function()
 	end
 end
 
-M.getSubDirectories = function(dirname)
+function M.getSubDirectories (dirname)
 	local dir = io.popen("ls " .. dirname)
 	local subdirectories = {}
 	if not dir then
@@ -86,7 +90,7 @@ M.getSubDirectories = function(dirname)
 	return subdirectories
 end
 
-M.get_buf_text = function()
+function M.get_buf_text ()
 	local content = vim.api.nvim_buf_get_lines(0, 0, vim.api.nvim_buf_line_count(0), false)
 	return table.concat(content, "\n")
 end
@@ -194,7 +198,7 @@ M.icons = {
 	Download = "󰇚",
 }
 
-M.format = function(icon, text)
+function M.format (icon, text)
 	return M.icons[icon] .. " " .. text
 end
 
@@ -202,12 +206,12 @@ local keymap = vim.keymap.set
 -- Silent keymap option
 local opts = { silent = true }
 
-M.keymap = function(mode, lhs, rhs, extra_opts)
+function M.keymap (mode, lhs, rhs, extra_opts)
 	local combined_opts = vim.tbl_extend("force", opts, extra_opts or {})
 	keymap(mode, lhs, rhs, combined_opts)
 end
 
-M.buf_vtext = function()
+function M.buf_vtext ()
 	local a_orig = vim.fn.getreg("a")
 	local mode = vim.fn.mode()
 	if mode ~= "v" and mode ~= "V" then
@@ -219,7 +223,7 @@ M.buf_vtext = function()
 	return tostring(text)
 end
 
-M.merge_tables = function(...)
+function M.merge_tables (...)
 	local tables = { ... }
 	local result = {}
 
@@ -236,7 +240,7 @@ end
 
 ---@param table table
 ---@param cb function(value: any): boolean
-M.index_of = function(table, cb)
+function M.index_of (table, cb)
 	for index, value in ipairs(table) do
 		if cb(value) then
 			return index
@@ -247,7 +251,7 @@ end
 
 ---@param list table
 ---@param cb function(value: any): boolean
-M.filter = function(list, cb)
+function M.filter (list, cb)
 	local result = {}
 	for _, value in ipairs(list) do
 		if cb(value) then
@@ -261,7 +265,7 @@ end
 ---@param list `T`[]
 ---@param cb function(value: `T`): `T`
 ---@return `T` | nil
-M.find = function(list, cb)
+function M.find (list, cb)
 	for _, value in ipairs(list) do
 		if cb(value) then
 			return value
@@ -273,7 +277,7 @@ end
 ---@generic T
 ---@param list Array<`T`>
 ---@param cb function(value: `T`): `T`
-M.map = function(list, cb)
+function M.map (list, cb)
 	local result = {}
 	for _, value in ipairs(list) do
 		table.insert(result, cb(value))
@@ -282,12 +286,12 @@ M.map = function(list, cb)
 end
 
 ---@param win number
-M.is_help_window = function(win)
+function M.is_help_window (win)
 	return vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(win), "buftype") == "help"
 end
 
 ---@param buffer number
-M.get_window_of_buffer = function(buffer)
+function M.get_window_of_buffer (buffer)
 	local windows = vim.api.nvim_list_wins() -- List all windows
 
 	for _, win in ipairs(windows) do
@@ -298,7 +302,7 @@ M.get_window_of_buffer = function(buffer)
 end
 
 ---@param cb function
-M.debounce = function(cb, delay, ...)
+function M.debounce (cb, delay, ...)
 	local timer_id = nil
 	return function(...)
 		if timer_id ~= nil then
