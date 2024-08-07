@@ -1,11 +1,7 @@
--- Autocmds are automatically loaded on the VeryLazy event
--- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
--- Add any additional autocmds here
 local function augroup(name)
 	return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true })
 end
 
--- Check if we need to reload the file when it changed
 vim.api.nvim_create_autocmd("BufWritePost", {
 	group = augroup("nix"),
 	pattern = "*.nix",
@@ -21,7 +17,6 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 	end,
 })
 
--- TODO: why is persistence not defined?
 local persistence_group = augroup("persistence")
 vim.api.nvim_create_autocmd("BufWritePost", {
 	group = persistence_group,
@@ -169,7 +164,6 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 	end,
 })
 
--- close some filetypes with <q>
 vim.api.nvim_create_autocmd("FileType", {
 	group = augroup("close_with_q"),
 	pattern = {

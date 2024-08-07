@@ -32,7 +32,6 @@ return {
 					"/home/stefan/.local/share/nvim/lazy/cmp-nvim-lsp/lua",
 					"/home/stefan/.local/share/nvim/lazy/LuaSnip/lua",
 					"/home/stefan/.local/share/nvim/lazy/nvim/lua",
-					"/home/stefan/.local/share/nvim/lazy/telescope.nvim/lua",
 					"/home/stefan/.local/share/nvim/lazy/neodev.nvim/lua",
 					"/home/stefan/.local/share/nvim/lazy/nvim-treesitter/lua",
 					"/home/stefan/.local/share/nvim/lazy/nvim-lspconfig/lua",

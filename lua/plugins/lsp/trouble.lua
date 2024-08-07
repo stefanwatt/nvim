@@ -37,12 +37,7 @@ return {
 			"<CMD>Trouble diagnostics toggle filter.buf=0<CR>",
 			desc = "Buffer diagnostics",
 		},
-		{
-			"<leader>tf",
-			mode = { "n" },
-			"<CMD>TodoTelescope<CR>",
-			desc = "Find TODOs",
-		},
+
 		{
 			"<C-n>",
 			mode = { "n", "i" },

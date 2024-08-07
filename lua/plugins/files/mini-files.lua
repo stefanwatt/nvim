@@ -19,7 +19,7 @@ return {
 			},
 		},
 		config = function()
-			require("plugins.utility.my-files").setup({
+			require("plugins.files.my-files").setup({
 
 				-- require("mini.files").setup({
 				-- Customization of shown content

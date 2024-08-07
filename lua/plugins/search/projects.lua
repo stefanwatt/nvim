@@ -8,7 +8,6 @@ return {
         detection_methods = { "pattern" },
         patterns = { ".git", "Makefile", "package.json" },
       })
-      require("telescope").load_extension('projects')
     end
   }
 }

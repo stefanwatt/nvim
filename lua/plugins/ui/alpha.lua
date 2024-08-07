@@ -85,7 +85,7 @@ return {
 					button("w", "  wm config", ":e " .. paths.wm_config .. "<CR>"),
 					button("x", "  nixos config", ":e ~/.config/nixos/flake.nix<CR>"),
 					button("n", "  nvim config", ":e ~/.config/nvim/init.lua<CR>"),
-					button("p", "  projects", ":Telescope projects<CR>"),
+					button("p", "  projects", "<cmd>FzfProject<CR>"),
 				},
 				position = "center",
 			}

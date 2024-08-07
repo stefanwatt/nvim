@@ -2,31 +2,29 @@ return {
 	{
 		"tpope/vim-fugitive",
 		event = "VeryLazy",
-		dependencies = { "nvim-telescope/telescope.nvim" },
+		dependencies = { "ibhagwan/fzf-lua" },
 		keys = {
 			{
 				"<leader>gd",
 				mode = { "n" },
 				function()
-					local actions = require("telescope.actions")
-					local action_state = require("telescope.actions.state")
-					local builtin = require("telescope.builtin")
+					local fzf_lua = require("fzf-lua")
 
-					local function custom_git_commit_action(prompt_bufnr)
-						local selection = action_state.get_selected_entry()
-						actions.close(prompt_bufnr)
-						local current_file = vim.fn.expand("%")
-						vim.api.nvim_command("G diff " .. selection.value .. " -- %")
-						vim.schedule(function()
-							vim.api.nvim_command("only")
-							vim.api.nvim_buf_set_keymap(0, "n", "q", ":bdelete<cr>", {silent=true})
-						end)
+					local function custom_git_commit_action(selected)
+						if selected and #selected > 0 then
+							local commit_hash = selected[1]:match("%S+")
+							vim.schedule(function()
+								vim.cmd("G diff " .. commit_hash .. " -- %")
+								vim.cmd("only")
+								vim.api.nvim_buf_set_keymap(0, "n", "q", ":bdelete<cr>", { silent = true })
+							end)
+						end
 					end
-					builtin.git_commits({
-						attach_mappings = function(_, map)
-							actions.select_default:replace(custom_git_commit_action)
-							return true
-						end,
+
+					fzf_lua.git_commits({
+						actions = {
+							["default"] = custom_git_commit_action,
+						},
 					})
 				end,
 				desc = "[git] diff",
