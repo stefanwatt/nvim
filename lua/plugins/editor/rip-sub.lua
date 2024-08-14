@@ -1,6 +1,7 @@
 return {
 	-- "chrisgrieser/nvim-rip-substitute",
 	"rip-substitute",
+	enabled =false,
 	name = "nvim-rip-substitute",
 	dir = "/home/stefan/Projects/nvim-rip-substitute",
 	keys = {

@@ -160,6 +160,7 @@ return {
 					print("arduino_language_server attached")
 				end,
 			},
+			jdtls = {},
 		}
 
 		require("mason").setup()
