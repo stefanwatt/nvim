@@ -55,92 +55,50 @@ return {
 				on_attach = function(bufnr)
 					local gitsigns = require("gitsigns")
 
-          fzf.git_commits({
-            actions = {
-              ["default"] = function(selected)
-                  local commit_hash = selected[1]:match("^(%S+)")
-                  vim.api.nvim_command("G diff " .. commit_hash .. " -- %")
-                  vim.schedule(function()
-                    vim.api.nvim_command("only")
-                    vim.api.nvim_buf_set_keymap(0, "n", "q", ":bdelete<cr>", { silent = true })
-                  end)
-              end,
-            },
-          })
-        end,
-        desc = "[git] diff",
-      },
-    },
-  }
-  ,
-  {
-    "f-person/git-blame.nvim",
-    config = function()
-      require("gitblame").setup({
-        enabled = false,
-      })
-    end,
-    event = "VeryLazy",
-    keys = {
-      {
-        "<leader>gb",
-        mode = { "n" },
-        ":GitBlameToggle<CR>",
-        desc = "Git Blame",
-      },
-    },
-  },
-  {
-    "lewis6991/gitsigns.nvim",
-    config = function()
-      require("gitsigns").setup({
-        on_attach = function(bufnr)
-          local gitsigns = require("gitsigns")
+					local function map(mode, l, r, opts)
+						opts = opts or {}
+						opts.buffer = bufnr
+						vim.keymap.set(mode, l, r, opts)
+					end
 
-          local function map(mode, l, r, opts)
-            opts = opts or {}
-            opts.buffer = bufnr
-            vim.keymap.set(mode, l, r, opts)
-          end
+					map("n", "]c", function()
+						if vim.wo.diff then
+							vim.cmd.normal({ "]c", bang = true })
+						else
+							gitsigns.nav_hunk("next")
+						end
+					end)
 
-          map("n", "]c", function()
-            if vim.wo.diff then
-              vim.cmd.normal({ "]c", bang = true })
-            else
-              gitsigns.nav_hunk("next")
-            end
-          end)
+					map("n", "[c", function()
+						if vim.wo.diff then
+							vim.cmd.normal({ "[c", bang = true })
+						else
+							gitsigns.nav_hunk("prev")
+						end
+					end)
 
-          map("n", "[c", function()
-            if vim.wo.diff then
-              vim.cmd.normal({ "[c", bang = true })
-            else
-              gitsigns.nav_hunk("prev")
-            end
-          end)
-
-          -- Actions
-          map("n", "<leader>ghs", gitsigns.stage_hunk)
-          map("n", "<leader>ghr", gitsigns.reset_hunk)
-          map("v", "<leader>ghs", function()
-            gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
-          end)
-          map("v", "<leader>ghr", function()
-            gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
-          end)
-          map("n", "<leader>ghS", gitsigns.stage_buffer)
-          map("n", "<leader>ghu", gitsigns.undo_stage_hunk)
-          map("n", "<leader>ghR", gitsigns.reset_buffer)
-          map("n", "<leader>ghp", gitsigns.preview_hunk)
-          map("n", "<leader>ghb", function()
-            gitsigns.blame_line({ full = true })
-          end)
-          map("n", "<leader>ghd", gitsigns.diffthis)
-          map("n", "<leader>ghD", function()
-            gitsigns.diffthis("~")
-          end)
-        end,
-      })
-    end,
-  },
+					-- Actions
+					map("n", "<leader>ghs", gitsigns.stage_hunk)
+					map("n", "<leader>ghr", gitsigns.reset_hunk)
+					map("v", "<leader>ghs", function()
+						gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+					end)
+					map("v", "<leader>ghr", function()
+						gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
+					end)
+					map("n", "<leader>ghS", gitsigns.stage_buffer)
+					map("n", "<leader>ghu", gitsigns.undo_stage_hunk)
+					map("n", "<leader>ghR", gitsigns.reset_buffer)
+					map("n", "<leader>ghp", gitsigns.preview_hunk)
+					map("n", "<leader>ghb", function()
+						gitsigns.blame_line({ full = true })
+					end)
+					map("n", "<leader>ghd", gitsigns.diffthis)
+					map("n", "<leader>ghD", function()
+						gitsigns.diffthis("~")
+					end)
+				end,
+			})
+		end,
+	},
 }
