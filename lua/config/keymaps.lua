@@ -59,11 +59,6 @@ vim.keymap.set("n", "<leader>T", function()
   utils.exec("wezterm cli split-pane --bottom --percent 30")
 end, opts)
 
-vim.keymap.set("n", "<leader>gg", function()
-  nvim_float("lazygit")
-end, opts)
-vim.keymap.set("n", "<leader>ff", ":Telescope git_files<CR>", opts)
-vim.keymap.set("n", "<leader>fh", ":Telescope help_tags<CR>", opts)
 
 -- Navigate buffers
 vim.keymap.set("n", "<S-Right>", ":bnext<CR>", opts)

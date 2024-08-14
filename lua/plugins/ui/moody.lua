@@ -5,6 +5,7 @@ return {
     dependencies = {
         "catppuccin/nvim",
     },
+    enabled = false,
     opts = {
         -- you can set different blend values for your different modes.
         -- Some colours might look better more dark, so set a higher value

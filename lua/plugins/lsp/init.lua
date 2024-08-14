@@ -7,5 +7,6 @@ return {
 	require("plugins.lsp.lsp-config"),
 	require("plugins.lsp.lsp-saga"),
 	require("plugins.lsp.cmp"),
+	require("plugins.lsp.java"),
 	require("plugins.lsp.luasnip"),
 }

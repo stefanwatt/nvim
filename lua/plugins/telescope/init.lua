@@ -3,7 +3,7 @@ local keys = {
 		"<leader>f",
 		name = "Find",
 	},
-{
+	{
 		"<leader>fB",
 		function()
 			local theme = require("telescope.themes").get_dropdown({ winblend = 10, previewer = false })
@@ -15,7 +15,7 @@ local keys = {
 	{ "gd",         require("telescope.builtin").lsp_definitions,      desc = "[G]oto [D]efinition" },
 	{ "<leader>fr", require("telescope.builtin").lsp_references,       desc = "[f]ind [R]eferences" },
 	{ "<leader>fs", require("telescope.builtin").lsp_document_symbols, desc = "[f]ind [S]ymbols" },
-	{ "<leader>fh", require("telescope.builtin").help_tags, desc = "[f]ind [h]help" },
+	{ "<leader>fh", require("telescope.builtin").help_tags,            desc = "[f]ind [h]help" },
 	{
 		"<leader>dc",
 		"<cmd>lua require('telescope').extensions.diff.diff_current({ hidden = true })<cr>",
@@ -35,7 +35,6 @@ local keys = {
 
 local disabled = {
 	"<leader>/",
-	"<leader>fr",
 	"<leader>fw",
 	"<leader><space>",
 	"<leader>,",
