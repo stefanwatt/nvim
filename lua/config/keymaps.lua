@@ -3,30 +3,6 @@ local opts = { silent = true }
 local utils = require("config.utils")
 local nvim_float = utils.NvimFloat
 
--- vim.keymap.set("n", "<leader>r", function()
--- 	local cwd = vim.fn.getcwd()
--- 	local command = "/home/stefan/Applications/spectre-gui"
--- 	local flags = {
--- 		{ name = "mode", value = "search-and-replace" },
--- 		{ name = "dir", value = cwd },
--- 		{ name = "servername", value = vim.v.servername },
--- 	}
--- 	utils.i3_exec(command, flags)
--- end, opts)
---
--- vim.keymap.set("v", "<leader>r", function()
--- 	local search_term = utils.buf_vtext()
--- 	local cwd = vim.fn.getcwd()
--- 	local command = "/home/stefan/Applications/spectre-gui"
--- 	local flags = {
--- 		{ name = "mode", value = "search-and-replace" },
--- 		{ name = "dir", value = cwd },
--- 		{ name = "search-term", value = search_term },
--- 		{ name = "servername", value = vim.v.servername },
--- 	}
--- 	utils.i3_exec(command, flags)
--- end, opts)
-
 vim.keymap.set("n", "<BS>", "ciw", opts)
 vim.keymap.set("n", "<CR>", function()
   local buftype = vim.api.nvim_buf_get_option(0, "buftype")
@@ -47,29 +23,25 @@ vim.keymap.set("n", "<C-s>", ":wall<CR>", opts)
 vim.keymap.set("n", "<C-x>", utils.MoveBufferToOppositeWindow, opts)
 vim.keymap.set("n", "<C-d>", "<C-d>zz", opts)
 vim.keymap.set("n", "<C-u>", "<C-u>zz", opts)
+
 vim.keymap.set("v", ":", function()
   vim.cmd('normal! "vy')
   local text = vim.fn.getreg("v")
   vim.api.nvim_input(":<C-u>" .. text)
 end, { noremap = true, silent = true, desc = "Open cmdline with visual selection" })
 
+
+vim.keymap.set("v", "/", function()
+  vim.cmd('normal! "vy')
+  local text = vim.fn.getreg("v")
+  vim.api.nvim_input("/<C-u>" .. text)
+end, { noremap = true, silent = true, desc = "Search with visual selection" })
+
 vim.keymap.set("v", "=", function()
   vim.cmd('normal! "vy')
   local text = vim.fn.getreg("v")
   vim.api.nvim_input(":<C-u>" .. "=" .. text)
 end, { noremap = true, silent = true, desc = "lua command with visual selection" })
-
--- Better window navigation
--- vim.keymap.set("n", "<C-Up>", "<C-w>k", opts)
--- vim.keymap.set("n", "<C-Down>", "<C-w>j", opts)
--- vim.keymap.set("n", "<C-Left>", "<C-w>h", opts)
--- vim.keymap.set("n", "<C-Right>", "<C-w>l", opts)
---
--- -- Resize with arrows
--- vim.keymap.set("n", "<C-A-Up>", ":resize -10<CR>", opts)
--- vim.keymap.set("n", "<C-A-Down>", ":resize +10<CR>", opts)
--- vim.keymap.set("n", "<C-A-Left>", ":vertical resize -10<CR>", opts)
--- vim.keymap.set("n", "<C-A-Right>", ":vertical resize +10<CR>", opts)
 
 vim.keymap.set("n", "<leader>v", ":vsplit<CR>", opts)
 vim.keymap.set("n", "<leader>V", function()
@@ -106,7 +78,6 @@ vim.keymap.set("n", "s", function()
   })
 end, { silent = true, noremap = true })
 
-vim.keymap.set("n", "<leader><leader>y", ":lua", opts)
 vim.keymap.set("n", "<F5>", "<cmd>lua require('osv').launch({port=8086})<cr>", opts)
 
 vim.keymap.set("n", "<S-CR>", "lua print('') print('shift enter pressed')", opts)

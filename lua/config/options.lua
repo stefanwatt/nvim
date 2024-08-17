@@ -72,5 +72,6 @@ opt.fillchars = {
 	eob = " ",
 }
 vim.o.cmdheight = 0
+vim.o.showtabline = 0
 vim.o.swapfile = false
 vim.opt.termguicolors = true

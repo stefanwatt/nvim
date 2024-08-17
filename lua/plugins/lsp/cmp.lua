@@ -18,6 +18,13 @@ return { -- Autocompletion
 			},
 		})
 
+		cmp.setup.filetype('norg', {
+			sources = {
+				{ name = 'buffer' },
+				{ name = 'path' },
+			},
+		})
+
 		cmp.setup({
 			snippet = {
 				expand = function(args)
