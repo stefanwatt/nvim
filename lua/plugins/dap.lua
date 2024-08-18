@@ -1,100 +1,206 @@
-local disabled_keys = {
-	"<leader>td",
-	"<leader>tl",
-	"<leader>to",
-	"<leader>tO",
-	"<leader>r",
-	"<leader>s",
-	"<leader>S",
-	"<leader>T",
+local dap_icons = {
+    Stopped = { "󰁕 ", "DiagnosticWarn", "DapStoppedLine" },
+    Breakpoint = " ",
+    BreakpointCondition = " ",
+    BreakpointRejected = { " ", "DiagnosticError" },
+    LogPoint = ".>",
 }
-
-local keys = {
-	{
-		"<leader>tt",
-		mode = { "n" },
-		"<CMD>Trouble<CR>",
-		desc = "Toggle Trouble",
-	},
-	{
-
-		"<leader>tt",
-		mode = { "n" },
-		"<CMD>Trouble<CR>",
-		desc = "Toggle Trouble",
-	},
-}
-
-for _, key in ipairs(disabled_keys) do
-	table.insert(keys, { key, false })
-end
 
 return {
+
 	{
 		"mfussenegger/nvim-dap",
-		optional = true,
+		event = "VeryLazy",
 		dependencies = {
 			{
-				"williamboman/mason.nvim",
-				opts = function(_, opts)
-					opts.ensure_installed = opts.ensure_installed or {}
-					table.insert(opts.ensure_installed, "js-debug-adapter")
-				end,
-			},
-			"leoluz/nvim-dap-go",
-		},
-		keys = keys,
-		opts = function()
-			local dap = require("dap")
-			if not dap.adapters["pwa-node"] then
-				require("dap").adapters["pwa-node"] = {
-					type = "server",
-					host = "localhost",
-					port = "${port}",
-					executable = {
-						command = os.getenv("NODE"),
-						-- 💀 Make sure to update this path to point to your installation
-						args = {
-							require("mason-registry").get_package("js-debug-adapter"):get_install_path()
-								.. "/js-debug/src/dapDebugServer.js",
-							"${port}",
-						},
+				"jay-babu/mason-nvim-dap.nvim",
+				dependencies = {
+					"williamboman/mason.nvim",
+				},
+				cmd = { "DapInstall", "DapUninstall" },
+				opts = {
+					-- Makes a best effort to setup the various debuggers with
+					-- reasonable debug configurations
+					automatic_installation = true,
+
+					-- You can provide additional configuration to the handlers,
+					-- see mason-nvim-dap README for more information
+					handlers = {},
+
+					-- You'll need to check that you have the required things installed
+					-- online, please don't ask me how to install them :)
+					ensure_installed = {
+						-- Update this to ensure that you have the debuggers for the langs you want
 					},
-				}
+				},
+			},
+		},
+		config = function(_, opts)
+			-- Set nice color highlighting at the stopped line
+			-- vim.api.nvim_set_hl(0, "DapStoppedLine", { default = true, link = "Visual" })
+
+			-- Show nice icons in gutter instead of the default characters
+			for name, sign in pairs(dap_icons) do
+				sign = type(sign) == "table" and sign or { sign }
+				vim.fn.sign_define("Dap" .. name, {
+					text = sign[1],
+					texthl = sign[2] or "DiagnosticInfo",
+					linehl = sign[3],
+					numhl = sign[3],
+				})
 			end
-			for _, language in ipairs({ "typescript", "javascript", "typescriptreact", "javascriptreact" }) do
-				if not dap.configurations[language] then
-					dap.configurations[language] = {
-						{
-							type = "pwa-node",
-							request = "launch",
-							name = "Launch file",
-							program = "${file}",
-							cwd = "${workspaceFolder}",
-						},
-						{
-							type = "pwa-node",
-							request = "attach",
-							name = "Attach",
-							processId = require("dap.utils").pick_process,
-							cwd = "${workspaceFolder}",
-						},
-					}
-				end
+
+			local dap = require("dap")
+			if opts.configurations ~= nil then
+				local merged = require("config.utils").deep_tbl_extend(dap.configurations, opts.configurations)
+				dap.configurations = merged
 			end
 		end,
-		-- require("dap-go").setup({
-		-- 	dap_configurations = {
-		-- 		{
-		-- 			type = "go",
-		-- 			name = "Attach remote",
-		-- 			mode = "remote",
-		-- 			request = "attach",
-		-- 			debugAdapter = "legacy",
-		-- 			port = 2345,
-		-- 			host = "127.0.0.1",
-		-- 		},
-		-- 	},
-		-- }),
+		keys = {
+			{
+				"<leader>db",
+				function()
+					require("dap").toggle_breakpoint()
+				end,
+				desc = "toggle [d]ebug [b]reakpoint",
+			},
+			{
+				"<leader>dc",
+				function()
+					require("dap").continue()
+				end,
+				desc = "[d]ebug [c]ontinue (start here)",
+			},
+			{
+				"<leader>do",
+				function()
+					require("dap").step_over()
+				end,
+				desc = "[d]ebug step [o]ver",
+			},
+			{
+				"<leader>dO",
+				function()
+					require("dap").step_out()
+				end,
+				desc = "[d]ebug step [O]ut",
+			},
+			{
+				"<leader>di",
+				function()
+					require("dap").step_into()
+				end,
+				desc = "[d]ebug [i]nto",
+			},
+			{
+				"<leader>dl",
+				function()
+					require("dap").run_last()
+				end,
+				desc = "[d]ebug [l]ast",
+			},
+			{
+				"<leader>dp",
+				function()
+					require("dap").pause()
+				end,
+				desc = "[d]ebug [p]ause",
+			},
+			{
+				"<leader>dr",
+				function()
+					require("dap").repl.toggle()
+				end,
+				desc = "[d]ebug [r]epl",
+			},
+			{
+				"<leader>dR",
+				function()
+					require("dap").clear_breakpoints()
+				end,
+				desc = "[d]ebug [R]emove breakpoints",
+			},
+			{
+				"<leader>dt",
+				function()
+					require("dap").terminate()
+				end,
+				desc = "[d]ebug [t]erminate",
+			},
+		}
+	},
+
+	{
+		"rcarriga/nvim-dap-ui",
+		event = "VeryLazy",
+		dependencies = {
+			"nvim-neotest/nvim-nio",
+			{
+				"theHamsta/nvim-dap-virtual-text",
+				opts = {},
+			},
+			{
+				"mfussenegger/nvim-dap",
+				opts = {},
+			},
+		},
+		opts = {},
+		config = function(_, opts)
+			-- setup dap config by VsCode launch.json file
+			-- require("dap.ext.vscode").load_launchjs()
+			local dap = require("dap")
+			local dapui = require("dapui")
+			dapui.setup(opts)
+			dap.listeners.after.event_initialized["dapui_config"] = function()
+				dapui.open({})
+			end
+			dap.listeners.before.event_terminated["dapui_config"] = function()
+				dapui.close({})
+			end
+			dap.listeners.before.event_exited["dapui_config"] = function()
+				dapui.close({})
+			end
+		end,
+		keys = {
+			{
+				"<leader>du",
+				function()
+					require("dapui").toggle({})
+				end,
+				desc = "DAP UI",
+			},
+
+			{
+				"<leader>de",
+				function()
+					require("dapui").eval()
+				end,
+				desc = "DAP Eval",
+			},
+		}
+	},
+
+	{
+		"nvim-lualine/lualine.nvim",
+		event = "VeryLazy",
+		dependencies = {
+			"mfussenegger/nvim-dap",
+		},
+		opts = function(_, opts)
+			local function dap_status()
+				return "  " .. require("dap").status()
+			end
+
+			opts.dap_status = {
+				lualine_component = {
+					dap_status,
+					cond = function()
+						-- return package.loaded["dap"] and require("dap").status() ~= ""
+						return require("dap").status() ~= ""
+					end,
+					color = require("config.utils").fgcolor("Debug"),
+				},
+			}
+		end,
 	},
 }

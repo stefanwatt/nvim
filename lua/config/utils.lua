@@ -380,4 +380,26 @@ M.cmp_icons = {
 		Variable = "󰀫 ",
 	},
 }
+
+
+function M.deep_tbl_extend(t1, t2)
+  for k, v in pairs(t2) do
+    if type(v) == "table" then
+      if type(t1[k] or false) == "table" then
+        M.deep_tbl_extend(t1[k] or {}, t2[k] or {})
+      else
+        t1[k] = v
+      end
+    else
+      t1[k] = v
+    end
+  end
+  return t1
+end
+
+function M.fgcolor(name)
+  local hl = vim.api.nvim_get_hl and vim.api.nvim_get_hl(0, { name = name, link = false })
+  local fg = hl and (hl.fg or hl.foreground)
+  return fg and { fg = string.format("#%06x", fg) } or nil
+end
 return M

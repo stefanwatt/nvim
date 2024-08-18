@@ -4,7 +4,7 @@ return {
 		{ "williamboman/mason.nvim", config = true },
 		"williamboman/mason-lspconfig.nvim",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
-		{ "j-hui/fidget.nvim",       opts = {} },
+		{ "j-hui/fidget.nvim", opts = {} },
 
 		{
 			"folke/neodev.nvim",
@@ -12,14 +12,14 @@ return {
 				{ "Bilal2453/luvit-meta", lazy = true },
 			},
 			event = "VeryLazy",
-			config=function ()
+			config = function()
 				require("neodev").setup({})
-			end
+			end,
 		},
 	},
 	keys = {
-		{ "K",         vim.lsp.buf.hover,       desc = "Hover Documentation" },
-		{ "gD",        vim.lsp.buf.declaration, desc = "[G]oto [D]eclaration" },
+		{ "K", vim.lsp.buf.hover, desc = "Hover Documentation" },
+		{ "gD", vim.lsp.buf.declaration, desc = "[G]oto [D]eclaration" },
 		{
 			"<leader>lR",
 			"<cmd>lua vim.lsp.buf.references()<cr>",
@@ -160,6 +160,7 @@ return {
 				mason = false,
 				cmd = { "/home/stefan/.nix-profile/bin/gleam", "lsp" },
 			},
+			jdtls = {},
 		}
 
 		require("mason").setup()
