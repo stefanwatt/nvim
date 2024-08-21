@@ -10,7 +10,7 @@ vim.keymap.set("n", "<CR>", function()
     return
   end
   local cursor_pos = vim.api.nvim_win_get_cursor(0)
-  vim.api.nvim_input("ggVGy")
+  vim.api.nvim_input("ggyG")
   vim.schedule(function()
     vim.api.nvim_win_set_cursor(0, cursor_pos)
   end)

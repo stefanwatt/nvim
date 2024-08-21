@@ -39,7 +39,7 @@
   "neodev.nvim": { "branch": "main", "commit": "46aa467dca16cf3dfe27098042402066d2ae242d" },
   "neorg": { "branch": "main", "commit": "81ee90cb2d72ac43bfadb7dd276646f34c8f85be" },
   "neotest": { "branch": "master", "commit": "32ff2ac21135a372a42b38ae131e531e64833bd3" },
-  "neotest-java": { "branch": "main", "commit": "d82f3a4aa797c1c62746511a169baf346b49db63" },
+  "neotest-golang": { "branch": "main", "commit": "baa2cf4be671a368c6b75eccbc78672df8b0c124" },
   "neotest-plenary": { "branch": "master", "commit": "2cc925246d7e5324ddf9585fad891cec73c3947b" },
   "neotest-vim-test": { "branch": "master", "commit": "75c4228882ae4883b11bfce9b8383e637eb44192" },
   "no-neck-pain.nvim": { "branch": "main", "commit": "ecc584150f5c8a2a82f2e1d43201df0f65c63d0e" },

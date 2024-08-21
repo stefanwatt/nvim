@@ -1,5 +1,29 @@
 local visible = true
 
+local function macro_recording_status()
+	local recording_register = vim.fn.reg_recording()
+	if recording_register ~= "" then
+		return "Recording @" .. recording_register
+	end
+	return ""
+end
+
+local custom_fname = require('lualine.components.filename'):extend()
+
+function custom_fname:init(options)
+	custom_fname.super.init(self, options)
+end
+
+function custom_fname:update_status()
+	local data = vim.fn.expand('%:t')
+	if data == "" then
+		data = "[No Name]"
+	end
+
+	if not vim.bo.modified then return data end
+	return "%#DiagnosticSignWarn#" .. data .. ' ●'
+end
+
 return {
 	{
 		"nvim-lualine/lualine.nvim",
@@ -24,7 +48,20 @@ return {
 			require("lualine").setup({
 				sections = {
 					lualine_c = {
-						{ "filename" },
+						custom_fname,
+						macro_recording_status
+					},
+					lualine_x = { 'filetype' },
+					lualine_y = {
+						{
+							'fileformat',
+							icons_enabled = true,
+							symbols = {
+								unix = 'LF',
+								dos = 'CRLF',
+								mac = 'CR',
+							},
+						},
 					},
 				},
 			})

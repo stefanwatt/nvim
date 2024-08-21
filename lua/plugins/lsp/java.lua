@@ -24,7 +24,11 @@ return {
 			},
 			dependencies = {
 				"nvim-neotest/nvim-nio",
-				"rcasia/neotest-java",
+				{
+					"neotest-java",
+					name = "neotest-java",
+					dir = "/home/stefan/Projects/neotest-java",
+				},
 				"nvim-lua/plenary.nvim",
 				"antoinemadec/FixCursorHold.nvim",
 				"nvim-treesitter/nvim-treesitter",
