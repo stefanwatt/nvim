@@ -43,6 +43,14 @@ vim.keymap.set("v", "=", function()
   vim.api.nvim_input(":<C-u>" .. "=" .. text)
 end, { noremap = true, silent = true, desc = "lua command with visual selection" })
 
+vim.keymap.set("n", "<leader>r", ":%s///gci<Left><Left><Left><Left><Left>", opts)
+
+vim.keymap.set("v", "<leader>r", function()
+  vim.cmd('normal! "vy')
+  local text = vim.fn.getreg("v")
+  vim.api.nvim_input(":%s/" .. text.."//gci<Left><Left><Left><Left>")
+end, opts)
+
 vim.keymap.set("n", "<leader>v", ":vsplit<CR>", opts)
 vim.keymap.set("n", "<leader>V", function()
   utils.exec("wezterm cli split-pane --horizontal")
