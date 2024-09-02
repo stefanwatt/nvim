@@ -8,5 +8,6 @@ return {
 	require("plugins.lsp.lsp-saga"),
 	require("plugins.lsp.cmp"),
 	require("plugins.lsp.java"),
+	require("plugins.lsp.csharp"),
 	require("plugins.lsp.luasnip"),
 }

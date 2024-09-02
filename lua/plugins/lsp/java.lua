@@ -82,11 +82,7 @@ return {
 			test = true,
 			settings = {
 				java = {
-					inlayHints = {
-						parameterNames = {
-							enabled = "all",
-						},
-					},
+					inlayHints = false
 				},
 			},
 		}

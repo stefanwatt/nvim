@@ -92,6 +92,7 @@ return {
 			{
 				"<leader>tt",
 				function()
+					vim.cmd("Neotest output-panel clear")
 					require("neotest").run.run(vim.fn.expand("%"))
 					-- require("jdtls.dap").test_class({	})
 				end,

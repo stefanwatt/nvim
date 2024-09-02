@@ -18,6 +18,7 @@ end, opts)
 vim.keymap.set({ "n", "i", "v", "x" }, "<C-p>", ":cprev<CR>", opts)
 vim.keymap.set({ "n", "i", "v", "x" }, "<C-n>", ":cnext<CR>", opts)
 vim.keymap.set("n", "<leader>q", ":q!<CR>", opts)
+vim.keymap.set("n", "<leader>Q", ":qall<CR>", opts)
 vim.keymap.set("n", "<leader>w", ":w!<CR>", opts)
 vim.keymap.set("n", "<C-s>", ":wall<CR>", opts)
 vim.keymap.set("n", "<C-x>", utils.MoveBufferToOppositeWindow, opts)
@@ -87,10 +88,6 @@ end, { silent = true, noremap = true })
 vim.keymap.set("n", "<F5>", "<cmd>lua require('osv').launch({port=8086})<cr>", opts)
 
 vim.keymap.set("n", "<S-CR>", "lua print('') print('shift enter pressed')", opts)
-
-
-
-
 
 function RunNgTestForCurrentFile()
   local current_file = vim.fn.expand('%:p')
