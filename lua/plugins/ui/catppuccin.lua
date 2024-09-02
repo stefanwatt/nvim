@@ -46,6 +46,7 @@ return {
 			custom_highlights = function(colors)
 				return {
 					LspInlayHint = { bg = "NONE", fg = colors.overlay1, italic = true },
+					WinSeparator = { bg = "NONE", fg = colors.overlay1 },
 				}
 			end,
 		})

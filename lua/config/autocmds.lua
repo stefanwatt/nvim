@@ -2,6 +2,14 @@ local function augroup(name)
 	return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true })
 end
 
+vim.api.nvim_create_autocmd("BufEnter", {
+	group = augroup("nix"),
+	pattern = "*.nix",
+	callback = function ()
+		vim.lsp.inlay_hint.enable(false)
+	end
+})
+
 vim.api.nvim_create_autocmd("BufWritePost", {
 	group = augroup("nix"),
 	pattern = "*.nix",
