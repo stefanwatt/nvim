@@ -3,33 +3,33 @@ return {
 		"tpope/vim-fugitive",
 		event = "VeryLazy",
 		dependencies = { "ibhagwan/fzf-lua" },
-		keys = {
-			{
-				"<leader>gd",
-				mode = { "n" },
-				function()
-					local fzf_lua = require("fzf-lua")
-
-					local function custom_git_commit_action(selected)
-						if selected and #selected > 0 then
-							local commit_hash = selected[1]:match("%S+")
-							vim.schedule(function()
-								vim.cmd("G diff " .. commit_hash .. " -- %")
-								vim.cmd("only")
-								vim.api.nvim_buf_set_keymap(0, "n", "q", ":bdelete<cr>", { silent = true })
-							end)
-						end
-					end
-
-					fzf_lua.git_commits({
-						actions = {
-							["default"] = custom_git_commit_action,
-						},
-					})
-				end,
-				desc = "[git] diff",
-			},
-		},
+		-- keys = {
+		-- 	{
+		-- 		"<leader>gd",
+		-- 		mode = { "n" },
+		-- 		function()
+		-- 			local fzf_lua = require("fzf-lua")
+		--
+		-- 			local function custom_git_commit_action(selected)
+		-- 				if selected and #selected > 0 then
+		-- 					local commit_hash = selected[1]:match("%S+")
+		-- 					vim.schedule(function()
+		-- 						-- vim.cmd("G diff " .. commit_hash .. " -- %")
+		-- 						-- vim.cmd("only")
+		-- 						-- vim.api.nvim_buf_set_keymap(0, "n", "q", ":bdelete<cr>", { silent = true })
+		-- 					end)
+		-- 				end
+		-- 			end
+		--
+		-- 			fzf_lua.git_commits({
+		-- 				actions = {
+		-- 					["default"] = custom_git_commit_action,
+		-- 				},
+		-- 			})
+		-- 		end,
+		-- 		desc = "[git] diff",
+		-- 	},
+		-- },
 	},
 	{
 		"f-person/git-blame.nvim",
