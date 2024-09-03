@@ -11,7 +11,7 @@ return {
 			"fredrikaverpil/neotest-golang",
 			"nvim-neotest/neotest-plenary",
 			"nvim-neotest/neotest-vim-test",
-
+			"rcasia/neotest-java",
 			{
 				"echasnovski/mini.indentscope",
 				opts = function()

@@ -1,12 +1,17 @@
 return {
 	"shortcuts/no-neck-pain.nvim",
-	event = "VeryLazy",
+	keys =
+	{
+		"<leader>n",
+		"NoNeckPain",
+		desc = "no neck pain",
+	},
 	version = "*",
 	opts = {
 		width = 160,
 		minSideBufferWidth = 40,
 		autocmds = {
-			enableOnVimEnter = true,
+			enableOnVimEnter = false,
 		},
 	},
 }
