@@ -27,7 +27,12 @@ return {
 		{ "<leader>fp", "<cmd>FzfProject<cr>",                   desc = "[f]ind [p]roject" },
 		{ "<leader>ff", "<cmd>FzfLua git_files<cr>",             desc = "[f]ind [f]iles" },
 		{ "<leader>fw", "<cmd>FzfLua live_grep<cr>",             desc = "[f]ind [w]ord" },
-		{ mode = "v",   "<leader>fw",                            "<cmd>FzfLua grep_visual<cr>",      desc = "[f]ind [w]ord" },
+		{
+			mode = "v",
+			"<leader>fw",
+			"<cmd>FzfLua grep_visual<cr>",
+			desc = "[f]ind [w]ord",
+		},
 		{
 			"<leader>ft",
 			"<cmd>lua require('fzf-lua').grep({search='TODO|HACK|PERF|NOTE|FIXME|FIX', no_esc=true})<CR>",

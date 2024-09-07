@@ -4,7 +4,7 @@ return {
 		{ "williamboman/mason.nvim", config = true },
 		"williamboman/mason-lspconfig.nvim",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
-		{ "j-hui/fidget.nvim", opts = {} },
+		{ "j-hui/fidget.nvim",       opts = {} },
 
 		{
 			"folke/neodev.nvim",
@@ -18,7 +18,7 @@ return {
 		},
 	},
 	keys = {
-		{ "K", vim.lsp.buf.hover, desc = "Hover Documentation" },
+		{ "K",  vim.lsp.buf.hover,       desc = "Hover Documentation" },
 		{ "gD", vim.lsp.buf.declaration, desc = "[G]oto [D]eclaration" },
 		{
 			"<leader>lR",
@@ -127,6 +127,7 @@ return {
 				},
 			},
 			gopls = require("plugins.lsp.gopls").config,
+			golangci_lint_ls = {},
 			lemminx = {},
 			clangd = {
 				cmd = { "/run/current-system/sw/bin/clangd" },

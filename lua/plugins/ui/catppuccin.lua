@@ -50,5 +50,9 @@ return {
 			end,
 		})
 		vim.cmd.colorscheme("catppuccin-frappe")
+		local colors = require("catppuccin.palettes").get_palette()
+		vim.api.nvim_set_hl(0, "DiagnosticUnnecessary", {
+			fg = colors.overlay0,
+		})
 	end,
 }

@@ -30,7 +30,6 @@ vim.keymap.set("v", ":", function()
   vim.api.nvim_input(":<C-u>" .. text)
 end, { noremap = true, silent = true, desc = "Open cmdline with visual selection" })
 
-
 vim.keymap.set("v", "/", function()
   vim.cmd('normal! "vy')
   local text = vim.fn.getreg("v")
