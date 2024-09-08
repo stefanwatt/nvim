@@ -78,6 +78,7 @@
   "schemastore.nvim": { "branch": "main", "commit": "28a6a50e5b7b963dc6a5d2defc40e158231a67ed" },
   "smart-splits.nvim": { "branch": "master", "commit": "99216f4cdbd4a690e10fabafd7f6defcb25e97b2" },
   "sqlite.lua": { "branch": "master", "commit": "d0ffd703b56d090d213b497ed4eb840495f14a11" },
+  "substitute.nvim": { "branch": "main", "commit": "97f49d16f8eea7967d41db4f657dd63af53eeba1" },
   "tagalong.vim": { "branch": "main", "commit": "5a2bbf2b1d5b657685a49d48d98a4aa921c1fde3" },
   "todo-comments.nvim": { "branch": "main", "commit": "319c01b99b7a8c9ac2066bf0efd4d6ec68fef444" },
   "treesj": { "branch": "main", "commit": "0d81326b5afd36babe7dd480aabbb0b05f33e688" },
