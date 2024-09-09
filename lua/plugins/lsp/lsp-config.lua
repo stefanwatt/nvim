@@ -127,7 +127,6 @@ return {
 				},
 			},
 			gopls = require("plugins.lsp.gopls").config,
-			golangci_lint_ls = {},
 			lemminx = {},
 			clangd = {
 				cmd = { "/run/current-system/sw/bin/clangd" },
