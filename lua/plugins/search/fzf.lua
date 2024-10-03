@@ -24,6 +24,7 @@ return {
 		{ "<leader>fs", "<cmd>FzfLua lsp_document_symbols<cr>",  desc = "[f]ind document [s]ymbols" },
 		{ "<leader>fS", "<cmd>FzfLua lsp_workspace_symbols<cr>", desc = "[f]ind workspace [S]ymbols" },
 		{ "<leader>fh", "<cmd>FzfLua helptags<cr>",              desc = "[f]ind [h]elp" },
+		{ "<leader>fb", "<cmd>FzfLua buffers<cr>",              desc = "[f]ind [b]uffers" },
 		{ "<leader>fp", "<cmd>FzfProject<cr>",                   desc = "[f]ind [p]roject" },
 		{ "<leader>ff", "<cmd>FzfLua git_files<cr>",             desc = "[f]ind [f]iles" },
 		{ "<leader>fw", "<cmd>FzfLua live_grep<cr>",             desc = "[f]ind [w]ord" },

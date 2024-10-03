@@ -161,6 +161,7 @@ return {
 				cmd = { "/home/stefan/.nix-profile/bin/gleam", "lsp" },
 			},
 			jdtls = {},
+			taplo = {},
 		}
 
 		require("mason").setup()

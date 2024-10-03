@@ -8,6 +8,10 @@ return { -- Autocompletion
 	config = function()
 		-- See `:help cmp`
 		local cmp = require("cmp")
+		local window_config = cmp.config.window.bordered()
+		window_config = vim.tbl_deep_extend('force',window_config, {
+			winblend = 0
+		})
 		local luasnip = require("luasnip")
 		luasnip.config.setup({})
 
@@ -26,6 +30,10 @@ return { -- Autocompletion
 		})
 
 		cmp.setup({
+			window = {
+				completion = window_config,
+				documentation = window_config,
+			},
 			snippet = {
 				expand = function(args)
 					luasnip.lsp_expand(args.body)

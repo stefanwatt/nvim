@@ -15,11 +15,16 @@ vim.keymap.set("n", "<CR>", function()
     vim.api.nvim_win_set_cursor(0, cursor_pos)
   end)
 end, opts)
-vim.keymap.set({ "n", "i", "v", "x" }, "<C-p>", ":cprev<CR>", opts)
-vim.keymap.set({ "n", "i", "v", "x" }, "<C-n>", ":cnext<CR>", opts)
-vim.keymap.set("n", "<leader>q", ":q!<CR>", opts)
-vim.keymap.set("n", "<leader>w", ":w!<CR>", opts)
-vim.keymap.set("n", "<C-s>", ":wall<CR>", opts)
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'qf',
+  callback = function(event)
+    vim.keymap.set({ "n", "i" }, "<C-p>", "<cmd>cprev<CR>", opts)
+    vim.keymap.set({ "n", "i" }, "<C-n>", "<cmd>cnext<CR>", opts)
+  end,
+})
+vim.keymap.set("n", "<leader>q", "<cmd>q!<CR>", opts)
+vim.keymap.set("n", "<leader>w", "<cmd>w!<CR>", opts)
+vim.keymap.set("n", "<C-s>", "<cmd>wall<CR>", opts)
 vim.keymap.set("n", "<C-x>", utils.MoveBufferToOppositeWindow, opts)
 vim.keymap.set("n", "<C-d>", "<C-d>zz", opts)
 vim.keymap.set("n", "<C-u>", "<C-u>zz", opts)
@@ -47,10 +52,10 @@ vim.keymap.set("n", "<leader>r", ":%s///gci<Left><Left><Left><Left><Left>", opts
 vim.keymap.set("v", "<leader>r", function()
   vim.cmd('normal! "vy')
   local text = vim.fn.getreg("v")
-  vim.api.nvim_input(":%s/" .. text.."//gci<Left><Left><Left><Left>")
+  vim.api.nvim_input(":%s/" .. text .. "//gci<Left><Left><Left><Left>")
 end, opts)
 
-vim.keymap.set("n", "<leader>v", ":vsplit<CR>", opts)
+vim.keymap.set("n", "<leader>v", "<cmd>vsplit<CR>", opts)
 vim.keymap.set("n", "<leader>V", function()
   utils.exec("wezterm cli split-pane --horizontal")
 end, opts)
@@ -63,15 +68,12 @@ vim.keymap.set("n", "<leader>gg", function()
 end, opts)
 
 -- Navigate buffers
-vim.keymap.set("n", "<S-Right>", ":bnext<CR>", opts)
-vim.keymap.set("n", "<S-Left>", ":bprevious<CR>", opts)
+vim.keymap.set("n", "<S-Right>", "<cmd>bnext<CR>", opts)
+vim.keymap.set("n", "<S-Left>", "<cmd>bprevious<CR>", opts)
 vim.keymap.set("n", "gb", "<C-o>", opts)
 vim.keymap.set("n", "db", "vbd", opts)
 vim.keymap.set("n", "cb", "vbc", opts)
--- Better paste
 vim.keymap.set("v", "p", '"_dP', opts)
-
--- Stay in indent mode
 vim.keymap.set("v", "<", "<gv", opts)
 vim.keymap.set("v", ">", ">gv", opts)
 vim.keymap.set("n", "<leader><leader>x", "<cmd>so %<cr> :lua print('file reloaded')<cr>", opts)
@@ -84,7 +86,3 @@ vim.keymap.set("n", "s", function()
     },
   })
 end, { silent = true, noremap = true })
-
-vim.keymap.set("n", "<F5>", "<cmd>lua require('osv').launch({port=8086})<cr>", opts)
-
-vim.keymap.set("n", "<S-CR>", "lua print('') print('shift enter pressed')", opts)
