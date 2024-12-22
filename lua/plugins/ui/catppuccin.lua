@@ -54,5 +54,9 @@ return {
 		vim.api.nvim_set_hl(0, "DiagnosticUnnecessary", {
 			fg = colors.overlay0,
 		})
+
+		vim.api.nvim_set_hl(0, "BlinkCmpMenu", { fg = colors.text })
+		vim.api.nvim_set_hl(0, "BlinkCmpMenuBorder", { fg = colors.blue })
+		vim.api.nvim_set_hl(0, "BlinkCmpMenuSelection", { bg = colors.surface0 })
 	end,
 }

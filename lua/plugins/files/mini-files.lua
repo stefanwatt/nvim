@@ -1,24 +1,26 @@
 return {
+	-- {
+	-- 	"mini.files",
+	-- 	name = "mini.files",
+	-- 	dir = "/home/stefan/Projects/mini.files",
+	--
+	-- 	dependencies = {
+	-- 		"nvim-tree/nvim-web-devicons",
+	-- 	},
+	-- 	lazy = false,
+	-- 	opts = {
+	-- 		use_as_default_explorer = true,
+	-- 	},
+	-- 	keys = {
+	-- 		{
+	-- 			"<leader>e",
+	-- 			mode = { "n" },
+	-- 			"<cmd>lua require('mini.files').open(vim.api.nvim_buf_get_name(0), false)<cr>",
+	-- 			desc = "File Explorer",
+	-- 		},
+	-- 	},
+	-- },
 	{
-		-- "mini.files",
-		-- name = "mini.files",
-		-- dir = "/home/stefan/Projects/mini.files",
-		--
-		-- dependencies = {
-		-- 	"nvim-tree/nvim-web-devicons",
-		-- },
-		-- lazy = false,
-		-- opts = {
-		-- 	use_as_default_explorer = true,
-		-- },
-		-- keys = {
-		-- 	{
-		-- 		"<leader>e",
-		-- 		mode = { "n" },
-		-- 		"<cmd>lua require('mini.files').open(vim.api.nvim_buf_get_name(0), false)<cr>",
-		-- 		desc = "File Explorer",
-		-- 	},
-		-- },
 		"stefanwatt/mini.files",
 		commit ="4a5298e0035eb32bc9ba6e49957dc3f397ecbb46",
 		version = false,
@@ -32,7 +34,7 @@ return {
 		},
 		keys = {
 			{
-				"<leader>e",
+				"<leader>E",
 				mode = { "n" },
 				"<cmd>lua MiniFiles.open(vim.api.nvim_buf_get_name(0), false)<cr>",
 				desc = "File Explorer",
@@ -40,6 +42,9 @@ return {
 		},
 		config = function()
 			require("mini.files").setup({
+				windows ={
+					preview = true
+				},
 				content = {
 					filter = nil,
 					sort = nil,

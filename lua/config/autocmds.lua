@@ -22,34 +22,37 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 	group = persistence_group,
 	pattern = "*",
 	callback = function()
-		require("persistence").save()
+		local buftype = vim.bo.buftype
+		if buftype ~= 'nofile' then
+			require("persistence").save()
+		end
 	end,
 })
 
 local home = vim.fn.expand "~"
 local disabled_dirs = {
-  home,
-  home .. "/Downloads",
-  "/private/tmp",
+	home,
+	home .. "/Downloads",
+	"/private/tmp",
 }
 
 vim.api.nvim_create_autocmd({ "VimEnter" }, {
-  group = persistence_group,
-  callback = function()
-    local cwd = vim.fn.getcwd()
-    for _, path in pairs(disabled_dirs) do
-      if path == cwd then
-        require("persistence").stop()
-        return
-      end
-    end
-    if vim.fn.argc() == 0 and not vim.g.started_with_stdin then
-      require("persistence").load()
-    else
-      require("persistence").stop()
-    end
-  end,
-  nested = true,
+	group = persistence_group,
+	callback = function()
+		local cwd = vim.fn.getcwd()
+		for _, path in pairs(disabled_dirs) do
+			if path == cwd then
+				require("persistence").stop()
+				return
+			end
+		end
+		if vim.fn.argc() == 0 and not vim.g.started_with_stdin then
+			require("persistence").load()
+		else
+			require("persistence").stop()
+		end
+	end,
+	nested = true,
 })
 
 
@@ -198,5 +201,3 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 		vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
 	end,
 })
-
-

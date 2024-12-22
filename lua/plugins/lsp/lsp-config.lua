@@ -1,10 +1,20 @@
 return {
 	"neovim/nvim-lspconfig",
 	dependencies = {
+		{
+			"yioneko/nvim-cmp",
+			branch = "perf-up",
+			commit = "a475d8b8b282fda2d18f9fbdebba401b405cfecd",
+			event = "InsertEnter",
+			dependencies = {
+				"hrsh7th/cmp-nvim-lsp",
+				"hrsh7th/cmp-path",
+			},
+		},
 		{ "williamboman/mason.nvim", config = true },
 		"williamboman/mason-lspconfig.nvim",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
-		{ "j-hui/fidget.nvim",       opts = {} },
+		{ "j-hui/fidget.nvim", opts = {} },
 
 		{
 			"folke/neodev.nvim",
@@ -18,7 +28,7 @@ return {
 		},
 	},
 	keys = {
-		{ "K",  vim.lsp.buf.hover,       desc = "Hover Documentation" },
+		{ "K", vim.lsp.buf.hover, desc = "Hover Documentation" },
 		{ "gD", vim.lsp.buf.declaration, desc = "[G]oto [D]eclaration" },
 		{
 			"<leader>lR",
@@ -126,7 +136,8 @@ return {
 					},
 				},
 			},
-			gopls = require("plugins.lsp.gopls").config,
+			-- gopls = require("plugins.lsp.gopls").config,
+			gopls = {},
 			lemminx = {},
 			clangd = {
 				cmd = { "/run/current-system/sw/bin/clangd" },

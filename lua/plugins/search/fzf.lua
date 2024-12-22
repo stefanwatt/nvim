@@ -5,7 +5,7 @@ return {
 		"ahmedkhalf/project.nvim",
 	},
 	keys = {
-		{ "<leader>f",  name = "Find" },
+		{ "<leader>f", name = "Find" },
 		{
 			"gd",
 			"<cmd>lua require('fzf-lua').lsp_definitions({ jump_to_single_result = true })<CR>",
@@ -21,13 +21,13 @@ return {
 			end,
 			desc = "[f]ind [r]eferences",
 		},
-		{ "<leader>fs", "<cmd>FzfLua lsp_document_symbols<cr>",  desc = "[f]ind document [s]ymbols" },
+		{ "<leader>fs", "<cmd>FzfLua lsp_document_symbols<cr>", desc = "[f]ind document [s]ymbols" },
 		{ "<leader>fS", "<cmd>FzfLua lsp_workspace_symbols<cr>", desc = "[f]ind workspace [S]ymbols" },
-		{ "<leader>fh", "<cmd>FzfLua helptags<cr>",              desc = "[f]ind [h]elp" },
-		{ "<leader>fb", "<cmd>FzfLua buffers<cr>",              desc = "[f]ind [b]uffers" },
-		{ "<leader>fp", "<cmd>FzfProject<cr>",                   desc = "[f]ind [p]roject" },
-		{ "<leader>ff", "<cmd>FzfLua git_files<cr>",             desc = "[f]ind [f]iles" },
-		{ "<leader>fw", "<cmd>FzfLua live_grep<cr>",             desc = "[f]ind [w]ord" },
+		{ "<leader>fh", "<cmd>FzfLua helptags<cr>", desc = "[f]ind [h]elp" },
+		{ "<leader>fb", "<cmd>FzfLua buffers<cr>", desc = "[f]ind [b]uffers" },
+		{ "<leader>fp", "<cmd>FzfProject<cr>", desc = "[f]ind [p]roject" },
+		{ "<leader>ff", "<cmd>FzfLua git_files<cr>", desc = "[f]ind [f]iles" },
+		{ "<leader>fw", "<cmd>FzfLua live_grep<cr>", desc = "[f]ind [w]ord" },
 		{
 			mode = "v",
 			"<leader>fw",
@@ -43,7 +43,7 @@ return {
 	config = function()
 		local fzflua = require("fzf-lua")
 		fzflua.setup({
-			keymap = { fzf = { ["ctrl-q"] = "select-all+accept" } },
+			keymap = { fzf = { ["ctrl-q"] = "select-all+accept", ["ctrl-alt-q"] = "accept" } },
 		})
 		vim.api.nvim_create_user_command("FzfProject", function()
 			local opts = {}

@@ -49,6 +49,7 @@ opt.sidescrolloff = 8 -- Columns of context
 opt.signcolumn = "yes" -- Always show the signcolumn, otherwise it would shift the text each time
 opt.smartcase = true -- Don't ignore case with capitals
 opt.smartindent = true -- Insert indents automatically
+opt.autoindent = true -- Insert indents automatically
 opt.spelllang = { "en" }
 opt.splitbelow = true -- Put new windows below current
 opt.splitkeep = "screen"
@@ -77,4 +78,14 @@ vim.o.swapfile = false
 vim.opt.termguicolors = true
 
 
-
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "go", "gomod", "gowork", "gotmpl" },
+	callback = function()
+		vim.opt_local.autoindent = true
+		vim.opt_local.smartindent = true
+		vim.opt_local.tabstop = 2
+		vim.opt_local.shiftwidth = 2
+		vim.opt_local.shiftwidth = 2
+		vim.opt_local.colorcolumn = "120"
+	end,
+})

@@ -11,5 +11,6 @@ return {
 	require("plugins.ui.noice"),
 	require("plugins.ui.notify"),
 	require("plugins.ui.whichkey"),
+	require("plugins.ui.smear-cursor"),
 	{ "stevearc/dressing.nvim" },
 }

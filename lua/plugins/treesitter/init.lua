@@ -5,6 +5,7 @@ return {
 			"nvim-treesitter/nvim-treesitter-textobjects",
 			"JoosepAlviste/nvim-ts-context-commentstring",
 			"windwp/nvim-ts-autotag",
+			{ "nushell/tree-sitter-nu", build = ":TSUpdate nu" },
 		},
 		event = "BufReadPost",
 		config = function()
