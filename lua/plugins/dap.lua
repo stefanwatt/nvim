@@ -1,9 +1,9 @@
 local dap_icons = {
-    Stopped = { "󰁕 ", "DiagnosticWarn", "DapStoppedLine" },
-    Breakpoint = " ",
-    BreakpointCondition = " ",
-    BreakpointRejected = { " ", "DiagnosticError" },
-    LogPoint = ".>",
+	Stopped = { "󰁕 ", "DiagnosticWarn", "DapStoppedLine" },
+	Breakpoint = " ",
+	BreakpointCondition = " ",
+	BreakpointRejected = { " ", "DiagnosticError" },
+	LogPoint = ".>",
 }
 
 return {
@@ -12,6 +12,18 @@ return {
 		"mfussenegger/nvim-dap",
 		event = "VeryLazy",
 		dependencies = {
+			{
+				"jbyuki/one-small-step-for-vimkind",
+				keys = {
+					{
+						"<leader>dl",
+						function()
+							require("osv").launch({ port = 8086 })
+						end,
+						desc = "launch nlua adapter",
+					},
+				},
+			},
 			{
 				"jay-babu/mason-nvim-dap.nvim",
 				dependencies = {
@@ -54,6 +66,16 @@ return {
 			if opts.configurations ~= nil then
 				local merged = require("config.utils").deep_tbl_extend(dap.configurations, opts.configurations)
 				dap.configurations = merged
+			end
+			dap.configurations.lua = {
+				{
+					type = "nlua",
+					request = "attach",
+					name = "Attach to running Neovim instance",
+				},
+			}
+			dap.adapters.nlua = function(callback, config)
+				callback({ type = "server", host = config.host or "127.0.0.1", port = config.port or 8086 })
 			end
 		end,
 		keys = {
@@ -127,7 +149,7 @@ return {
 				end,
 				desc = "[d]ebug [t]erminate",
 			},
-		}
+		},
 	},
 
 	{
@@ -177,7 +199,7 @@ return {
 				end,
 				desc = "DAP Eval",
 			},
-		}
+		},
 	},
 
 	{

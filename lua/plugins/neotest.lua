@@ -1,5 +1,12 @@
 return {
 	{
+		"echasnovski/mini.test",
+		version = false,
+		config = function()
+			require("mini.test").setup()
+		end,
+	},
+	{
 		"nvim-neotest/neotest",
 		event = "VeryLazy",
 		dependencies = {

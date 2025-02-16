@@ -296,7 +296,7 @@ M.attach_buffer = function(channel)
 	language_tree:register_cbs({
 		on_changedtree = function(ranges, ts_tree)
 			local tree = M.get_tree_as_table(ts_tree:root(), language_tree:lang(), bufnr)
-			vim.print(tree)
+			-- vim.print(tree)
 			vim.fn.rpcrequest(channel, "nvim-gui-buf-changed", tree)
 		end,
 	}, true)
@@ -371,6 +371,10 @@ end
 ---@field end_top number
 ---@field start_left number
 ---@field end_left number
+---@field start_row number
+---@field start_col number
+---@field end_row number
+---@field end_col number
 ---@field root boolean
 ---@field line_break boolean
 ---@field space boolean
@@ -409,57 +413,26 @@ end
 local whitespace_count = 0
 local line_breaks = {}
 
----@param id string
----@param next_start_left number
----@param start_left number
----@param start_top number
----@param end_top number
----@param children NvimGuiNode[]
----@param line_breaks_inserted number
-local function insert_indent(id, next_start_left, start_left, start_top, end_top, children, line_breaks_inserted)
-	---@type NvimGuiNode
-	local space = {
-		id = id .. tostring(whitespace_count),
-		text = string.rep(" ", next_start_left - start_left),
-		hl_group = "",
-		start_top = start_top,
-		end_top = end_top,
-		start_left = start_left,
-		end_left = start_left + 1,
-		root = false,
-		line_break = false,
-		space = true,
-		children = {},
-	}
-	insert_child(children, line_breaks_inserted + 1, space)
-end
-
 ---@param start_col number
 ---@param children NvimGuiNode[]
----@param parent_left number
+---@param parent_start_left number
 ---@param start_top number
 ---@param child_index number
 ---@return number
-function M.calc_start_left(start_col, parent_left, children, start_top, child_index)
-	local start_left = 0
+function M.calc_start_left(start_col, parent_start_left, children, start_top, child_index)
 	if child_index == 1 then
-		start_left = start_col - parent_left
-		if start_left < 0 then
-			start_left = 0
-		end
+		return 0
 	else
 		local left_sibling = children[child_index - 1]
-		if not left_sibling then
-			goto continue
-		end
-		if left_sibling.start_top ~= start_top and left_sibling.start_top > whitespace_count then -- TODO: i dont understand this anymore
-			start_left = left_sibling.end_left - whitespace_count
+		assert(left_sibling ~= nil)
+		-- if left_sibling.start_top ~= start_top and left_sibling.start_top > whitespace_count then -- TODO: i dont understand this anymore
+		if left_sibling.start_top ~= start_top then
+			-- start_left = left_sibling.end_left - whitespace_count
+			return 0
 		else
-			start_left = left_sibling.end_left + 1
+			return left_sibling.end_left + 1
 		end
-		::continue::
 	end
-	return start_left
 end
 
 ---@param child TSNode
@@ -509,6 +482,10 @@ function M.map_default_child_node(id, start_top, end_top, start_left, end_left)
 		line_break = false,
 		space = false,
 		children = {},
+		start_row = 0,
+		start_col = 0,
+		end_row = 0,
+		end_col = 0,
 	}
 end
 
@@ -522,14 +499,52 @@ function M.calc_expected_left(start_top, parent, child_index, children)
 		-- assert(#children >= child_index - 1, "not enough children to find last child")
 		-- vim.print("children: ", children, "children[1]: ", children[1], " child_index = ", child_index)
 		if children[child_index - 1] then
-			return children[child_index - 1].end_left + 1
+			return children[child_index - 1].end_left
 		end
 	end
-	return start_top == parent.start_top and parent.end_left + 1 or 0
+	return start_top == parent.start_top and parent.end_left or 0
+end
+
+---@param base_id string
+---@param spaces number
+---@param last_end_left number
+---@param start_row number
+---@param start_col number
+---@param start_top number
+---@return NvimGuiNode
+function M.map_whitespace(
+		base_id,
+		spaces,
+		last_end_left,
+		start_row,
+		start_col,
+		start_top
+)
+	local space = {
+		id = base_id .. tostring(whitespace_count),
+		text = string.rep(" ", spaces),
+		hl_group = "",
+		start_top = start_top,
+		end_top = start_top,
+		start_left = last_end_left + 1,
+		end_left = last_end_left + 1 + spaces,
+		root = false,
+		line_break = false,
+		space = true,
+		children = {},
+		start_row = start_row,
+		start_col = start_col,
+		end_row = start_row,
+		end_col = start_col + spaces,
+	}
+	whitespace_count = whitespace_count + 1
+	return space
 end
 
 ---@param child TSNode
+---@param left_sibling TSNode | nil
 ---@param parent NvimGuiNode
+---@param parent_ts_node TSNode
 ---@param children NvimGuiNode[]
 ---@param rows_indented boolean[]
 ---@param line_breaks_inserted number
@@ -537,53 +552,72 @@ end
 ---@param query vim.treesitter.Query
 ---@param depth number
 ---@param child_index number
-function M.handle_child(child, parent, children, rows_indented, line_breaks_inserted, bufnr, query, depth, child_index)
+function M.handle_child(
+		child,
+		left_sibling,
+		parent,
+		parent_ts_node,
+		children,
+		rows_indented,
+		line_breaks_inserted,
+		bufnr,
+		query,
+		depth,
+		child_index
+)
 	local id = child:id()
 	local start_row, start_col, end_row, end_col = child:range()
-	vim.print("node-range",start_row, start_col, end_row, end_col)
 	local start_top = start_row - parent.start_top
 	local start_left = M.calc_start_left(start_col, parent.start_left, children, start_top, child_index)
 	local end_top = start_top + (end_row - start_row)
 	local end_left = end_top ~= start_top and end_col or (start_left + (end_col - start_col))
 
-	local expected_left = M.calc_expected_left(start_top, parent, child_index, children)
-	if start_left > expected_left and not rows_indented[start_row] then
-		insert_indent(id, start_col, expected_left, start_top, end_top, children, line_breaks_inserted)
-		rows_indented[start_row] = true
-		whitespace_count = whitespace_count + 1
-		expected_left = expected_left + 1
+	if left_sibling ~= nil then
+		local ls_start_row, ls_start_col, ls_end_row, ls_end_col = left_sibling:range()
+		local diff = start_col - ls_end_col
+		local ls_node = children[child_index - 1]
+		if start_row == ls_start_row and diff > 0 then
+			local space = M.map_whitespace(
+				id,
+				diff,
+				ls_node.end_left,
+				ls_node.start_row,
+				ls_node.start_col + 1,
+				ls_node.start_top
+			)
+			insert_child(children, child_index, space)
+			start_left = space.end_left + 1
+			end_left = end_left + diff
+		end
 	end
 
+	-- local expected_left = M.calc_expected_left(start_top, parent, child_index, children)
+	-- if start_left > expected_left and not rows_indented[start_row] then
+	-- insert_indent(id, start_col, expected_left, start_top, end_top, children, line_breaks_inserted)
+	-- 	rows_indented[start_row] = true
+	-- 	whitespace_count = whitespace_count + 1
+	-- 	expected_left = expected_left + 1
+	-- end
+
 	local child_node = M.map_default_child_node(id, start_top, end_top, start_left, end_left)
+	child_node.start_row,
+	child_node.start_col,
+	child_node.end_row,
+	child_node.end_col = child:range()
 	child_node.hl_group = M.map_hl_group(query, child, bufnr, start_row)
 	child_node.text = M.map_node_text(child, bufnr)
 	child_node.end_left = start_left + (#child_node.text - 1)
 
-
 	if child:child_count() > 0 then
 		child_node.children =
-				M.build_subtree(child, child_node, depth + 1, query, bufnr, rows_indented, line_breaks_inserted)
+				M.build_subtree(child, child_node, depth + 1, query, bufnr, rows_indented, line_breaks_inserted, {})
 		--NOTE: text will always be on leaf nodes -> remove text from parent if it has children
 		child_node.text = nil
 	end
-	insert_child(children, nil, child_node)
-	if start_left ~= 0 and child_node.end_left < end_col then
-		local space = {
-			id = id .. tostring(whitespace_count),
-			text = string.rep(" ", (end_col - child_node.end_left)-1),
-			hl_group = "",
-			start_top = start_top,
-			end_top = end_top,
-			start_left = start_left,
-			end_left = start_left + 1,
-			root = false,
-			line_break = false,
-			space = true,
-			children = {},
-		}
-		whitespace_count = whitespace_count + 1
-		insert_child(children, nil, space)
+	if child_index == 1 then
+		assert(start_left == 0)
 	end
+	insert_child(children, nil, child_node)
 end
 
 ---@param parent_ts_node TSNode
@@ -592,10 +626,10 @@ end
 ---@param query vim.treesitter.Query
 ---@param rows_indented boolean[]
 ---@param line_breaks_inserted number
+---@param children NvimGuiNode[]
 ---@returns NvimGuiNode[]
-function M.build_subtree(parent_ts_node, parent, depth, query, bufnr, rows_indented, line_breaks_inserted)
-	---@type NvimGuiNode[]
-	local children = {}
+function M.build_subtree(parent_ts_node, parent, depth, query, bufnr, rows_indented, line_breaks_inserted, children)
+	local i = #children + 1
 	local last_top = parent.start_top + line_breaks_inserted
 	local first_child = parent_ts_node:child(0)
 	if first_child then
@@ -608,13 +642,49 @@ function M.build_subtree(parent_ts_node, parent, depth, query, bufnr, rows_inden
 			line_breaks_inserted = line_breaks_inserted + 1
 			last_top = last_top + 1
 		end
+
+		local start_row, start_col, end_row, end_col = first_child:range()
+		local p_start_row, p_start_col, p_end_row, p_end_col = parent_ts_node:range()
+		if p_start_row ~= start_row then
+			p_start_col = 0
+		end
+		local diff = start_col - p_start_col
+		if diff > 0 then
+			local space = M.map_whitespace(
+				first_child:id(),
+				diff,
+				-1, --TODO: not super clean
+				start_row,
+				start_col,
+				parent.start_top
+			)
+			insert_child(children, nil, space)
+			i = i + 1
+		end
 	end
-	local i = 1
+	local left_sibling = nil
+	local ts_nodes = {}
 	for child, name in parent_ts_node:iter_children() do
-		M.handle_child(child, parent, children, rows_indented, line_breaks_inserted, bufnr, query, depth, i)
-		i = i + 1
+		local length_before = #children
+		M.handle_child(
+			child,
+			left_sibling,
+			parent,
+			parent_ts_node,
+			children,
+			rows_indented,
+			line_breaks_inserted,
+			bufnr,
+			query,
+			depth,
+			i
+		)
+		local length_after = #children
+		i = i + (length_after - length_before)
+		ts_nodes[i] = child
+		left_sibling = child
 	end
-	vim.print("children", children)
+	-- vim.print("children", children)
 	local updated_children = {}
 	local prev_child = nil
 
@@ -627,15 +697,43 @@ function M.build_subtree(parent_ts_node, parent, depth, query, bufnr, rows_inden
 			assert(prev_child, "must have prev child if j > 1")
 			-- Insert missing line breaks if necessary
 			if child.start_top > prev_child.end_top then
-				insert_child(updated_children, nil, M.map_line_break(prev_child.id, prev_child.end_top))
+				local linebreak = M.map_line_break(prev_child.id, prev_child.end_top)
+				insert_child(updated_children, nil, linebreak)
 				whitespace_count = whitespace_count + 1
+				for k = 2, child.start_top - prev_child.end_top, 1 do
+					linebreak = M.map_line_break(linebreak.id, linebreak.end_top)
+					insert_child(updated_children, nil, linebreak)
+					whitespace_count = whitespace_count + 1
+				end
+				if ts_nodes[j] then --TODO: why is this nil??
+					local start_row, start_col = ts_nodes[j]:range()
+					local source_text = vim.api.nvim_buf_get_lines(bufnr, start_row, start_row + 1, true)[1]
+					local leading_spaces = nil
+					if source_text:match("^%s+") then
+						leading_spaces = #source_text:match("^%s+")
+					end
+					if leading_spaces and leading_spaces > 0 then
+						local space = M.map_whitespace(
+							prev_child.id,
+							leading_spaces,
+							-1,
+							start_row,
+							start_col,
+							linebreak.end_top
+						)
+						insert_child(updated_children, nil, space)
+						child.start_left = child.start_left + leading_spaces
+						child.end_left = child.end_left + leading_spaces
+					end
+				end
 			end
 			-- Insert the current child
 			insert_child(updated_children, nil, child)
 			prev_child = child
 		end
 	end
-	vim.print("updated_children", updated_children)
+
+	-- vim.print("updated_children", updated_children)
 
 	return updated_children
 end
@@ -656,6 +754,11 @@ function M.map_line_break(id, last_end_top)
 		line_break = true,
 		space = false,
 		children = {},
+		--TODO:
+		start_row = 0,
+		start_col = 0,
+		end_row = 0,
+		end_col = 0,
 	}
 end
 
@@ -721,16 +824,32 @@ function M.get_tree_as_table(root, lang, bufnr)
 		end_top = end_row,
 		start_left = 0,
 		end_left = end_col,
+		start_row = 0,
+		start_col = 0,
+		end_row = end_row,
+		end_col = end_col,
 		root = true,
 		line_break = false,
 		space = false,
 		children = {},
 	}
+
+	if start_col > 0 then
+		local space = M.map_whitespace(
+			id,
+			start_col,
+			-1,
+			start_row,
+			0,
+			0
+		)
+		insert_child(root_node.children, nil, space)
+	end
 	local ok, text = pcall(vim.treesitter.get_node_text, root, bufnr)
 	if ok then
 		root_node.text = text
 	end
-	root_node.children = M.build_subtree(root, root_node, 0, query, bufnr, {}, 0)
+	root_node.children = M.build_subtree(root, root_node, 0, query, bufnr, {}, 0, root_node.children)
 	return root_node
 end
 
@@ -745,5 +864,5 @@ M.print_tree_as_table = function()
 	local tree_table = M.get_tree_as_table(root, lang, bufnr)
 	write_to_buffer(tree_table)
 end
-
+local function test_tree_update() end
 return M
