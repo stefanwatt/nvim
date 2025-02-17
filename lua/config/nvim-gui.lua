@@ -155,51 +155,10 @@ local TSCallbackNames = {
 local counter = 0
 
 local M = {}
-
-local function escape_special_characters(str)
-	local replacements = {
-		["="] = "eq",
-		["."] = "dot",
-		[","] = "comma",
-		[" "] = "space",
-		["/"] = "slash",
-		["\\"] = "backslash",
-		[":"] = "colon",
-		[";"] = "semicolon",
-		["("] = "lparen",
-		[")"] = "rparen",
-		["["] = "lbracket",
-		["]"] = "rbracket",
-		["{"] = "lbrace",
-		["}"] = "rbrace",
-		["<"] = "lt",
-		[">"] = "gt",
-		["?"] = "question",
-		["!"] = "exclamation",
-		["#"] = "hash",
-		["$"] = "dollar",
-		["%"] = "percent",
-		["^"] = "caret",
-		["&"] = "amp",
-		["*"] = "asterisk",
-		["+"] = "plus",
-		["-"] = "dash",
-		["_"] = "underscore",
-		["~"] = "tilde",
-		["|"] = "pipe",
-		["'"] = "apostrophe",
-		['"'] = "quote",
-	}
-
-	counter = counter + 1
-	if replacements[str] then
-		return replacements[str] .. tostring(counter)
-	end
-	return str
-end
+local H = {}
 
 ---@param name string
-local function augroup(name)
+function H.augroup(name)
 	return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true })
 end
 
@@ -220,88 +179,6 @@ M.get_buf_lines = function()
 	return result
 end
 
----@param channel number
-M.listen_for_mode_change = function(channel)
-	local event_name = "nvim-gui-mode-changed"
-	vim.api.nvim_create_autocmd("ModeChanged", {
-		group = augroup(event_name),
-		pattern = "*",
-		callback = function()
-			local new_mode = vim.fn.mode()
-			vim.fn.rpcrequest(channel, event_name, {
-				new_mode,
-			})
-		end,
-	})
-	return "success"
-end
-
----@param channel number
-M.listen_for_visual_selection_change = function(channel)
-	local event_name = "nvim-gui-visual-selection-changed"
-	vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "ModeChanged" }, {
-		group = augroup(event_name),
-		pattern = "*",
-		callback = function()
-			local mode = vim.fn.mode()
-			if mode == "v" or mode == "V" then
-				local _, start_row, start_col, _ = unpack(vim.fn.getpos("v"))
-				local _, end_row, end_col, _ = unpack(vim.fn.getpos("."))
-				vim.fn.rpcrequest(channel, event_name, {
-					start_row = math.max(start_row - 1, 0),
-					start_col = math.max(start_col - 1, 0),
-					end_row = math.max(end_row - 1, 0),
-					end_col = math.max(end_col - 1, 0),
-				})
-			end
-		end,
-	})
-	return "success"
-end
-
----@param channel number
-M.listen_for_cursor_move = function(channel)
-	local event_name = "nvim-gui-cursor-moved"
-	vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-		group = augroup(event_name),
-		callback = function(event)
-			local cursor = vim.api.nvim_win_get_cursor(0)
-			local row = cursor[1]
-			local col = cursor[2]
-			local key_at_cursor = vim.fn.getline(row):sub(col + 1, col + 1)
-			local top_line = vim.fn.line("w0")
-			local bottom_line = vim.fn.line("w$")
-			vim.fn.rpcrequest(channel, event_name, {
-				row = row - 1,
-				col = col,
-				key = key_at_cursor,
-				top_line = top_line,
-				bottom_line = bottom_line,
-			})
-		end,
-	})
-	return "success"
-end
-
-local parsers = require("nvim-treesitter.parsers")
-local ts_utils = require("nvim-treesitter.ts_utils")
-local highlighter = vim.treesitter.highlighter
----@param channel number
-M.attach_buffer = function(channel)
-	local bufnr = vim.api.nvim_get_current_buf()
-	local language_tree = parsers.get_parser(bufnr)
-	if not language_tree then
-		return nil, {}
-	end
-	language_tree:register_cbs({
-		on_changedtree = function(ranges, ts_tree)
-			local tree = M.get_tree_as_table(ts_tree:root(), language_tree:lang(), bufnr)
-			-- vim.print(tree)
-			vim.fn.rpcrequest(channel, "nvim-gui-buf-changed", tree)
-		end,
-	}, true)
-	return "success"
-end
 
 M.decimal_to_hex_color = function(decimal)
 	return string.format("#%06x", decimal)
@@ -313,9 +190,8 @@ end
 ---@param node TSNode
 ---@param lang vim.treesitter.Language
 ---@return HighlightIterator|nil, table
-local function get_hl_captures(bufnr, node, lang)
+function H.get_hl_captures(bufnr, node, lang)
 	local captures = {}
-
 	local query = vim.treesitter.query.get(lang, "highlights")
 	if not query then
 		return nil, {}
@@ -327,7 +203,7 @@ end
 ---@param lang vim.treesitter.Language
 M.get_tokens = function(root, lang)
 	local bufnr = vim.api.nvim_get_current_buf()
-	local iterator, captures = get_hl_captures(bufnr, root, lang)
+	local iterator, captures = H.get_hl_captures(bufnr, root, lang)
 	if not iterator or captures == {} then
 		return nil
 	end
@@ -382,22 +258,22 @@ end
 ---
 ---
 
-local function is_even(x)
+function H.is_positive(x)
 	return x >= 0
 end
 
 ---@param children NvimGuiNode[]
 ---@param pos number|nil
 ---@param child NvimGuiNode
-local function insert_child(children, pos, child)
+function H.insert_child(children, pos, child)
 	vim.validate({
 		id = { child.id, "string" },
 		text = { child.text, "string", true },
 		hl_group = { child.hl_group, "string", true },
-		start_top = { child.start_top, is_even, "positive number" },
-		end_top = { child.end_top, is_even, "positive number" },
-		start_left = { child.start_left, is_even, "positive number" },
-		end_left = { child.end_left, is_even, "positive number" },
+		start_top = { child.start_top, H.is_positive, "positive number" },
+		end_top = { child.end_top, H.is_positive, "positive number" },
+		start_left = { child.start_left, H.is_positive, "positive number" },
+		end_left = { child.end_left, H.is_positive, "positive number" },
 		root = { child.root, "boolean" },
 		line_break = { child.line_break, "boolean" },
 		space = { child.space, "boolean" },
@@ -578,14 +454,14 @@ function M.handle_child(
 		local ls_node = children[child_index - 1]
 		if start_row == ls_start_row and diff > 0 then
 			local space = M.map_whitespace(
-				id.."_1_",
+				id .. "_1_",
 				diff,
 				ls_node.end_left,
 				ls_node.start_row,
 				ls_node.end_col,
 				ls_node.start_top
 			)
-			insert_child(children, child_index, space)
+			H.insert_child(children, child_index, space)
 			start_left = space.end_left + 1
 			end_left = end_left + diff
 		end
@@ -607,6 +483,7 @@ function M.handle_child(
 	child_node.hl_group = M.map_hl_group(query, child, bufnr, start_row)
 	child_node.text = M.map_node_text(child, bufnr)
 	child_node.end_left = start_left + (#child_node.text - 1)
+	child_node.end_left = math.max(0, child_node.end_left)
 
 	if child:child_count() > 0 then
 		child_node.children =
@@ -617,7 +494,7 @@ function M.handle_child(
 	if child_index == 1 then
 		assert(start_left == 0)
 	end
-	insert_child(children, nil, child_node)
+	H.insert_child(children, nil, child_node)
 end
 
 ---@param parent_ts_node TSNode
@@ -638,7 +515,7 @@ function M.build_subtree(parent_ts_node, parent, depth, query, bufnr, rows_inden
 		-- NOTE: insert leading line breaks
 		local inserted_before_this_node = 1
 		while first_child_start_top > last_top do
-			insert_child(parent.children, 1,
+			H.insert_child(parent.children, 1,
 				M.map_line_break(first_child:id(), last_top, parent.start_row + inserted_before_this_node))
 			whitespace_count = whitespace_count + 1
 			line_breaks_inserted = line_breaks_inserted + 1
@@ -654,14 +531,14 @@ function M.build_subtree(parent_ts_node, parent, depth, query, bufnr, rows_inden
 		local diff = start_col - p_start_col
 		if diff > 0 then
 			local space = M.map_whitespace(
-				first_child:id().."_2_",
+				first_child:id() .. "_2_",
 				diff,
 				-1, --TODO: not super clean
 				start_row,
 				start_col,
 				parent.start_top
 			)
-			insert_child(children, nil, space)
+			H.insert_child(children, nil, space)
 			i = i + 1
 		end
 	end
@@ -695,18 +572,18 @@ function M.build_subtree(parent_ts_node, parent, depth, query, bufnr, rows_inden
 	for j, child in ipairs(children) do
 		if j == 1 then
 			-- Insert the first child
-			insert_child(updated_children, nil, child)
+			H.insert_child(updated_children, nil, child)
 			prev_child = child
 		else
 			assert(prev_child, "must have prev child if j > 1")
 			-- Insert missing line breaks if necessary
 			if child.start_top > prev_child.end_top then
 				local linebreak = M.map_line_break(prev_child.id, prev_child.end_top, prev_child.end_row + 1)
-				insert_child(updated_children, nil, linebreak)
+				H.insert_child(updated_children, nil, linebreak)
 				whitespace_count = whitespace_count + 1
 				for k = 2, child.start_top - prev_child.end_top, 1 do
 					linebreak = M.map_line_break(linebreak.id, linebreak.end_top, prev_child.end_row + k)
-					insert_child(updated_children, nil, linebreak)
+					H.insert_child(updated_children, nil, linebreak)
 					whitespace_count = whitespace_count + 1
 				end
 				if ts_nodes[j] then --TODO: why is this nil??
@@ -718,21 +595,21 @@ function M.build_subtree(parent_ts_node, parent, depth, query, bufnr, rows_inden
 					end
 					if leading_spaces and leading_spaces > 0 then
 						local space = M.map_whitespace(
-							prev_child.id.."_3_",
+							prev_child.id .. "_3_",
 							leading_spaces,
 							-1,
 							start_row,
 							start_col,
 							linebreak.end_top
 						)
-						insert_child(updated_children, nil, space)
+						H.insert_child(updated_children, nil, space)
 						child.start_left = child.start_left + leading_spaces
 						child.end_left = child.end_left + leading_spaces
 					end
 				end
 			end
 			-- Insert the current child
-			insert_child(updated_children, nil, child)
+			H.insert_child(updated_children, nil, child)
 			prev_child = child
 		end
 	end
@@ -769,7 +646,7 @@ end
 ---@param node NvimGuiNode
 ---@param level number
 ---@return string
-local function serialize_node(node, level)
+function H.serialize_node(node, level)
 	local prefix = string.rep(" ", level * 4)
 	local text = node.text or ""
 	return string.format(
@@ -787,25 +664,25 @@ local function serialize_node(node, level)
 	)
 end
 
-local function tree_to_string(node, level, buffer)
+function H.tree_to_string(node, level, buffer)
 	level = level or 0
 	buffer = buffer or {}
 
-	local node_string = serialize_node(node, level)
+	local node_string = H.serialize_node(node, level)
 	node_string = node_string:gsub("\n", "\\n")
 	table.insert(buffer, node_string)
 
 	for _, child in ipairs(node.children or {}) do
-		tree_to_string(child, level + 1, buffer)
+		H.tree_to_string(child, level + 1, buffer)
 	end
 
 	return buffer
 end
 
-local function write_to_buffer(root)
+function H.write_to_buffer(root)
 	vim.api.nvim_input(":vsplit<cr>")
 	local buf = vim.api.nvim_create_buf(false, true)
-	local lines = tree_to_string(root)
+	local lines = H.tree_to_string(root)
 	vim.schedule(function()
 		vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
 		vim.api.nvim_set_current_buf(buf)
@@ -840,14 +717,14 @@ function M.get_tree_as_table(root, lang, bufnr)
 
 	if start_col > 0 then
 		local space = M.map_whitespace(
-			id.."_4_",
+			id .. "_4_",
 			start_col,
 			-1,
 			start_row,
 			0,
 			0
 		)
-		insert_child(root_node.children, nil, space)
+		H.insert_child(root_node.children, nil, space)
 	end
 	local ok, text = pcall(vim.treesitter.get_node_text, root, bufnr)
 	if ok then
@@ -866,7 +743,90 @@ M.print_tree_as_table = function()
 	local tree = language_tree:parse({ 0, -1 })[1]
 	local root = tree:root()
 	local tree_table = M.get_tree_as_table(root, lang, bufnr)
-	write_to_buffer(tree_table)
+	H.write_to_buffer(tree_table)
 end
-local function test_tree_update() end
+
+
+---@param channel number
+M.listen_for_mode_change = function(channel)
+	local event_name = "nvim-gui-mode-changed"
+	vim.api.nvim_create_autocmd("ModeChanged", {
+		group = H.augroup(event_name),
+		pattern = "*",
+		callback = function()
+			local new_mode = vim.fn.mode()
+			vim.fn.rpcrequest(channel, event_name, {
+				new_mode,
+			})
+		end,
+	})
+	return "success"
+end
+
+---@param channel number
+M.listen_for_visual_selection_change = function(channel)
+	local event_name = "nvim-gui-visual-selection-changed"
+	vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "ModeChanged" }, {
+		group = H.augroup(event_name),
+		pattern = "*",
+		callback = function()
+			local mode = vim.fn.mode()
+			if mode == "v" or mode == "V" then
+				local _, start_row, start_col, _ = unpack(vim.fn.getpos("v"))
+				local _, end_row, end_col, _ = unpack(vim.fn.getpos("."))
+				vim.fn.rpcrequest(channel, event_name, {
+					start_row = math.max(start_row - 1, 0),
+					start_col = math.max(start_col - 1, 0),
+					end_row = math.max(end_row - 1, 0),
+					end_col = math.max(end_col - 1, 0),
+				})
+			end
+		end,
+	})
+	return "success"
+end
+
+---@param channel number
+M.listen_for_cursor_move = function(channel)
+	local event_name = "nvim-gui-cursor-moved"
+	vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+		group = H.augroup(event_name),
+		callback = function(event)
+			local cursor = vim.api.nvim_win_get_cursor(0)
+			local row = cursor[1]
+			local col = cursor[2]
+			local key_at_cursor = vim.fn.getline(row):sub(col + 1, col + 1)
+			local top_line = vim.fn.line("w0")
+			local bottom_line = vim.fn.line("w$")
+			vim.fn.rpcrequest(channel, event_name, {
+				row = row - 1,
+				col = col,
+				key = key_at_cursor,
+				top_line = top_line,
+				bottom_line = bottom_line,
+			})
+		end,
+	})
+	return "success"
+end
+
+local parsers = require("nvim-treesitter.parsers")
+local ts_utils = require("nvim-treesitter.ts_utils")
+local highlighter = vim.treesitter.highlighter
+---@param channel number
+M.attach_buffer = function(channel)
+	local bufnr = vim.api.nvim_get_current_buf()
+	local language_tree = parsers.get_parser(bufnr)
+	if not language_tree then
+		return nil, {}
+	end
+	language_tree:register_cbs({
+		on_changedtree = function(ranges, ts_tree)
+			local tree = M.get_tree_as_table(ts_tree:root(), language_tree:lang(), bufnr)
+			-- vim.print(tree)
+			vim.fn.rpcrequest(channel, "nvim-gui-buf-changed", tree)
+		end,
+	}, true)
+	return "success"
+end
 return M
