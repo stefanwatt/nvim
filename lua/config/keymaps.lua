@@ -104,3 +104,6 @@ local function auto_indent_new_line()
 	end
 end
 vim.keymap.set("n", "o", auto_indent_new_line, opts)
+
+vim.api.nvim_set_keymap('n', ']b', '<Plug>JumpDiffCharNextStart', { noremap = false })
+vim.api.nvim_set_keymap('n', '[b', '<Plug>JumpDiffCharPrevStart', { noremap = false })
