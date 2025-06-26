@@ -23,13 +23,13 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 	pattern = "*",
 	callback = function()
 		local buftype = vim.bo.buftype
-		if buftype ~= 'nofile' then
+		if buftype ~= "nofile" then
 			require("persistence").save()
 		end
 	end,
 })
 
-local home = vim.fn.expand "~"
+local home = vim.fn.expand("~")
 local disabled_dirs = {
 	home,
 	home .. "/Downloads",
@@ -54,7 +54,6 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
 	end,
 	nested = true,
 })
-
 
 local golang_organize_imports = function(bufnr, isPreflight)
 	local params = vim.lsp.util.make_range_params(nil, vim.lsp.util._get_offset_encoding(bufnr))
@@ -199,5 +198,35 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 		end
 		local file = vim.loop.fs_realpath(event.match) or event.match
 		vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
+	end,
+})
+
+vim.api.nvim_create_autocmd("User", {
+	pattern = "MiniFilesWindowUpdate",
+	callback = function(args)
+		local config = vim.api.nvim_win_get_config(args.data.win_id)
+		config.height = 10
+		vim.api.nvim_win_set_config(args.data.win_id, config)
+	end,
+})
+
+vim.api.nvim_create_autocmd("User", {
+	pattern = "TrekClosed",
+	callback = function(args)
+		if not vim.g.nvim_gui_channel then
+			return
+		end
+		vim.fn.rpcrequest(vim.g.nvim_gui_channel, "TrekClosed", args.data)
+	end,
+})
+
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
+	group = augroup("buf-enter"),
+	callback = function(args)
+		if not vim.g.nvim_gui_channel then
+			return
+		end
+		local filepath = vim.api.nvim_buf_get_name(args.buf)
+		vim.fn.rpcrequest(vim.g.nvim_gui_channel, "BufEnter", { filepath })
 	end,
 })

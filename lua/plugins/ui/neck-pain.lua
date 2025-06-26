@@ -6,7 +6,7 @@ return {
 		width = 160,
 		minSideBufferWidth = 40,
 		autocmds = {
-			enableOnVimEnter = true,
+			enableOnVimEnter = false,
 		},
 	},
 }

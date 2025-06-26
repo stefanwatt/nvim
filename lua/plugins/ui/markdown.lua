@@ -13,6 +13,7 @@ return {
 	},
 	{
 		"OXY2DEV/markview.nvim",
+		enabled = false,
 		event = "VeryLazy",
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
@@ -30,7 +31,20 @@ return {
 	},
 	{
 		"lukas-reineke/headlines.nvim",
+		enabled = false,
 		dependencies = "nvim-treesitter/nvim-treesitter",
-		config = true
+		config = true,
+	},
+	{
+		enabled = false,
+		"MeanderingProgrammer/render-markdown.nvim",
+		dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
+		---@module 'render-markdown'
+		---@type render.md.UserConfig
+		opts = {
+			heading = {
+				icons = { "", "", "", "", "", "" },
+			},
+		},
 	},
 }

@@ -48,3 +48,30 @@ vim.api.nvim_create_autocmd("QuitPre", {
 		end
 	end,
 })
+
+function FormatQfList(info)
+  local items = vim.fn.getqflist()
+  local results = {}
+  
+  -- Find the maximum width needed for the filename column
+  local max_filename_width = 0
+  for _, item in ipairs(items) do
+    local filename = vim.fn.bufname(item.bufnr) or item.filename or "[No Name]"
+    filename = vim.fn.fnamemodify(filename, ":t") -- Get just the filename without path
+    max_filename_width = math.max(max_filename_width, string.len(filename))
+  end
+  
+  -- Format each entry
+  for i = info.start_idx, info.end_idx do
+    local item = items[i]
+    local filename = vim.fn.bufname(item.bufnr) or item.filename or "[No Name]"
+    filename = vim.fn.fnamemodify(filename, ":t") -- Get just the filename without path
+    
+    -- Format line with fixed-width columns
+    local line = string.format("%-" .. max_filename_width .. "s | %4d:%-3d | %s", 
+                               filename, item.lnum, item.col, item.text)
+    table.insert(results, line)
+  end
+  
+  return results
+end

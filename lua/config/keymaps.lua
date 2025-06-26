@@ -71,6 +71,7 @@ end, opts)
 vim.keymap.set("n", "<S-Right>", "<cmd>bnext<CR>", opts)
 vim.keymap.set("n", "<S-Left>", "<cmd>bprevious<CR>", opts)
 vim.keymap.set("n", "gb", "<C-o>", opts)
+vim.keymap.set("n", "gf", "<C-i>", opts)
 vim.keymap.set("n", "db", "vbd", opts)
 vim.keymap.set("n", "cb", "vbc", opts)
 vim.keymap.set("v", "p", '"_dP', opts)
@@ -105,5 +106,70 @@ local function auto_indent_new_line()
 end
 vim.keymap.set("n", "o", auto_indent_new_line, opts)
 
-vim.api.nvim_set_keymap('n', ']b', '<Plug>JumpDiffCharNextStart', { noremap = false })
-vim.api.nvim_set_keymap('n', '[b', '<Plug>JumpDiffCharPrevStart', { noremap = false })
+vim.api.nvim_set_keymap("n", "]b", "<Plug>JumpDiffCharNextStart", { noremap = false })
+vim.api.nvim_set_keymap("n", "[b", "<Plug>JumpDiffCharPrevStart", { noremap = false })
+
+vim.keymap.set("n", "<leader>nj", ":cd ~/Documents/ | Neorg journal today<CR>", { noremap = false })
+
+vim.keymap.set({ "n", "t", "c" }, "<C-b>", function()
+	local buf = vim.api.nvim_win_get_buf(0)
+	local filetype = vim.api.nvim_buf_get_option(buf, "filetype")
+	vim.print(filetype)
+end, { noremap = "false" })
+
+vim.api.nvim_set_hl(0, "TaskList", {
+	fg = "#a6d189", -- Using your theme's green color
+	bold = true,
+})
+
+vim.keymap.set({ "n" }, "<leader><leader>h", require("config.foo").handle_task_list, { noremap = "false" })
+
+vim.api.nvim_set_hl(0, "NoConcealment", { link = "Normal" })
+vim.keymap.set({ "n" }, "<leader><leader>t", function()
+	local bufnr = vim.api.nvim_get_current_buf()
+	local parser = vim.treesitter.get_parser(bufnr, "markdown")
+	if not parser then
+		return
+	end
+	
+	local inline_parser = parser:children()["markdown_inline"]
+	if not inline_parser then
+		return
+	end
+	
+	local tree = inline_parser:parse()[1]
+	local root = tree:root()
+	
+	local query = vim.treesitter.query.parse(
+		"markdown_inline",
+		[[
+      (image) @image
+    ]]
+	)
+	
+	-- Clear existing treesitter highlights in this range
+	local ts_ns = vim.api.nvim_get_namespaces()["treesitter/highlighter"]
+	
+	for id, node in query:iter_captures(root, bufnr) do
+		local start_row, start_col, end_row, end_col = node:range()
+		
+		-- Clear treesitter highlighting for this range
+		if ts_ns then
+			vim.api.nvim_buf_clear_namespace(bufnr, ts_ns, start_row, end_row + 1)
+		end
+		
+		-- Apply our own highlighting without concealment
+		vim.api.nvim_buf_set_extmark(
+			bufnr,
+			vim.api.nvim_create_namespace("markdown_no_conceal"),
+			start_row,
+			start_col,
+			{
+				end_row = end_row,
+				end_col = end_col,
+				hl_group = "Normal",
+				priority = 1000,
+			}
+		)
+	end
+end, { noremap = "false" })

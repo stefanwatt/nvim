@@ -11,15 +11,17 @@ return {
 		-- build = 'cargo build --release',
 
 		opts = {
-			keymap = "default",
-			highlight = {
-				use_nvim_cmp_as_default = true,
+			keymap = { preset = "default" },
+			signature = { enabled = true },
+			completion = {
+				documentation = {
+					auto_show = true,
+					auto_show_delay_ms = 500,
+				}
 			},
-			nerd_font_variant = "normal",
-			windows = {
-				autocomplete = { border = "rounded" },
-				documentation = { border = "rounded" },
-				signature_help = { border = "rounded" },
+			appearance = {
+				use_nvim_cmp_as_default = true,
+				nerd_font_variant = "normal",
 			},
 		},
 	},

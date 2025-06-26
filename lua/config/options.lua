@@ -25,7 +25,6 @@ end
 opt.completeopt = "menu,menuone,noselect"
 opt.conceallevel = 2 -- Hide * markup for bold and italic, but not markers with substitutions
 opt.confirm = true -- Confirm to save changes before exiting modified buffer
-opt.cursorline = true -- Enable highlighting of the current line
 opt.expandtab = true -- Use spaces instead of tabs
 opt.formatoptions = "jcroqlnt" -- tcqj
 opt.grepformat = "%f:%l:%c:%m"
@@ -36,7 +35,6 @@ opt.laststatus = 3 -- global statusline
 opt.list = false -- Show some invisible characters (tabs...
 opt.mouse = "a" -- Enable mouse mode
 opt.number = true -- Print line number
-opt.relativenumber = true -- Relative line numbers
 opt.pumblend = 10 -- Popup blend
 opt.pumheight = 10 -- Maximum number of entries in a popup
 opt.scrolloff = 4 -- Lines of context
@@ -76,8 +74,7 @@ vim.o.cmdheight = 0
 vim.o.showtabline = 0
 vim.o.swapfile = false
 vim.opt.termguicolors = true
-
-
+vim.diagnostic.config({ virtual_lines = false })
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = { "go", "gomod", "gowork", "gotmpl" },
 	callback = function()
@@ -89,3 +86,19 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.opt_local.colorcolumn = "120"
 	end,
 })
+
+opt.cursorline = true -- Enable highlighting of the current line
+if not vim.g.nvim_gui then
+	opt.relativenumber = true -- Relative line numbers
+	vim.g.keymaps = {
+		fzf_lua_find_files = "<leader>ff",
+		fzf_lua_find_references = "<leader>fr",
+		fzf_lua_live_grep = "<leader>fw",
+		fzf_lua_find_buffer_symbols = "<leader>fs",
+		fzf_lua_find_workspace_symbols = "<leader>fS",
+		fzf_lua_find_help = "<leader>fh",
+		fzf_lua_find_buffer = "<leader>fb",
+		fzf_lua_find_project = "<leader>fp",
+		fzf_lua_find_todo = "<leader>ft",
+	}
+end

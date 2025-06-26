@@ -1,3 +1,29 @@
+-- return {
+-- 	"echasnovski/mini.files",
+-- 	version = false,
+-- 	keys = {
+-- 		{
+-- 			"<leader>e",
+-- 			mode = { "n", "x", "o" },
+-- 			":lua MiniFiles.open()<cr>",
+-- 			desc = "MiniFiles",
+-- 		},
+-- 	},
+-- 	config = function()
+-- 		require("mini.files").setup({
+-- 			mappings = {
+-- 				close = "q",
+-- 				go_in_plus = "<Right>",
+-- 				go_out_plus = "<Left>",
+-- 				synchronize = "=",
+-- 			},
+-- 			windows = {
+-- 				preview = true,
+-- 				max_number = 3,
+-- 			},
+-- 		})
+-- 	end,
+-- }
 return {
   "trek.nvim",
   name = "trek.nvim",

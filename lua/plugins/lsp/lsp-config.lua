@@ -182,6 +182,16 @@ return {
 		vim.list_extend(ensure_installed, {
 			-- 'stylua',
 		})
+		vim.diagnostic.config({
+			signs = {
+				text = {
+					[vim.diagnostic.severity.ERROR] = "",
+					[vim.diagnostic.severity.WARN] = "",
+					[vim.diagnostic.severity.HINT] = "⚑",
+					[vim.diagnostic.severity.INFO] = "»",
+				},
+			},
+		})
 		local lspconfig = require("lspconfig")
 		for server, opts in pairs(servers) do
 			lspconfig[server].setup(opts)

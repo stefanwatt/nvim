@@ -86,6 +86,7 @@ return {
 					button("x", "  nixos config", ":e ~/.config/nixos/flake.nix<CR>"),
 					button("n", "  nvim config", ":e ~/.config/nvim/init.lua<CR>"),
 					button("p", "  projects", "<cmd>FzfProject<CR>"),
+					button("j", "  journal", ":cd ~/Documents/ | Neorg journal today<CR>"),
 				},
 				position = "center",
 			}
