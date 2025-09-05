@@ -1,6 +1,8 @@
 local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
+table.insert(runtime_path, vim.env.HOME .. "/.local/share/awesomewm-api/lib/?.lua")
+table.insert(runtime_path, vim.env.HOME .. "/.local/share/awesomewm-api/lib/?/init.lua")
 
 return {
 	settings = {
@@ -23,6 +25,8 @@ return {
 			workspace = {
 				checkThirdParty = false,
 				library = {
+					vim.env.HOME .. "/.local/share/awesomewm-api/lib",
+					vim.env.HOME .. ".nix-profile/share/awesome/lib",
 					"/home/stefan/.local/share/nvim/lazy/neodev.nvim/types/stable",
 					"/nix/store/zzz8s6cgkwb9vnpvgs6rqlp855jcqcsm-neovim-nightly/share/nvim/runtime/lua",
 					"/nix/store/zzz8s6cgkwb9vnpvgs6rqlp855jcqcsm-neovim-nightly/share/nvim/runtime/lua/vim/treesitter",

@@ -20,7 +20,7 @@ return {
 		-- 	},
 		-- },
 		"stefanwatt/mini.files",
-		commit ="4a5298e0035eb32bc9ba6e49957dc3f397ecbb46",
+		commit = "4a5298e0035eb32bc9ba6e49957dc3f397ecbb46",
 		version = false,
 		dependencies = {
 			"nvim-tree/nvim-web-devicons",
@@ -61,6 +61,12 @@ return {
 					confirm_fs_actions = false,
 					close_on_file_opened = true,
 					open_on_current_dir = true,
+				},
+				windows = {
+					preview = true,
+					width_focus = 50,
+					width_nofocus = 15,
+					width_preview = 80,
 				},
 			})
 		end,

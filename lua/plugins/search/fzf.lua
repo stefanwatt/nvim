@@ -6,11 +6,11 @@ return {
 	},
 	keys = {
 		{ "<leader>f",  name = "Find" },
-		{
-			"gd",
-			"<cmd>lua require('fzf-lua').lsp_definitions({ jump_to_single_result = true })<CR>",
-			desc = "[g]oto [d]efinition",
-		},
+		-- {
+		-- 	"gd",
+		-- 	"<cmd>lua require('fzf-lua').lsp_definitions({ jump1 = true })<CR>",
+		-- 	desc = "[g]oto [d]efinition",
+		-- },
 		{
 			"<leader>fr",
 			function()

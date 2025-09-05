@@ -12,6 +12,7 @@ local java_filetypes = { "java" }
 return {
 	"mfussenegger/nvim-jdtls",
 	dependencies = {
+		"neovim/nvim-lspconfig",
 		"folke/which-key.nvim",
 		{
 			"nvim-neotest/neotest",
@@ -44,21 +45,39 @@ return {
 		local mason_registry = require("mason-registry")
 		local lombok_jar = mason_registry.get_package("jdtls"):get_install_path() .. "/lombok.jar"
 		return {
-			root_dir = require("lspconfig.server_configurations.jdtls").default_config.root_dir,
-			project_name = function(root_dir)
+			root_dir            = function(fname)
+				local root_files = {
+					{ '.git', 'build.gradle', 'build.gradle.kts' },
+					{
+						'build.xml',     -- Ant
+						'pom.xml',       -- Maven
+						'settings.gradle', -- Gradle
+						'settings.gradle.kts', -- Gradle
+					},
+				}
+				for _, patterns in ipairs(root_files) do
+					local root = require("lspconfig.util").root_pattern(unpack(patterns))(fname)
+					if root then
+						return root
+					end
+				end
+			end,
+			project_name        = function(root_dir)
 				return root_dir and vim.fs.basename(root_dir)
 			end,
-			jdtls_config_dir = function(project_name)
+			jdtls_config_dir    = function(project_name)
 				return vim.fn.stdpath("cache") .. "/jdtls/" .. project_name .. "/config"
 			end,
 			jdtls_workspace_dir = function(project_name)
 				return vim.fn.stdpath("cache") .. "/jdtls/" .. project_name .. "/workspace"
 			end,
-			cmd = {
+			cmd                 = {
 				vim.fn.exepath("jdtls"),
 				string.format("--jvm-arg=-javaagent:%s", lombok_jar),
+				'-Xmx12G',
+				'-Xms12G',
 			},
-			full_cmd = function(opts)
+			full_cmd            = function(opts)
 				local fname = vim.api.nvim_buf_get_name(0)
 				local root_dir = opts.root_dir(fname)
 				local project_name = opts.project_name(root_dir)
@@ -73,10 +92,10 @@ return {
 				end
 				return cmd
 			end,
-			dap = { hotcodereplace = "auto", config_overrides = {} },
-			dap_main = {},
-			test = true,
-			settings = {
+			dap                 = { hotcodereplace = "auto", config_overrides = {} },
+			dap_main            = {},
+			test                = true,
+			settings            = {
 				java = {
 					inlayHints = false
 				},
@@ -115,7 +134,6 @@ return {
 				settings = opts.settings,
 				capabilities = require("cmp_nvim_lsp").default_capabilities(),
 			}, opts.jdtls)
-
 			require("jdtls").start_or_attach(config)
 		end
 		vim.api.nvim_create_autocmd("FileType", {

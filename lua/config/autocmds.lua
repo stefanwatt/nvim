@@ -5,9 +5,9 @@ end
 vim.api.nvim_create_autocmd("BufEnter", {
 	group = augroup("nix"),
 	pattern = "*.nix",
-	callback = function ()
+	callback = function()
 		vim.lsp.inlay_hint.enable(false)
-	end
+	end,
 })
 
 vim.api.nvim_create_autocmd("BufWritePost", {
@@ -34,32 +34,31 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 	end,
 })
 
-local home = vim.fn.expand "~"
+local home = vim.fn.expand("~")
 local disabled_dirs = {
-  home,
-  home .. "/Downloads",
-  "/private/tmp",
+	home,
+	home .. "/Downloads",
+	"/private/tmp",
 }
 
 vim.api.nvim_create_autocmd({ "VimEnter" }, {
-  group = persistence_group,
-  callback = function()
-    local cwd = vim.fn.getcwd()
-    for _, path in pairs(disabled_dirs) do
-      if path == cwd then
-        require("persistence").stop()
-        return
-      end
-    end
-    if vim.fn.argc() == 0 and not vim.g.started_with_stdin then
-      require("persistence").load()
-    else
-      require("persistence").stop()
-    end
-  end,
-  nested = true,
+	group = persistence_group,
+	callback = function()
+		local cwd = vim.fn.getcwd()
+		for _, path in pairs(disabled_dirs) do
+			if path == cwd then
+				require("persistence").stop()
+				return
+			end
+		end
+		if vim.fn.argc() == 0 and not vim.g.started_with_stdin then
+			require("persistence").load()
+		else
+			require("persistence").stop()
+		end
+	end,
+	nested = true,
 })
-
 
 local golang_organize_imports = function(bufnr, isPreflight)
 	local params = vim.lsp.util.make_range_params(nil, vim.lsp.util._get_offset_encoding(bufnr))
@@ -207,4 +206,43 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 	end,
 })
 
+vim.cmd([[
+augroup jdtls_lsp
+    autocmd!
+    autocmd FileType java lua require"plugins.lsp.jdtls".setup()
+augroup end
+]])
 
+-- vim.api.nvim_create_autocmd({ "VimEnter", "DirChanged" }, {
+-- 	callback = function()
+-- 		local cwd = vim.fn.getcwd()
+-- 		local target_dir = vim.fn.expand("~/Projects/code-entry")
+-- 		if not vim.startswith(cwd, target_dir) then
+-- 			return
+-- 		end
+-- 		vim.cmd("tabnew")
+-- 		vim.cmd(
+-- 			"terminal sh -c 'kill -9 $(lsof -ti:4200) 2>/dev/null; cd "
+-- 				.. target_dir
+-- 				.. "/frontend/ui && rm -rf .angular && npm start'"
+-- 		)
+-- 		local frontend_buf = vim.api.nvim_get_current_buf()
+-- 		vim.keymap.set("n", "<leader>rr", function()
+-- 			vim.api.nvim_buf_delete(frontend_buf, { force = true })
+-- 			vim.cmd("terminal sh -c 'cd " .. target_dir .. "/frontend/ui && rm -rf .angular && npm start'")
+-- 		end, { buffer = frontend_buf, desc = "Restart frontend" })
+-- 		vim.cmd("split")
+-- 		vim.cmd("terminal sh -c 'cd " .. target_dir .. "/backend-minimal && quarkus dev'")
+-- 		local backend_buf = vim.api.nvim_get_current_buf()
+-- 		vim.keymap.set("n", "<leader>rr", function()
+-- 			vim.api.nvim_buf_delete(backend_buf, { force = true })
+-- 			vim.cmd(
+-- 				"terminal sh -c 'kill -9 $(lsof -ti:8080) 2>/dev/null; cd "
+-- 					.. target_dir
+-- 					.. "/backend-minimal && quarkus dev'"
+-- 			)
+-- 		end, { buffer = backend_buf, desc = "Restart backend" })
+-- 		vim.cmd("tabprevious")
+-- 		vim.schedule(vim.notify("Starting code-entry dev servers...", vim.log.levels.INFO))
+-- 	end,
+-- })

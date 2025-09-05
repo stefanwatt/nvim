@@ -6,6 +6,7 @@ return {
 	},
 	{
 		"nvim-neorg/neorg",
+		enabled = false,
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"3rd/image.nvim",
@@ -16,8 +17,7 @@ return {
 		},
 		build = ":Neorg sync-parsers",
 		version = "*",
-		ft = "norg", -- lazy load on file type
-		cmd = "Neorg", -- lazy load on command
+		lazy = false,
 		config = function()
 			require("neorg").setup({
 				load = {

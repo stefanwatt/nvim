@@ -19,7 +19,7 @@ return {
 				vim.g.disable_autoformat = not vim.g.disable_autoformat
 				local status = vim.g.disable_autoformat and "disabled" or "enabled"
 				local level = vim.g.disable_autoformat and "error" or "info"
-				require("notify")("format on save",level, { title = status })
+				require("notify")("format on save", level, { title = status })
 			end,
 			mode = "",
 			desc = "[T]oggle format on save",
@@ -44,7 +44,10 @@ return {
 			--
 			-- You can use a sub-list to tell conform to run *until* a formatter
 			-- is found.
-			-- javascript = { { "prettierd", "prettier" } },
+			javascript = { "prettierd", "prettier", stop_after_first = true },
+			typescript = { "prettierd", "prettier", stop_after_first = true },
+			htmlangular = { "prettierd", "prettier", stop_after_first = true },
+			html = { "prettierd", "prettier", stop_after_first = true },
 		},
 	},
 }

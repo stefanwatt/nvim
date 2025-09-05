@@ -31,6 +31,7 @@ return {
 		dependencies = {
 			"AndreM222/copilot-lualine",
 		},
+		enabled = false,
 		keys = {
 			{
 				"<leader><leader>s",
