@@ -31,7 +31,7 @@ vim.keymap.set("n", "<C-d>", "<C-d>zz", opts)
 vim.keymap.set("n", "<C-u>", "<C-u>zz", opts)
 
 vim.keymap.set("n", "<leader>gg", function()
-  utils.exec("wezterm start --class foo --always-new-process --cwd " .. vim.uv.cwd() .. " -- lazygit")
+  utils.exec("/usr/bin/wezterm start --class foo --always-new-process --cwd " .. vim.uv.cwd() .. " -- lazygit")
 end, opts)
 vim.keymap.set("v", ":", function()
   vim.cmd('normal! "vy')

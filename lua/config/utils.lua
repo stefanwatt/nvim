@@ -16,7 +16,7 @@ function M.i3_exec(command, flags)
 end
 
 function M.exec(command)
-	os.execute("i3-msg 'exec " .. command .. "' >/dev/null 2>&1 &")
+	os.execute("hyprctl dispatch exec '" .. command .. "' >/dev/null 2>&1 &")
 end
 
 ---@return string
@@ -57,7 +57,7 @@ function M.NvimFloat(command)
 	)
 end
 
-function M.MoveBufferToOppositeWindow ()
+function M.MoveBufferToOppositeWindow()
 	local current_buffer = vim.api.nvim_get_current_buf()
 	local current_window = vim.api.nvim_get_current_win()
 	local target_window = nil
@@ -78,7 +78,7 @@ function M.MoveBufferToOppositeWindow ()
 	end
 end
 
-function M.getSubDirectories (dirname)
+function M.getSubDirectories(dirname)
 	local dir = io.popen("ls " .. dirname)
 	local subdirectories = {}
 	if not dir then
@@ -90,7 +90,7 @@ function M.getSubDirectories (dirname)
 	return subdirectories
 end
 
-function M.get_buf_text ()
+function M.get_buf_text()
 	local content = vim.api.nvim_buf_get_lines(0, 0, vim.api.nvim_buf_line_count(0), false)
 	return table.concat(content, "\n")
 end
@@ -198,7 +198,7 @@ M.icons = {
 	Download = "󰇚",
 }
 
-function M.format (icon, text)
+function M.format(icon, text)
 	return M.icons[icon] .. " " .. text
 end
 
@@ -206,12 +206,12 @@ local keymap = vim.keymap.set
 -- Silent keymap option
 local opts = { silent = true }
 
-function M.keymap (mode, lhs, rhs, extra_opts)
+function M.keymap(mode, lhs, rhs, extra_opts)
 	local combined_opts = vim.tbl_extend("force", opts, extra_opts or {})
 	keymap(mode, lhs, rhs, combined_opts)
 end
 
-function M.buf_vtext ()
+function M.buf_vtext()
 	local a_orig = vim.fn.getreg("a")
 	local mode = vim.fn.mode()
 	if mode ~= "v" and mode ~= "V" then
@@ -223,7 +223,7 @@ function M.buf_vtext ()
 	return tostring(text)
 end
 
-function M.merge_tables (...)
+function M.merge_tables(...)
 	local tables = { ... }
 	local result = {}
 
@@ -240,7 +240,7 @@ end
 
 ---@param table table
 ---@param cb function(value: any): boolean
-function M.index_of (table, cb)
+function M.index_of(table, cb)
 	for index, value in ipairs(table) do
 		if cb(value) then
 			return index
@@ -251,7 +251,7 @@ end
 
 ---@param list table
 ---@param cb function(value: any): boolean
-function M.filter (list, cb)
+function M.filter(list, cb)
 	local result = {}
 	for _, value in ipairs(list) do
 		if cb(value) then
@@ -265,7 +265,7 @@ end
 ---@param list `T`[]
 ---@param cb function(value: `T`): `T`
 ---@return `T` | nil
-function M.find (list, cb)
+function M.find(list, cb)
 	for _, value in ipairs(list) do
 		if cb(value) then
 			return value
@@ -277,7 +277,7 @@ end
 ---@generic T
 ---@param list Array<`T`>
 ---@param cb function(value: `T`): `T`
-function M.map (list, cb)
+function M.map(list, cb)
 	local result = {}
 	for _, value in ipairs(list) do
 		table.insert(result, cb(value))
@@ -286,12 +286,12 @@ function M.map (list, cb)
 end
 
 ---@param win number
-function M.is_help_window (win)
+function M.is_help_window(win)
 	return vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(win), "buftype") == "help"
 end
 
 ---@param buffer number
-function M.get_window_of_buffer (buffer)
+function M.get_window_of_buffer(buffer)
 	local windows = vim.api.nvim_list_wins() -- List all windows
 
 	for _, win in ipairs(windows) do
@@ -302,7 +302,7 @@ function M.get_window_of_buffer (buffer)
 end
 
 ---@param cb function
-function M.debounce (cb, delay, ...)
+function M.debounce(cb, delay, ...)
 	local timer_id = nil
 	return function(...)
 		if timer_id ~= nil then
@@ -381,25 +381,24 @@ M.cmp_icons = {
 	},
 }
 
-
 function M.deep_tbl_extend(t1, t2)
-  for k, v in pairs(t2) do
-    if type(v) == "table" then
-      if type(t1[k] or false) == "table" then
-        M.deep_tbl_extend(t1[k] or {}, t2[k] or {})
-      else
-        t1[k] = v
-      end
-    else
-      t1[k] = v
-    end
-  end
-  return t1
+	for k, v in pairs(t2) do
+		if type(v) == "table" then
+			if type(t1[k] or false) == "table" then
+				M.deep_tbl_extend(t1[k] or {}, t2[k] or {})
+			else
+				t1[k] = v
+			end
+		else
+			t1[k] = v
+		end
+	end
+	return t1
 end
 
 function M.fgcolor(name)
-  local hl = vim.api.nvim_get_hl and vim.api.nvim_get_hl(0, { name = name, link = false })
-  local fg = hl and (hl.fg or hl.foreground)
-  return fg and { fg = string.format("#%06x", fg) } or nil
+	local hl = vim.api.nvim_get_hl and vim.api.nvim_get_hl(0, { name = name, link = false })
+	local fg = hl and (hl.fg or hl.foreground)
+	return fg and { fg = string.format("#%06x", fg) } or nil
 end
 return M
