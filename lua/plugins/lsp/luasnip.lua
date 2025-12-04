@@ -1,4 +1,5 @@
 return {
+	enabled = false,
 	"L3MON4D3/LuaSnip",
 	build = (not jit.os:find("Windows"))
 			and "echo 'NOTE: jsregexp is optional, so not a big deal if it fails to build'; make install_jsregexp"
@@ -10,7 +11,6 @@ return {
 				require("luasnip.loaders.from_vscode").lazy_load()
 			end,
 		},
-		"nvim-cmp",
 		"saadparwaiz1/cmp_luasnip",
 	},
 	opts = {

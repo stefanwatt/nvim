@@ -8,7 +8,7 @@ return {
 		local schemastore = require("schemastore")
 		local capabilities = vim.lsp.protocol.make_client_capabilities()
 		capabilities.textDocument.completion.completionItem.snippetSupport = true
-		lspconfig.jsonls.setup({
+		vim.lsp.config("jsonls", {
 			capabilities = capabilities,
 			settings = {
 				json = {
@@ -17,7 +17,7 @@ return {
 				},
 			},
 		})
-		lspconfig.yamlls.setup({
+		vim.lsp.config("yamlls", {
 			settings = {
 				yaml = {
 					schemaStore = {

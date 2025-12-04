@@ -4,15 +4,20 @@ local M = {}
 ---@field name string
 ---@field value string
 
+-- ---@param command string
+-- ---@param flags CommandFlag
+-- function M.i3_exec(command, flags)
+-- 	local args = ""
+-- 	for _, flag in ipairs(flags) do
+-- 		local prefix = #flag.name == 1 and "-" or "--"
+-- 		args = args .. " " .. prefix .. flag.name .. " " .. '"' .. flag.value .. '"'
+-- 	end
+-- 	os.execute("i3-msg 'exec " .. command .. args .. " ' >/dev/null 2>&1 &")
+-- end
+
 ---@param command string
----@param flags CommandFlag
-function M.i3_exec(command, flags)
-	local args = ""
-	for _, flag in ipairs(flags) do
-		local prefix = #flag.name == 1 and "-" or "--"
-		args = args .. " " .. prefix .. flag.name .. " " .. '"' .. flag.value .. '"'
-	end
-	os.execute("i3-msg 'exec " .. command .. args .. " ' >/dev/null 2>&1 &")
+function M.i3_exec(command)
+	os.execute("i3-msg 'exec " .. command .. " ' >/dev/null 2>&1 &")
 end
 
 function M.exec(command)

@@ -18,7 +18,7 @@ return {
 	name = "catppuccin",
 	priority = 1000,
 	opts = {
-		flavour = "latte",
+		flavour = "mocha",
 		styles = {
 			comments = {},
 		},
@@ -65,7 +65,7 @@ return {
 				}
 			end,
 		})
-		vim.cmd.colorscheme("catppuccin-latte")
+		vim.cmd.colorscheme("catppuccin-mocha")
 		local colors = require("catppuccin.palettes").get_palette()
 		vim.api.nvim_set_hl(0, "DiagnosticUnnecessary", {
 			fg = colors.overlay0,

@@ -1,5 +1,6 @@
 return {
 	require("plugins.lsp.cmp"),
+	require("plugins.lsp.diagnostics"),
 	require("plugins.lsp.go"),
 	-- require("plugins.lsp.java"),
 	require("plugins.lsp.lsp-config"),

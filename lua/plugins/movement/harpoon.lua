@@ -4,7 +4,7 @@ return {
 		event = "VeryLazy",
 		keys = {
 			{
-				"<Tab>",
+				"<A-Tab>",
 				mode = { "n" },
 				function()
 					require("harpoon.ui").nav_next()
