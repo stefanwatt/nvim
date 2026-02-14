@@ -16,7 +16,7 @@ return {
 			function()
 				require("fzf-lua").lsp_references({
 					includeDeclaration = false,
-					jump_to_single_result = true,
+					jump1 = true,
 				})
 			end,
 			desc = "[f]ind [r]eferences",

@@ -91,22 +91,6 @@ vim.keymap.set("n", "cb", "vbc", opts)
 -- Better paste
 vim.keymap.set("v", "p", '"_dP', opts)
 
--- Swap current line with the line above
-vim.keymap.set("n", "<A-Up>", function()
-	local current_line = vim.fn.line(".")
-	if current_line > 1 then
-		vim.cmd("move -2")
-	end
-end, opts)
-
--- Swap current line with the line below
-vim.keymap.set("n", "<A-Down>", function()
-	local current_line = vim.fn.line(".")
-	local last_line = vim.fn.line("$")
-	if current_line < last_line then
-		vim.cmd("move +1")
-	end
-end, opts) -- Stay in indent mode
 vim.keymap.set("v", "<", "<gv", opts)
 vim.keymap.set("v", ">", ">gv", opts)
 vim.keymap.set("n", "<leader><leader>x", "<cmd>so %<cr> :lua print('file reloaded')<cr>", opts)

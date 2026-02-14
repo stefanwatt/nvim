@@ -5,6 +5,8 @@ table.insert(runtime_path, vim.env.HOME .. "/.local/share/awesomewm-api/lib/?.lu
 table.insert(runtime_path, vim.env.HOME .. "/.local/share/awesomewm-api/lib/?/init.lua")
 
 return {
+	mason = false,
+	cmd = {"/home/stefan/.nix-profile/bin/lua-language-server"},
 	settings = {
 		Lua = {
 			runtime = {

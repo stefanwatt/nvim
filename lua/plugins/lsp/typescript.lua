@@ -6,7 +6,7 @@ return {
 			"neovim/nvim-lspconfig",
 			"kyoh86/climbdir.nvim",
 		},
-		enabled = false,
+		-- enabled = false,
 		opts = {},
 		keys = {
 			{
