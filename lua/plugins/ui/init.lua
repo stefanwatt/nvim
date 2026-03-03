@@ -1,6 +1,7 @@
 return {
 	require("plugins.ui.alpha"),
 	require("plugins.ui.catppuccin"),
+	require("plugins.ui.checkmate"),
 	require("plugins.ui.colorizer"),
 	require("plugins.ui.helpview"),
 	require("plugins.ui.image"),

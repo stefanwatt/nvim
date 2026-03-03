@@ -120,3 +120,21 @@ vim.keymap.set("n", "tr", RunNgTestForCurrentFile, opts)
 
 vim.api.nvim_set_keymap("n", "]b", "<Plug>JumpDiffCharNextStart", { noremap = false })
 vim.api.nvim_set_keymap("n", "[b", "<Plug>JumpDiffCharPrevStart", { noremap = false })
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+	once =true,
+  callback = function()
+    local opts = { buffer = true, noremap = true, silent = true }
+    
+    -- map <c-a> and <c-x> to use dial.nvim's 'markdown' group
+    vim.keymap.set("n", "<C-a>", require("dial.map").inc_normal("markdown"), opts)
+    vim.keymap.set("n", "<C-x>", require("dial.map").dec_normal("markdown"), opts)
+    vim.keymap.set("v", "<C-a>", require("dial.map").inc_visual("markdown"), opts)
+    vim.keymap.set("v", "<C-x>", require("dial.map").dec_visual("markdown"), opts)
+
+    -- quick insert mappings (e.g., <leader>iy inserts " yes " at cursor)
+    vim.keymap.set("n", "<leader>iy", "i  <ESC>", opts)
+    vim.keymap.set("n", "<leader>is", "i      <ESC>", opts)
+  end,
+})

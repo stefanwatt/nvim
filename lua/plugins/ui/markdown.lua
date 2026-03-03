@@ -7,14 +7,6 @@ return {
 		opts = {},
 	},
 	{
-		"bngarren/checkmate.nvim",
-		ft = "markdown",
-		opts = {
-			files = { "*.md" },
-		},
-	},
-
-	{
 		"iamcco/markdown-preview.nvim",
 		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
 		build = "cd app && npm install",
@@ -23,6 +15,15 @@ return {
 		end,
 		ft = { "markdown" },
 	},
+
+	{
+		"Kicamon/markdown-table-mode.nvim",
+		config = function()
+			require('markdown-table-mode').setup()
+		end,
+		ft = { "markdown" },
+	},
+
 }
 
 -- {
